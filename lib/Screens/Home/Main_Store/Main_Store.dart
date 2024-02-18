@@ -12,6 +12,8 @@ class MainStore extends StatefulWidget {
 }
 
 class _MainStoreState extends State<MainStore> {
+  static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
+  static const Color unselectColor = Color.fromARGB(255, 156, 112, 18);
   final CartIndexList _cartIndexList = CartIndexList();
   int selectedIndex = 0;
 
@@ -32,8 +34,7 @@ class _MainStoreState extends State<MainStore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme:
-            const IconThemeData(color: Color.fromARGB(255, 192, 163, 99)),
+        iconTheme: const IconThemeData(color: unselectColor),
         elevation: 0,
         title: Center(
           child: Padding(
@@ -44,7 +45,7 @@ class _MainStoreState extends State<MainStore> {
               style: TextStyle(
                   fontFamily: 'Capri',
                   fontSize: 18,
-                  color: const Color.fromARGB(255, 241, 185, 65)),
+                  color: Color.fromARGB(255, 255, 255, 255)),
             ),
           ),
         ),
@@ -62,7 +63,7 @@ class _MainStoreState extends State<MainStore> {
               },
               icon: const Icon(
                 Icons.shopping_bag,
-                color: Color.fromARGB(255, 192, 163, 99),
+                color: unselectColor,
               ),
             ),
           ),
@@ -73,8 +74,8 @@ class _MainStoreState extends State<MainStore> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color.fromARGB(255, 255, 253, 249),
-                Color.fromARGB(255, 255, 255, 255),
+                baseColor,
+                baseColor
                 // Opacidad ajustable
               ],
             ),
@@ -93,8 +94,8 @@ class _MainStoreState extends State<MainStore> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color.fromARGB(255, 241, 185, 65),
-                    Color.fromARGB(255, 241, 185, 65),
+                    Color.fromARGB(255, 241, 165, 65),
+                    Color.fromARGB(255, 241, 165, 65),
                   ],
                 ),
               ),
@@ -146,9 +147,9 @@ class _MainStoreState extends State<MainStore> {
         unselectedFontSize: 14,
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        iconSize: MediaQuery.of(context).size.height / 18,
+        iconSize: MediaQuery.of(context).size.height / 20,
         showUnselectedLabels: true,
-        unselectedItemColor: Color.fromARGB(255, 192, 163, 99),
+        unselectedItemColor: const Color.fromARGB(255, 192, 163, 99),
         selectedItemColor: const Color.fromARGB(255, 241, 185, 65),
         currentIndex: selectedIndex,
         onTap: _itemOnTaped,
