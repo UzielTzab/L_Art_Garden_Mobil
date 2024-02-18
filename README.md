@@ -1,16 +1,16 @@
-# l_art_garden_mobil
+# L_Art_Garden_Mobil
 
-A new Flutter project.
+Desarrollo de aplicación móvil de L-Art Garden en Flutter.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Este proyecto es un punto de partida para una aplicación Flutter.
 
-A few resources to get you started if this is your first Flutter project:
+Algunos recursos para empezar si esta es tu primera aplicación Flutter:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Tutorial: Escribe tu primera aplicación Flutter](https://docs.flutter.dev/get-started/codelab)
+- [Recetario: Ejemplos útiles de Flutter](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Para obtener ayuda para empezar con el desarrollo Flutter, consulta la
+[documentación en línea](https://docs.flutter.dev/), que ofrece tutoriales,
+ejemplos, orientación sobre el desarrollo móvil y una referencia completa de la API.
