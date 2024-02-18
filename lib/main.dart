@@ -48,9 +48,9 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
     //     50);
     // deleteUser(1);
 
-    patchUser(2, {
-      'nombre': 'Uziel Alejandro Tzab Puc',
-    });
+    // patchUser(2, {
+    //   'nombre': 'Uziel Alejandro Tzab Puc',
+    // });
   }
 
   @override
@@ -71,7 +71,7 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
               labelMedium: TextStyle(fontFamily: 'Capri'),
               labelSmall: TextStyle(fontFamily: 'Capri')),
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 255, 140, 0)),
+              seedColor: Color.fromARGB(255, 241, 221, 167)),
           useMaterial3: true),
       color: const Color.fromARGB(255, 237, 145, 88),
       debugShowCheckedModeBanner: false,

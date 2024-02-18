@@ -32,7 +32,8 @@ class _MainStoreState extends State<MainStore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(size: 35),
+        iconTheme:
+            const IconThemeData(color: Color.fromARGB(255, 192, 163, 99)),
         elevation: 0,
         title: Center(
           child: Padding(
@@ -43,7 +44,7 @@ class _MainStoreState extends State<MainStore> {
               style: TextStyle(
                   fontFamily: 'Capri',
                   fontSize: 18,
-                  color: Color.fromARGB(255, 255, 255, 255)),
+                  color: const Color.fromARGB(255, 241, 185, 65)),
             ),
           ),
         ),
@@ -61,19 +62,19 @@ class _MainStoreState extends State<MainStore> {
               },
               icon: const Icon(
                 Icons.shopping_bag,
-                color: Color.fromARGB(255, 117, 83, 47),
+                color: Color.fromARGB(255, 192, 163, 99),
               ),
             ),
           ),
         ],
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Theme.of(context).colorScheme.inversePrimary,
-                Theme.of(context).colorScheme.inversePrimary,
+                Color.fromARGB(255, 255, 253, 249),
+                Color.fromARGB(255, 255, 255, 255),
                 // Opacidad ajustable
               ],
             ),
@@ -85,50 +86,50 @@ class _MainStoreState extends State<MainStore> {
         width: MediaQuery.of(context).size.width * 0.6,
         child: ListView(
           padding: EdgeInsets.zero,
-          children: [
+          children: const [
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Theme.of(context).colorScheme.inversePrimary,
-                    Theme.of(context).colorScheme.inversePrimary,
+                    Color.fromARGB(255, 241, 185, 65),
+                    Color.fromARGB(255, 241, 185, 65),
                   ],
                 ),
               ),
-              accountName: const Text(
+              accountName: Text(
                 'Uziel Tzab',
                 style: TextStyle(
                     fontSize: 23,
                     fontFamily: 'CuteFlower',
                     color: Color.fromARGB(255, 255, 255, 255)),
               ),
-              accountEmail: const Text(
+              accountEmail: Text(
                 'uzieltzab8@gmail.com',
                 style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'CuteFlower',
                     color: Color.fromARGB(255, 255, 255, 255)),
               ),
-              currentAccountPicture: const CircleAvatar(
+              currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('assets/images/usuario.png'),
                   backgroundColor: Color.fromARGB(255, 255, 255, 255)),
             ),
-            const ListTile(
+            ListTile(
               title: Text(
                 "Mi perfil",
                 style: TextStyle(
-                    fontSize: 17, color: Color.fromARGB(255, 177, 127, 96)),
+                    fontSize: 17, color: Color.fromARGB(255, 241, 185, 65)),
               ),
             ),
-            const ListTile(
+            ListTile(
                 title: Text(
               "Mis compras",
               style: TextStyle(
                   fontSize: 17, color: Color.fromARGB(255, 176, 119, 88)),
             )),
-            const ListTile(
+            ListTile(
               title: Text(
                 'Vender',
                 style: TextStyle(
@@ -147,13 +148,12 @@ class _MainStoreState extends State<MainStore> {
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         iconSize: MediaQuery.of(context).size.height / 18,
         showUnselectedLabels: true,
-        unselectedItemColor:
-            Theme.of(context).colorScheme.primary.withOpacity(0.6),
-        selectedItemColor: Theme.of(context).colorScheme.inversePrimary,
+        unselectedItemColor: Color.fromARGB(255, 192, 163, 99),
+        selectedItemColor: const Color.fromARGB(255, 241, 185, 65),
         currentIndex: selectedIndex,
         onTap: _itemOnTaped,
         selectedIconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.inversePrimary),
+            const IconThemeData(color: Color.fromARGB(255, 241, 185, 65)),
         elevation: 0,
         items: const [
           BottomNavigationBarItem(

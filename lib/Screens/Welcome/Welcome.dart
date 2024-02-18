@@ -128,8 +128,8 @@ class Welcome extends StatelessWidget {
                 style: TextStyle(
                     fontFamily: 'Capri',
                     decoration: TextDecoration.underline,
-                    decorationColor: Color.fromARGB(255, 255, 7, 185),
-                    color: Color.fromARGB(255, 255, 7, 185),
+                    decorationColor: Color.fromARGB(255, 210, 66, 169),
+                    color: Color.fromARGB(255, 238, 87, 195),
                     fontSize: 15,
                     letterSpacing: 2),
               ),

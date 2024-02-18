@@ -22,7 +22,9 @@ class _FlowerMainState extends State<FlowerMain> {
               title: const Center(
                 child: Text(
                   '¿Qué estas buscando?',
-                  style: TextStyle(color: Color.fromARGB(255, 221, 146, 225)),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 87, 87, 87),
+                      fontFamily: 'flower sun'),
                 ),
               ),
               bottom: const PreferredSize(
