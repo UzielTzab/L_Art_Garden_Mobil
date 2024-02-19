@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/Services/service.dart';
 import '../Home/Main_Store/Main_Store.dart';
 import '../../Widgets/waitingLoad.dart';
 
@@ -144,29 +145,47 @@ class _LoginScreenState extends State<LoginScreen> {
                                   backgroundColor:
                                       MaterialStateProperty.all(Colors.amber),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (_FormKey.currentState?.validate() ??
                                       false) {
                                     print(
                                         'Correo electrónico: ${emailController.text}');
                                     print(
                                         'Contraseña: ${passwordController.text}');
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => WaitingPage(
-                                          message: '¡Bienvenido Uziel!',
-                                          onWaitComplete: () {
-                                            // Navegar a la siguiente pantalla
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const MainStore(),
-                                              ),
-                                            );
-                                          },
+                                    try {
+                                      // Realiza la solicitud para obtener el usuario
+                                      final user =
+                                          await getUserByEmailAndPassword(
+                                        emailController.text,
+                                        passwordController.text,
+                                      );
+
+                                      // Si la solicitud fue exitosa, muestra el mensaje con el nombre del usuario
+                                      final welcomeMessage =
+                                          '¡Bienvenido ${user.nombre}!';
+
+                                      // Muestra la página de espera con el mensaje adecuado
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => WaitingPage(
+                                            message: welcomeMessage,
+                                            onWaitComplete: () {
+                                              // Navega a la siguiente pantalla después de completar la espera
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const MainStore(),
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
+                                    } catch (e) {
+                                      // Maneja el error en caso de que falle la solicitud
+                                      print('Error: $e');
+                                      // Puedes mostrar un diálogo o mensaje de error aquí si lo deseas
+                                    }
                                   }
                                 },
                                 child: const Text(

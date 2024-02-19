@@ -6,12 +6,25 @@ import '../Models/user.dart';
 const String ipDirection = "192.168.100.31";
 const String url = 'http://$ipDirection:3004/api/users';
 
-Future<User> getOneUser(int index) async {
-  final response = await http.get(Uri.parse('$url/$index'));
+// Future<User> getOneUser(int index) async {
+//   final response = await http.get(Uri.parse('$url/$index'));
+
+//   if (response.statusCode == 200) {
+//     print(response.body);
+//     return User.createUser(jsonDecode(response.body));
+//   } else {
+//     throw Exception('Error al conectar a la API');
+//   }
+// }
+
+Future<User> getUserByEmailAndPassword(String email, String password) async {
+  final response = await http
+      .get(Uri.parse('$url?correo_electronico=$email&contraseña=$password'));
 
   if (response.statusCode == 200) {
-    print(response.body);
-    return User.createUser(jsonDecode(response.body));
+    print('respuesta del inicio de sesion ${response.body}');
+    final dynamic responseData = jsonDecode(response.body);
+    return User.createUser(responseData);
   } else {
     throw Exception('Error al conectar a la API');
   }
