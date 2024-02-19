@@ -22,10 +22,11 @@ class _FlowerMainState extends State<FlowerMain> {
           length: 4,
           child: Scaffold(
             appBar: AppBar(
+              toolbarHeight: MediaQuery.of(context).size.height * 0.1,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(
-                      1000), // Ajusta el radio de la esquina inferior
+                  bottom: Radius.elliptical(
+                      1000, 100), // Ajusta el radio de la esquina inferior
                 ),
               ),
               title: const Center(
@@ -38,44 +39,47 @@ class _FlowerMainState extends State<FlowerMain> {
                 ),
               ),
               automaticallyImplyLeading: false,
-              backgroundColor: Colors.black,
+              backgroundColor: baseColor,
               bottom: PreferredSize(
                 preferredSize:
                     Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
                 child: Container(
-                  decoration: const BoxDecoration(color: baseColor),
+                  decoration: BoxDecoration(color: baseColor.withAlpha(0)),
                   child: Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
                             vertical: 4.0), // Ajusta el relleno
-                        child: SizedBox(
-                          width: 250,
-                          height: 45, // Ajusta la altura del TextField
-                          child: TextField(
-                            style: const TextStyle(color: grayColor),
-                            decoration: InputDecoration(
-                              labelStyle: const TextStyle(color: grayColor),
-                              filled: true,
-                              fillColor: whiteColor,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              hintText: 'Search...',
-                              prefixIcon: const Icon(
-                                Icons.search,
-                                color: grayColor,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40.0),
-                                borderSide: BorderSide(color: whiteColor),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40.0),
-                                borderSide: BorderSide(color: whiteColor),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: SizedBox(
+                            width: 250,
+                            height: 43, // Ajusta la altura del TextField
+                            child: TextField(
+                              style: const TextStyle(color: grayColor),
+                              decoration: InputDecoration(
+                                labelStyle: const TextStyle(color: grayColor),
+                                filled: true,
+                                fillColor: whiteColor,
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                hintText: 'Search...',
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  color: grayColor,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  borderSide: BorderSide(color: whiteColor),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  borderSide: BorderSide(color: whiteColor),
+                                ),
                               ),
                             ),
                           ),
@@ -107,7 +111,7 @@ class _FlowerMainState extends State<FlowerMain> {
                             .tab, // Ajusta el tamaño del indicador
                         indicatorPadding: const EdgeInsets.only(top: 45),
                         labelStyle: const TextStyle(
-                            fontSize: 17,
+                            fontSize: 14,
                             letterSpacing: 2,
                             fontFamily: 'Capri'),
                         labelColor:
