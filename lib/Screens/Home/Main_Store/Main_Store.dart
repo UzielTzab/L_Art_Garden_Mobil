@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/model_provider/provider.dart';
+import 'package:provider/provider.dart';
 import '../Main_Store/FlowersMain.dart';
 import '../../CartMain/CartMain.dart';
 import 'ClaseIntermediaria.dart';
@@ -13,6 +15,7 @@ class MainStore extends StatefulWidget {
 
 class _MainStoreState extends State<MainStore> {
   static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
+  static const Color baseColorDark = Color.fromARGB(255, 163, 114, 49);
   static const Color unselectColor = Color.fromARGB(255, 156, 112, 18);
   final CartIndexList _cartIndexList = CartIndexList();
   int selectedIndex = 0;
@@ -32,6 +35,7 @@ class _MainStoreState extends State<MainStore> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider watch = context.watch<UserProvider>();
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: unselectColor),
@@ -87,9 +91,9 @@ class _MainStoreState extends State<MainStore> {
         width: MediaQuery.of(context).size.width * 0.6,
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const [
+          children: [
             UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -100,43 +104,47 @@ class _MainStoreState extends State<MainStore> {
                 ),
               ),
               accountName: Text(
-                'Uziel Tzab',
-                style: TextStyle(
+                watch.nombre,
+                style: const TextStyle(
                     fontSize: 23,
                     fontFamily: 'CuteFlower',
                     color: Color.fromARGB(255, 255, 255, 255)),
               ),
               accountEmail: Text(
-                'uzieltzab8@gmail.com',
-                style: TextStyle(
+                watch.correo_electronico,
+                style: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'CuteFlower',
                     color: Color.fromARGB(255, 255, 255, 255)),
               ),
-              currentAccountPicture: CircleAvatar(
+              currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage('assets/images/usuario.png'),
                   backgroundColor: Color.fromARGB(255, 255, 255, 255)),
             ),
-            ListTile(
+            const ListTile(
               title: Text(
-                "Mi perfil",
-                style: TextStyle(
-                    fontSize: 17, color: Color.fromARGB(255, 241, 185, 65)),
+                "Mis datos personales",
+                style: TextStyle(fontSize: 17, color: baseColorDark),
               ),
             ),
-            ListTile(
+            const ListTile(
                 title: Text(
               "Mis compras",
-              style: TextStyle(
-                  fontSize: 17, color: Color.fromARGB(255, 176, 119, 88)),
+              style: TextStyle(fontSize: 17, color: baseColorDark),
             )),
-            ListTile(
+            const ListTile(
               title: Text(
-                'Vender',
+                'Mis devoluciones',
                 style: TextStyle(
                   fontSize: 17,
-                  color: Color.fromARGB(255, 176, 119, 88),
+                  color: baseColorDark,
                 ),
+              ),
+            ),
+            const ListTile(
+              title: Text(
+                'Mis cancelaciones',
+                style: TextStyle(fontSize: 17, color: baseColorDark),
               ),
             )
           ],

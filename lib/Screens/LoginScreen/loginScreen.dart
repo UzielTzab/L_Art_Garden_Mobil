@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Services/service.dart';
+import 'package:l_art_garden_mobil/model_provider/provider.dart';
+import 'package:provider/provider.dart';
 import '../Home/Main_Store/Main_Store.dart';
 import '../../Widgets/waitingLoad.dart';
 
@@ -159,6 +161,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         emailController.text,
                                         passwordController.text,
                                       );
+
+                                      context.read<UserProvider>().setDataUser(
+                                          nombre: user.nombre,
+                                          correo_electronico: user.correo);
 
                                       // Si la solicitud fue exitosa, muestra el mensaje con el nombre del usuario
                                       final welcomeMessage =

@@ -60,7 +60,7 @@ class _CustomScrollViewState extends State<CustomScrollViewClass> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: Color.fromARGB(155, 234, 205, 169),
+                        color: Color.fromARGB(0, 189, 119, 58),
                         style: BorderStyle.solid,
                         width: 2,
                       ),

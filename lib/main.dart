@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Screens/welcome/welcome.dart';
 import 'package:l_art_garden_mobil/Services/service.dart';
+import 'package:l_art_garden_mobil/model_provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'Models/user.dart';
 // import './Screens/Welcome/WelcomeScreen.dart';
 
@@ -56,28 +58,34 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          textTheme: const TextTheme(
-              titleLarge: TextStyle(fontFamily: 'Capri'),
-              titleMedium: TextStyle(fontFamily: 'Capri'),
-              titleSmall: TextStyle(fontFamily: 'Capri'),
-              // headlineLarge: TextStyle(fontFamily: 'Jost'),
-              // headlineMedium: TextStyle(fontFamily: 'Jost'),
-              // headlineSmall: TextStyle(fontFamily: 'Jost'),
-              // bodySmall: TextStyle(fontFamily: 'Jost'),
-              bodyLarge: TextStyle(fontFamily: 'Capri'),
-              bodyMedium: TextStyle(fontFamily: 'Capri'),
-              labelLarge: TextStyle(fontFamily: 'Capri'),
-              labelMedium: TextStyle(fontFamily: 'Capri'),
-              labelSmall: TextStyle(fontFamily: 'Capri')),
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Color.fromARGB(255, 241, 221, 167)),
-          useMaterial3: true),
-      color: const Color.fromARGB(255, 237, 145, 88),
-      debugShowCheckedModeBanner: false,
-      title: 'L Art Garden',
-      home: const Welcome(),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider())
+        ],
+        builder: (context, _) {
+          return MaterialApp(
+            theme: ThemeData(
+                textTheme: const TextTheme(
+                    titleLarge: TextStyle(fontFamily: 'Capri'),
+                    titleMedium: TextStyle(fontFamily: 'Capri'),
+                    titleSmall: TextStyle(fontFamily: 'Capri'),
+                    // headlineLarge: TextStyle(fontFamily: 'Jost'),
+                    // headlineMedium: TextStyle(fontFamily: 'Jost'),
+                    // headlineSmall: TextStyle(fontFamily: 'Jost'),
+                    // bodySmall: TextStyle(fontFamily: 'Jost'),
+                    bodyLarge: TextStyle(fontFamily: 'Capri'),
+                    bodyMedium: TextStyle(fontFamily: 'Capri'),
+                    labelLarge: TextStyle(fontFamily: 'Capri'),
+                    labelMedium: TextStyle(fontFamily: 'Capri'),
+                    labelSmall: TextStyle(fontFamily: 'Capri')),
+                colorScheme: ColorScheme.fromSeed(
+                    seedColor: Color.fromARGB(255, 241, 221, 167)),
+                useMaterial3: true),
+            color: const Color.fromARGB(255, 237, 145, 88),
+            debugShowCheckedModeBanner: false,
+            title: 'L Art Garden',
+            home: const Welcome(),
+          );
+        });
   }
 }
