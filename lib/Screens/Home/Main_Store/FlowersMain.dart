@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/Widgets/app_bar_oval.dart';
 import '../Main_Store/Custom_Scroll_View.dart';
 
 class FlowerMain extends StatefulWidget {
@@ -22,24 +23,17 @@ class _FlowerMainState extends State<FlowerMain> {
           length: 4,
           child: Scaffold(
             appBar: AppBar(
+              flexibleSpace: CustomFlexibleSpace(),
               toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.elliptical(
-                      1000, 100), // Ajusta el radio de la esquina inferior
-                ),
-              ),
-              title: const Center(
-                child: Text(
-                  '¿Qué estas buscando?',
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      color: whiteColor,
-                      fontFamily: 'flower sun'),
-                ),
+              title: const Text(
+                '¿Qué estas buscando?',
+                style: TextStyle(
+                    fontSize: 30.0,
+                    color: whiteColor,
+                    fontFamily: 'FlowerLetter'),
               ),
               automaticallyImplyLeading: false,
-              backgroundColor: baseColor,
+              backgroundColor: baseColor.withAlpha(1),
               bottom: PreferredSize(
                 preferredSize:
                     Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
@@ -48,38 +42,35 @@ class _FlowerMainState extends State<FlowerMain> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                            vertical: 4.0), // Ajusta el relleno
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: SizedBox(
-                            width: 250,
-                            height: 43, // Ajusta la altura del TextField
-                            child: TextField(
-                              style: const TextStyle(color: grayColor),
-                              decoration: InputDecoration(
-                                labelStyle: const TextStyle(color: grayColor),
-                                filled: true,
-                                fillColor: whiteColor,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                hintText: 'Search...',
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  color: grayColor,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: BorderSide(color: whiteColor),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: BorderSide(color: whiteColor),
-                                ),
+                        padding: EdgeInsets.only(
+                            bottom: 15,
+                            right: MediaQuery.of(context).size.width * 0.2),
+                        child: SizedBox(
+                          width: 240,
+                          height: 43, // Ajusta la altura del TextField
+                          child: TextField(
+                            style: const TextStyle(color: grayColor),
+                            decoration: InputDecoration(
+                              labelStyle: const TextStyle(color: grayColor),
+                              filled: true,
+                              fillColor: whiteColor,
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              hintText: 'Search...',
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: grayColor,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40.0),
+                                borderSide: BorderSide(color: whiteColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40.0),
+                                borderSide: BorderSide(color: whiteColor),
                               ),
                             ),
                           ),
@@ -98,7 +89,7 @@ class _FlowerMainState extends State<FlowerMain> {
                 backgroundColor: whiteColor,
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(
-                      MediaQuery.of(context).size.height * 0.08),
+                      MediaQuery.of(context).size.height * 0.07),
                   child: Column(
                     children: [
                       TabBar(

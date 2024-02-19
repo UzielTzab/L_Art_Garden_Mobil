@@ -10,6 +10,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool _obscurePassword = true;
   final GlobalKey<FormState> _FormKey = GlobalKey<FormState>();
   @override
@@ -81,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextFormField(
+                              controller: emailController,
                               validator: (value) {
                                 if (value?.isEmpty ?? true) {
                                   return 'Por favor llena el campo';
@@ -97,11 +100,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color:
                                           Color.fromARGB(255, 255, 255, 255)),
                                   border: UnderlineInputBorder(),
-                                  labelText: 'Tu correo o número de teléfono'),
+                                  labelText: 'Tu correo'),
                               style: const TextStyle(
                                   color: Colors.white, fontFamily: 'Capri'),
                             ),
                             TextFormField(
+                              controller: passwordController,
                               validator: (value) {
                                 if (value?.isEmpty ?? true) {
                                   return 'Por favor llena el campo';
@@ -143,6 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   if (_FormKey.currentState?.validate() ??
                                       false) {
+                                    print(
+                                        'Correo electrónico: ${emailController.text}');
+                                    print(
+                                        'Contraseña: ${passwordController.text}');
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) => WaitingPage(
@@ -254,5 +262,13 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Limpia los controladores cuando el Widget se elimina del árbol de widgets
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }
