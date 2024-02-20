@@ -27,6 +27,8 @@ class _registerScreenState extends State<registerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String _selectItem = "U";
+    List<String> _items = ["M", "F"];
     return Placeholder(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -230,6 +232,7 @@ class _registerScreenState extends State<registerScreen> {
                                           border: const UnderlineInputBorder(),
                                           labelText: ' Confirmar Contraseña'),
                                     ),
+                                    // DropdownButtonFormField(items: _items.map((e) => null) , onChanged: )
                                     Padding(
                                       padding: const EdgeInsets.only(top: 30),
                                       child: ElevatedButton(

@@ -124,19 +124,19 @@ class _MainStoreState extends State<MainStore> {
             const ListTile(
               title: Text(
                 "Mis datos personales",
-                style: TextStyle(fontSize: 17, color: baseColorDark),
+                style: TextStyle(fontSize: 15, color: baseColorDark),
               ),
             ),
             const ListTile(
                 title: Text(
               "Mis compras",
-              style: TextStyle(fontSize: 17, color: baseColorDark),
+              style: TextStyle(fontSize: 15, color: baseColorDark),
             )),
             const ListTile(
               title: Text(
                 'Mis devoluciones',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 15,
                   color: baseColorDark,
                 ),
               ),
@@ -144,7 +144,7 @@ class _MainStoreState extends State<MainStore> {
             const ListTile(
               title: Text(
                 'Mis cancelaciones',
-                style: TextStyle(fontSize: 17, color: baseColorDark),
+                style: TextStyle(fontSize: 15, color: baseColorDark),
               ),
             )
           ],
