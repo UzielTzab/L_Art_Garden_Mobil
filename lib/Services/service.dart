@@ -61,6 +61,7 @@ Future<User> createUser(User user) async {
     print(response.body);
     return User.createUser(jsonDecode(response.body));
   } else {
+    print(response.body);
     throw Exception('Error al conectar a la API');
   }
 }

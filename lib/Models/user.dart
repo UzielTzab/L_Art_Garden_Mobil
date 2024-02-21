@@ -33,12 +33,13 @@ class User {
 
     final user = User(
       id: json['Id_Usuario'] != null ? json['Id_Usuario'] as int : 0,
-      nombre: json['Nombre'] != null ? json['Nombre'] as String : '',
-      fechaNacimiento: json['Fecha_Nacimiento'] != null
-          ? json['Fecha_Nacimiento'] as String
+      nombre:
+          json['NombreUsuario'] != null ? json['NombreUsuario'] as String : '',
+      fechaNacimiento: json['FechaNacimiento'] != null
+          ? json['FechaNacimiento'] as String
           : '',
-      correo: json['Correo_Electronico'] != null
-          ? json['Correo_Electronico'] as String
+      correo: json['CorreoElectronico'] != null
+          ? json['CorreoElectronico'] as String
           : '',
       contrasena:
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
@@ -54,11 +55,11 @@ class User {
     return User(
       id: json['Id_Usuario'] != null ? json['Id_Usuario'] as int : 0,
       nombre: json['Nombre'] != null ? json['Nombre'] as String : '',
-      fechaNacimiento: json['Fecha_Nacimiento'] != null
-          ? json['Fecha_Nacimiento'] as String
+      fechaNacimiento: json['FechaNacimiento'] != null
+          ? json['FechaNacimiento'] as String
           : '',
-      correo: json['Correo_Electronico'] != null
-          ? json['Correo_Electronico'] as String
+      correo: json['CorreoElectronico'] != null
+          ? json['CorreoElectronico'] as String
           : '',
       contrasena:
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
@@ -70,11 +71,11 @@ class User {
     return User(
       id: json['Id_Usuario'] != null ? json['Id_Usuario'] as int : 0,
       nombre: json['Nombre'] != null ? json['Nombre'] as String : '',
-      fechaNacimiento: json['Fecha_Nacimiento'] != null
-          ? json['Fecha_Nacimiento'] as String
+      fechaNacimiento: json['FechaNacimiento'] != null
+          ? json['FechaNacimiento'] as String
           : '',
-      correo: json['Correo_Electronico'] != null
-          ? json['Correo_Electronico'] as String
+      correo: json['CorreoElectronico'] != null
+          ? json['CorreoElectronico'] as String
           : '',
       contrasena:
           json['Contraseña'] != null ? json['Contraseña'] as String : '',

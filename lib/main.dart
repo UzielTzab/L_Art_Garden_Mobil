@@ -27,14 +27,12 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
     // getAllUsers();
     // createUser(User(
     //   id: 0, // No importa el ID, ya que se asignará automáticamente en el servidor
-    //   nombre: 'Uziel',
-    //   apellido: 'Acasseo',
-    //   fechaNacimiento: '1990-01-01',
+    //   nombre: 'Uziel Tzab',
+    //   fechaNacimiento: '2004-01-13',
     //   telefono: '555-1234',
-    //   correo: 'uziel@example.com',
-    //   contrasena: 'con',
+    //   correo: 'uzieltzab@gmail.com',
+    //   contrasena: '225699',
     //   genero: 'M',
-    //   verificacion: true,
     // ));
     // updateUser(
     //     User(

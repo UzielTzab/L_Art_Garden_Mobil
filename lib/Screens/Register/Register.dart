@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import '../Home/Main_Store/Main_Store.dart';
+import 'package:l_art_garden_mobil/Models/user.dart';
+import 'package:l_art_garden_mobil/Services/service.dart';
 import '../LoginScreen/loginScreen.dart';
+import '../../Widgets/waitingLoad.dart';
+import 'package:intl/intl.dart';
 
 class registerScreen extends StatefulWidget {
   const registerScreen({super.key});
@@ -18,16 +21,18 @@ class _registerScreenState extends State<registerScreen> {
 
   bool pass = false;
   bool confirmPass = false;
+  DateTime _selectedDay = DateTime.now();
   final GlobalKey<FormState> _FormKey = GlobalKey<FormState>();
+  TextEditingController _dateController = TextEditingController();
   TextEditingController _Name = TextEditingController();
-  TextEditingController _LastName = TextEditingController();
   TextEditingController _Email = TextEditingController();
   TextEditingController _PasswordInfo = TextEditingController();
   TextEditingController _PasswordImfoConfirm = TextEditingController();
+  TextEditingController _Telefono = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    String _selectItem = "U";
+    String _selectItem = "M";
     List<String> _items = ["M", "F"];
     return Placeholder(
       child: Scaffold(
@@ -110,6 +115,7 @@ class _registerScreenState extends State<registerScreen> {
                                             color: Color.fromARGB(
                                                 255, 169, 169, 169))),
                                     TextFormField(
+                                      controller: _Name,
                                       onChanged: (value) {
                                         setState(() {
                                           nombre = value;
@@ -129,25 +135,7 @@ class _registerScreenState extends State<registerScreen> {
                                       },
                                     ),
                                     TextFormField(
-                                      onChanged: (value) {
-                                        setState(() {
-                                          apellido = value;
-                                        });
-                                      },
-                                      decoration: const InputDecoration(
-                                          labelStyle: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 150, 150, 150)),
-                                          border: UnderlineInputBorder(),
-                                          labelText: 'Apellido'),
-                                      validator: (value) {
-                                        if (value?.isEmpty ?? true) {
-                                          return 'Porfavor complete el campo';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    TextFormField(
+                                      controller: _Email,
                                       onChanged: (value) {
                                         setState(() {
                                           correro = value;
@@ -164,8 +152,60 @@ class _registerScreenState extends State<registerScreen> {
                                               color: Color.fromARGB(
                                                   255, 150, 150, 150)),
                                           border: UnderlineInputBorder(),
-                                          labelText:
-                                              'Correo o numero de telefono'),
+                                          labelText: 'Correo electronico'),
+                                    ),
+                                    TextFormField(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          contrasenia = value;
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value?.isEmpty ?? true) {
+                                          return 'Completa el campo';
+                                        }
+                                        return null;
+                                      },
+                                      controller: _Telefono,
+                                      obscureText: pass,
+                                      decoration: const InputDecoration(
+                                          labelStyle: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 150, 150, 150)),
+                                          border: UnderlineInputBorder(),
+                                          labelText: 'Telefono'),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(top: 18.0),
+                                      child: Text("Año de nacimiento",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Color.fromARGB(
+                                                  255, 169, 169, 169))),
+                                    ),
+                                    TextFormField(
+                                      controller: _dateController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Seleccione una fecha',
+                                        suffixIcon: Icon(Icons.calendar_today),
+                                      ),
+                                      onTap: () async {
+                                        final DateTime? pickedDate =
+                                            await showDatePicker(
+                                          context: context,
+                                          initialDate: _selectedDay,
+                                          firstDate: DateTime.utc(1920, 1, 1),
+                                          lastDate: DateTime.now(),
+                                        );
+                                        if (pickedDate != null) {
+                                          setState(() {
+                                            _selectedDay = pickedDate;
+                                            _dateController.text =
+                                                DateFormat('yyyy-MM-dd')
+                                                    .format(pickedDate);
+                                          });
+                                        }
+                                      },
                                     ),
                                     TextFormField(
                                       onChanged: (value) {
@@ -232,37 +272,101 @@ class _registerScreenState extends State<registerScreen> {
                                           border: const UnderlineInputBorder(),
                                           labelText: ' Confirmar Contraseña'),
                                     ),
-                                    // DropdownButtonFormField(items: _items.map((e) => null) , onChanged: )
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 30.0),
+                                      child: DropdownButtonFormField<String>(
+                                        value: _selectItem,
+                                        items: _items.map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            _selectItem = newValue!;
+                                          });
+                                        },
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 12.0),
+                                          labelText: 'Seleciona tu genero',
+                                          border: OutlineInputBorder(),
+                                        ),
+                                      ),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 30),
                                       child: ElevatedButton(
                                         style: ButtonStyle(
-                                            fixedSize:
-                                                const MaterialStatePropertyAll(
-                                                    Size(220, 30)),
-                                            elevation:
-                                                MaterialStateProperty.all(0),
                                             backgroundColor:
                                                 MaterialStateProperty.all(
-                                                    Colors.amber)),
+                                                    Colors.amber),
+                                            elevation:
+                                                MaterialStateProperty.all(0)),
                                         onPressed: () {
                                           if (_FormKey.currentState
                                                   ?.validate() ??
                                               false) {
+                                            // Validación de la confirmación de la contraseña
+                                            if (_PasswordInfo.text !=
+                                                _PasswordImfoConfirm.text) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Las contraseñas no coinciden'),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              );
+                                              return; // Detener el proceso si las contraseñas no coinciden
+                                            }
+
+                                            User newUser = User(
+                                              id: 0,
+                                              nombre: _Name.text,
+                                              telefono: _Telefono.text,
+                                              correo: _Email.text,
+                                              contrasena: _PasswordInfo.text,
+                                              fechaNacimiento:
+                                                  _dateController.text,
+                                              genero: _selectItem,
+                                            );
+
+                                            // Enviar la solicitud POST para crear el usuario
+                                            createUser(newUser);
+
+                                            const welcome =
+                                                '¡Estamos creando tu cuenta! Redirigiendo a la pagina de INICIO';
+
+                                            // Resto del código para la navegación
                                             print(
-                                                'nombre: $nombre, apellido: $apellido');
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const LoginScreen()));
+                                                'nombre: ${newUser.nombre}, telefono: ${newUser.telefono}');
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    WaitingPage(
+                                                  message: welcome,
+                                                  onWaitComplete: () {
+                                                    // Navega a la siguiente pantalla después de completar la espera
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const LoginScreen(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            );
                                           }
                                         },
                                         child: const Text(
                                           "Crear cuenta",
                                           style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 255, 255, 255)),
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255),
+                                          ),
                                         ),
                                       ),
                                     )
