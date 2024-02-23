@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Main_Store/Main_Store.dart';
+import 'Home/Main_Store/Main_Store.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

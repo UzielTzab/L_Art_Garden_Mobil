@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/model_provider/products.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
-import '../Main_Store/FlowersMain.dart';
-import '../../CartMain/CartMain.dart';
+import './FlowersMain.dart';
+import './CartMain.dart';
 import 'ClaseIntermediaria.dart';
-import '../../Favorits/Favorits.dart';
+import './Favorits.dart';
 
 class MainStore extends StatefulWidget {
   const MainStore({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Models/user.dart';
 import 'package:l_art_garden_mobil/Services/service.dart';
-import '../LoginScreen/loginScreen.dart';
+import './loginScreen.dart';
 import '../../Widgets/waitingLoad.dart';
 import 'package:intl/intl.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:l_art_garden_mobil/Screens/Home/Main_Store/Main_Store.dart';
-import 'package:l_art_garden_mobil/Screens/LoginScreen/loginScreen.dart';
-import 'package:l_art_garden_mobil/Screens/Register/Register.dart';
+import './Main_Store.dart';
+import './loginScreen.dart';
+import './Register.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
