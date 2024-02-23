@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/model_provider/products.dart';
+import 'package:provider/provider.dart';
 import 'CarouselFlowerShops.dart';
 import 'ProductPresentation.dart';
 // import 'ProductPresentation.dart';
@@ -29,8 +31,11 @@ class _CustomScrollViewState extends State<CustomScrollViewClass> {
   ];
   static const List<String> list = <String>["Rojo", "Blanco", "Morado", "Azul"];
   String dropdownValue = list.first;
+
   @override
   Widget build(BuildContext context) {
+    ProductsProvider productsProvider = context.watch<ProductsProvider>();
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(

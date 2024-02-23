@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:l_art_garden_mobil/Screens/welcome/welcome.dart';
+import 'package:l_art_garden_mobil/Screens/welcome.dart';
 import 'package:l_art_garden_mobil/Services/service.dart';
-import 'package:l_art_garden_mobil/model_provider/provider.dart';
+import 'package:l_art_garden_mobil/model_provider/products.dart';
+import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
 import 'Models/user.dart';
 // import './Screens/Welcome/WelcomeScreen.dart';
@@ -58,6 +59,7 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => ProductsProvider()),
           ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider())
         ],
         builder: (context, _) {

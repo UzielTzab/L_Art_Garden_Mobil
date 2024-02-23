@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Models/user.dart';
 
-const String ipDirection = "192.168.100.31";
+const String ipDirection = "192.168.1.33";
 const String url = 'http://$ipDirection:3004/api/users';
 
 // Future<User> getOneUser(int index) async {

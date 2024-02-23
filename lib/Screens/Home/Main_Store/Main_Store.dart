@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:l_art_garden_mobil/model_provider/provider.dart';
+import 'package:l_art_garden_mobil/model_provider/products.dart';
+import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
 import '../Main_Store/FlowersMain.dart';
 import '../../CartMain/CartMain.dart';
@@ -35,7 +36,8 @@ class _MainStoreState extends State<MainStore> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider watch = context.watch<UserProvider>();
+    UserProvider watchUser = context.watch<UserProvider>();
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: unselectColor),
@@ -104,14 +106,14 @@ class _MainStoreState extends State<MainStore> {
                 ),
               ),
               accountName: Text(
-                watch.nombre,
+                watchUser.nombre,
                 style: const TextStyle(
                     fontSize: 23,
                     fontFamily: 'CuteFlower',
                     color: Color.fromARGB(255, 255, 255, 255)),
               ),
               accountEmail: Text(
-                watch.correo_electronico,
+                watchUser.correo_electronico,
                 style: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'CuteFlower',
