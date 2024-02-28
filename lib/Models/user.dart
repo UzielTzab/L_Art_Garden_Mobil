@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class User {
   int id;
   String nombre;
@@ -6,6 +8,8 @@ class User {
   String contrasena;
   String fechaNacimiento;
   String genero;
+  String? tipoUsuario;
+  File? foto;
   User({
     required this.id,
     required this.nombre,
@@ -14,6 +18,8 @@ class User {
     required this.contrasena,
     required this.fechaNacimiento,
     required this.genero,
+    required this.tipoUsuario,
+    required this.foto,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -24,6 +30,7 @@ class User {
       'Correo_Electronico': correo,
       'Contraseña': contrasena,
       'Genero': genero,
+      'Foto': foto,
     };
   }
 
@@ -45,6 +52,9 @@ class User {
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
       telefono: json['Telefono'] != null ? json['Telefono'] as String : "",
       genero: json['Genero'] != null ? json['Genero'] as String : "",
+      tipoUsuario:
+          json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
+      foto: json['Foto'] != null ? json["Foto"] as File : null,
     );
 
     print("User created: $user");
@@ -65,6 +75,9 @@ class User {
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
       telefono: json['Telefono'] != null ? json['Telefono'] as String : "",
       genero: json['Genero'] != null ? json['Genero'] as String : "",
+      tipoUsuario:
+          json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
+      foto: json['Foto'] != null ? json["Foto"] as File : null,
     );
   }
   factory User.updateUser(Map<String, dynamic> json) {
@@ -81,6 +94,9 @@ class User {
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
       telefono: json['Telefono'] != null ? json['Telefono'] as String : "",
       genero: json['Genero'] != null ? json['Genero'] as String : "",
+      tipoUsuario:
+          json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
+      foto: json['Foto'] != null ? json["Foto"] as File : null,
     );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/Screens/list_arreglo.dart';
+import 'package:l_art_garden_mobil/Screens/list_macetas.dart';
+import 'package:l_art_garden_mobil/Screens/list_ramos.dart';
 import 'package:l_art_garden_mobil/Widgets/app_bar_oval.dart';
-import './Custom_Scroll_View.dart';
+import 'list_Offers.dart';
 
 class FlowerMain extends StatefulWidget {
   const FlowerMain({super.key});
@@ -124,10 +127,10 @@ class _FlowerMainState extends State<FlowerMain> {
               ),
               body: const TabBarView(
                 children: [
-                  CustomScrollViewClass(),
-                  Placeholder(),
-                  Placeholder(),
-                  Placeholder()
+                  CustomListOffers(),
+                  CustomListRamos(),
+                  CustomlistArreglo(),
+                  CustomListMacetas()
                 ],
               ),
             ),

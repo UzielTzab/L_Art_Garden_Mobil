@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Models/user.dart';
 import 'package:l_art_garden_mobil/Services/service.dart';
+import 'package:l_art_garden_mobil/Widgets/insert_image.dart';
 import './loginScreen.dart';
 import '../../Widgets/waitingLoad.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
+import '../Widgets/insert_image.dart';
 
 class registerScreen extends StatefulWidget {
   const registerScreen({super.key});
@@ -13,11 +16,13 @@ class registerScreen extends StatefulWidget {
 }
 
 class _registerScreenState extends State<registerScreen> {
+  ImageSelector _imageSelector = ImageSelector();
   String nombre = '';
   String apellido = '';
   String correro = '';
   String contrasenia = '';
   String confirmarContrasenia = '';
+  File? foto = null;
 
   bool pass = false;
   bool confirmPass = false;
@@ -295,6 +300,7 @@ class _registerScreenState extends State<registerScreen> {
                                         ),
                                       ),
                                     ),
+                                    ImageSelector(),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 30),
                                       child: ElevatedButton(
@@ -331,6 +337,8 @@ class _registerScreenState extends State<registerScreen> {
                                               fechaNacimiento:
                                                   _dateController.text,
                                               genero: _selectItem,
+                                              tipoUsuario: "",
+                                              foto: null,
                                             );
 
                                             // Enviar la solicitud POST para crear el usuario
@@ -369,7 +377,7 @@ class _registerScreenState extends State<registerScreen> {
                                           ),
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),

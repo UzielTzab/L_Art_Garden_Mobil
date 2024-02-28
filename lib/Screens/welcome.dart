@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import './Main_Store.dart';
+import 'package:provider/provider.dart';
+import 'main_store.dart';
 import './loginScreen.dart';
-import './Register.dart';
+import 'register.dart';
+import '../model_provider/users.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -82,7 +84,7 @@ class Welcome extends StatelessWidget {
 
           Padding(
             padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.9),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.91),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -120,6 +122,9 @@ class Welcome extends StatelessWidget {
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.95),
             child: GestureDetector(
               onTap: () {
+                context.read<UserProvider>().setDataUser(
+                    nombre: "No has iniciado sesión",
+                    correo_electronico: "¿Tienes cuenta?");
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MainStore()));
               },

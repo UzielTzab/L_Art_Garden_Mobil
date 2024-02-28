@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:l_art_garden_mobil/model_provider/products.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
-import './FlowersMain.dart';
-import './CartMain.dart';
+import 'flower_main.dart';
+import 'cart_main.dart';
 import 'ClaseIntermediaria.dart';
-import './Favorits.dart';
+import 'favorits.dart';
 
 class MainStore extends StatefulWidget {
   const MainStore({super.key});
@@ -17,14 +16,14 @@ class MainStore extends StatefulWidget {
 class _MainStoreState extends State<MainStore> {
   static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
   static const Color baseColorDark = Color.fromARGB(255, 163, 114, 49);
-  static const Color unselectColor = Color.fromARGB(255, 156, 112, 18);
+  static const Color unselectColor = Color.fromARGB(255, 107, 77, 12);
   final CartIndexList _cartIndexList = CartIndexList();
   int selectedIndex = 0;
 
   final List<Widget> _sectionsToGlobalStore = <Widget>[
     const FlowerMain(),
     const FavoritesScreen(),
-    CartMain(indices: CartIndexList().indexUrls),
+    const CartMain(),
     const Text("u4")
   ];
 
@@ -60,16 +59,13 @@ class _MainStoreState extends State<MainStore> {
             padding: const EdgeInsets.only(left: 0, right: 0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CartMain(
-                              indices: [2, 2, 3, 4, 5],
-                            )));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const CartMain()));
               },
               icon: const Icon(
                 Icons.shopping_bag,
                 color: unselectColor,
+                size: 20,
               ),
             ),
           ),
@@ -153,11 +149,11 @@ class _MainStoreState extends State<MainStore> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 15,
-        unselectedFontSize: 14,
+        selectedFontSize: 14,
+        unselectedFontSize: 13,
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        iconSize: MediaQuery.of(context).size.height / 20,
+        iconSize: MediaQuery.of(context).size.height / 23,
         showUnselectedLabels: true,
         unselectedItemColor: const Color.fromARGB(255, 192, 163, 99),
         selectedItemColor: const Color.fromARGB(255, 241, 185, 65),

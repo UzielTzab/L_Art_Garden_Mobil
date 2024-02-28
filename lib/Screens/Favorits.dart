@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/model_provider/flower_product_provider.dart';
+import 'package:provider/provider.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -21,45 +23,60 @@ class ScaffoldExample extends StatefulWidget {
 }
 
 class _ScaffoldExampleState extends State<ScaffoldExample> {
-  final List<String> imageUrls = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwHDYrj9GF3FRJXPyk0hkHJeg1kCPWhk5_6g&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXL4BrCGSKFdlL-vgTHU6DaaChK4xrkZRNNA&usqp=CAU',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=E5440_large_feature_better&key2=E5440_feature_better&key3=E5440_large_better&key4=E5440_large_thumb_better',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=CJB_large_feature_better&key2=CJB_feature_better&key3=CJB_large_better&key4=CJB_large_thumb_better',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=FLG_large_feature&key2=FLG_feature&key3=FLG_large&key4=FLG_large_thumb',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=D9-4911_large_feature_better&key2=D9-4911_feature_better&key3=D9-4911_large_better&key4=D9-4911_large_thumb_better',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=V1RS-CH_large_feature&key2=V1RS-CH_feature&key3=V1RS-CH_large&key4=V1RS-CH_large_thumb',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=V5510_large_feature_better&key2=V5510_feature_better&key3=V5510_large_better&key4=V5510_large_thumb_better',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=E3-5238_large_feature&key2=E3-5238_feature&key3=E3-5238_large&key4=E3-5238_large_thumb',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=F5512_large_feature_better&key2=F5512_feature_better&key3=F5512_large_better&key4=F5512_large_thumb_better',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=PGP_large_feature_better&key2=PGP_feature_better&key3=PGP_large_better&key4=PGP_large_thumb_better',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=D7-4906_large_feature_better&key2=D7-4906_feature_better&key3=D7-4906_large_better&key4=D7-4906_large_thumb_better',
-    'https://www.folimg.com/kernel/imageload/?table=fol3_catalog_images&key1=FLW_large_feature&key2=FLW_feature&key3=FLW_large&key4=FLW_large_thumb'
-  ];
   @override
   Widget build(BuildContext context) {
+    FlowerProvider watchFlowerProvider = context.watch<FlowerProvider>();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
           'Favoritos',
-          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+          style: TextStyle(
+              color: Color.fromARGB(255, 0, 0, 0), fontFamily: "Capri"),
         ),
       ),
       body: ListView.builder(
-        itemCount: 6,
+        itemCount: watchFlowerProvider.flores.length,
         itemBuilder: (BuildContext context, int index) {
           return Card(
             elevation: 0,
             child: Column(
               children: [
                 ListTile(
-                  title: Text('Elemento ${index + 1}'),
-                  subtitle: Text('Descripción del elemento ${index + 1}'),
-                  leading: Image.network(imageUrls[index]),
+                  title: Text(
+                    watchFlowerProvider.flores[index].descripcion,
+                    style: const TextStyle(fontFamily: "Capri"),
+                  ),
+                  subtitle: Row(
+                    children: [
+                      const Icon(Icons.monetization_on),
+                      Text(
+                        watchFlowerProvider.flores[index].precio.toString(),
+                        style: const TextStyle(fontFamily: "Capri"),
+                      ),
+                    ],
+                  ),
+                  leading:
+                      Image.network(watchFlowerProvider.flores[index].imageUrl),
                   onTap: () {
                     // Acción cuando se toca la carta
                   },
+                  trailing: IconButton(
+                    color: const Color.fromARGB(255, 150, 118, 20),
+                    onPressed: () {
+                      setState(() {
+                        print('Esto es index $index');
+                        for (var flor in watchFlowerProvider.flores) {
+                          print(
+                              'id de la flor: ${flor.indexFlower},    Descripcion de la flor: ${flor.descripcion}');
+                        }
+                        print(
+                            "has eliminado el producto del favoritos conel indice: ${watchFlowerProvider.flores[index].indexFlower}");
+                        watchFlowerProvider.removeFlower(index);
+                      });
+                    },
+                    icon: const Icon(Icons.heart_broken),
+                  ),
                 ),
                 const Divider(
                   // Agregar un Divider entre cada ListTile
