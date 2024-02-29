@@ -71,15 +71,25 @@ class _CartMainState extends State<CartMain> {
         },
       ),
       bottomSheet: Container(
-        color: Color.fromARGB(255, 232, 168, 65),
+        color: const Color.fromARGB(255, 232, 168, 65),
         height: MediaQuery.of(context).size.height / 8,
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              'Precio total: $_precioTotal',
-              style: const TextStyle(color: Colors.white),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Precio total:',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                const Icon(Icons.monetization_on, color: Colors.white),
+                Text(
+                  '$_precioTotal',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
             ),
             Text('Cantidad de productos: $_cantidadProductos',
                 style: const TextStyle(color: Colors.white)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/model_provider/flower_product_provider.dart';
+import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -26,6 +27,8 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
   @override
   Widget build(BuildContext context) {
     FlowerProvider watchFlowerProvider = context.watch<FlowerProvider>();
+    ProductsTestProvider watchProductProvider =
+        context.watch<ProductsTestProvider>();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -65,17 +68,28 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
                     color: const Color.fromARGB(255, 150, 118, 20),
                     onPressed: () {
                       setState(() {
-                        print('Esto es index $index');
+                        int? temporalIndex =
+                            watchFlowerProvider.flores[index].indexFlower;
+                        print('Esto es index $temporalIndex');
+                        print("-------Lista de flores en el favoritos--------");
                         for (var flor in watchFlowerProvider.flores) {
                           print(
                               'id de la flor: ${flor.indexFlower},    Descripcion de la flor: ${flor.descripcion}');
                         }
+                        print('----------------------------------------------');
                         print(
-                            "has eliminado el producto del favoritos conel indice: ${watchFlowerProvider.flores[index].indexFlower}");
-                        watchFlowerProvider.removeFlower(index);
+                            "has eliminado el producto del favoritos con el indice: ${watchFlowerProvider.flores[index].indexFlower}");
+                        watchFlowerProvider.removeFlower(temporalIndex);
+                        print(
+                            "-------Lista de flores en el favoritos despues de eliminar--------");
+                        for (var flor in watchFlowerProvider.flores) {
+                          print(
+                              'id de la flor: ${flor.indexFlower},    Descripcion de la flor: ${flor.descripcion}');
+                        }
+                        print('----------------------------------------------');
                       });
                     },
-                    icon: const Icon(Icons.heart_broken),
+                    icon: const Icon(Icons.heart_broken_outlined),
                   ),
                 ),
                 const Divider(

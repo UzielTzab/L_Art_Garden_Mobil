@@ -19,18 +19,28 @@ class ProductsTestProvider with ChangeNotifier {
 
     // Agrega más URLs según sea necesario
   ];
-  final List<Flower> _flores = [];
+  final List<Flower> _flowers = [];
 
-  List<Flower> get flores => _flores;
+  List<Flower> get flores => _flowers;
 
   ProductsTestProvider() {
     // Crear algunos productos simulados al inicializar la clase
     _initializeProducts();
   }
 
+  int? findIndex(int index) {
+    for (var flower in _flowers) {
+      if (flower.indexFlower == index) {
+        return flower.indexFlower;
+      }
+    }
+    // Si no se encuentra ninguna coincidencia, se devuelve null
+    return null;
+  }
+
   void _initializeProducts() {
     // Simular algunos productos
-    _flores.add(Flower(
+    _flowers.add(Flower(
       indexFlower: 0,
       imageUrl: imageUrls[0],
       descripcion: 'Ramo de rosas especiales',
@@ -39,7 +49,7 @@ class ProductsTestProvider with ChangeNotifier {
       stock: 10,
     ));
 
-    _flores.add(Flower(
+    _flowers.add(Flower(
       indexFlower: 1,
       imageUrl: imageUrls[1],
       descripcion: 'Arreglo floral, rosas blancas y rosadas',
@@ -48,7 +58,7 @@ class ProductsTestProvider with ChangeNotifier {
       stock: 5,
     ));
 
-    _flores.add(Flower(
+    _flowers.add(Flower(
       indexFlower: 2,
       imageUrl: imageUrls[2],
       descripcion: 'Arreglo floral, rosas rosadas',
@@ -57,7 +67,7 @@ class ProductsTestProvider with ChangeNotifier {
       stock: 8,
     ));
 
-    _flores.add(Flower(
+    _flowers.add(Flower(
       indexFlower: 3,
       imageUrl: imageUrls[3],
       descripcion: 'Arreglo de caja rectangular, con rosas nativas coloridas',
@@ -65,7 +75,7 @@ class ProductsTestProvider with ChangeNotifier {
       tipo: 'Arreglo',
       stock: 19,
     ));
-    _flores.add(Flower(
+    _flowers.add(Flower(
       indexFlower: 4,
       imageUrl: imageUrls[4],
       descripcion: 'Arreglo de rosa blanca especial ',
@@ -74,7 +84,7 @@ class ProductsTestProvider with ChangeNotifier {
       stock: 12,
     ));
 
-    _flores.add(Flower(
+    _flowers.add(Flower(
       indexFlower: 5,
       imageUrl: imageUrls[5],
       descripcion: 'Arreglo de flores de temporada ',
@@ -82,7 +92,7 @@ class ProductsTestProvider with ChangeNotifier {
       tipo: 'Arreglo',
       stock: 2,
     ));
-    _flores.add(Flower(
+    _flowers.add(Flower(
       indexFlower: 6,
       imageUrl: imageUrls[6],
       descripcion: 'Arreglo de rosa especial con chocolates incluidos ',
@@ -105,7 +115,7 @@ class ProductsTestProvider with ChangeNotifier {
   //     required int precio,
   //     required String tipo,
   //     required int stock}) {
-  //   _flores.add(Flower(
+  //   _flowers.add(Flower(
   //     indexFlower: indexFlower,
   //     imageUrl: imageUrl,
   //     descripcion: descripcion,
