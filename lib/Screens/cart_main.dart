@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
-import 'package:l_art_garden_mobil/model_provider/flower_product_provider.dart';
+
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,7 +22,12 @@ class _CartMainState extends State<CartMain> {
   Widget build(BuildContext context) {
     Color _orangeColor = Color.fromARGB(255, 209, 137, 49);
     CartProvider watchCartProvider = context.watch<CartProvider>();
-    CalcularPrecioFinal(watchCartProvider);
+    ProductsTestProvider watchProductTestProvider =
+        context.watch<ProductsTestProvider>();
+    for (var flor in watchCartProvider.flores) {
+      print('id: ${flor.indexFlower}     precio: ${flor.precio}');
+    }
+    calculationAddPrice(watchCartProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -56,7 +61,30 @@ class _CartMainState extends State<CartMain> {
                   },
                   trailing: IconButton(
                     color: _orangeColor,
-                    onPressed: () {},
+                    onPressed: () {
+                      int temporalIndex =
+                          watchCartProvider.flores[index].indexFlower;
+                      print('Esto es temporal index: $temporalIndex');
+                      calculationRemovePrice(watchProductTestProvider
+                          .flores[temporalIndex].precio);
+                      print(
+                          '--------Lista en carrito antes de remover dicha flore del carrito-------------');
+                      for (var flor in watchCartProvider.flores) {
+                        print(
+                            'indice de la flor: ${flor.indexFlower}, precio de la flor ${flor.precio}');
+                      }
+                      print(
+                          '----------------------------------------------------------------------------');
+                      watchCartProvider.removeFlower(temporalIndex);
+                      print(
+                          '--------Lista en carrito despues de remover dicha flore del carrito-------------');
+                      for (var flor in watchCartProvider.flores) {
+                        print(
+                            'indice de la flor: ${flor.indexFlower}, precio de la flor ${flor.precio}');
+                      }
+                      print(
+                          '----------------------------------------------------------------------------');
+                    },
                     icon: const Icon(Icons.remove),
                   ),
                 ),
@@ -74,38 +102,68 @@ class _CartMainState extends State<CartMain> {
         color: const Color.fromARGB(255, 232, 168, 65),
         height: MediaQuery.of(context).size.height / 8,
         width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Precio total:',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Text(
+                      'Precio total:',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                    const Icon(Icons.monetization_on, color: Colors.white),
+                    Text(
+                      '$_precioTotal',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
                 ),
-                const Icon(Icons.monetization_on, color: Colors.white),
-                Text(
-                  '$_precioTotal',
-                  style: const TextStyle(color: Colors.white),
+                Row(
+                  children: [
+                    const Text('Cantidad: ',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontFamily: "Capri")),
+                    Text(_cantidadProductos.toString(),
+                        style: const TextStyle(
+                            color: Colors.white, fontFamily: "Capri")),
+                  ],
                 ),
               ],
             ),
-            Text('Cantidad de productos: $_cantidadProductos',
-                style: const TextStyle(color: Colors.white)),
+            ElevatedButton(
+                style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(0),
+                    iconColor: MaterialStatePropertyAll(Colors.amber)),
+                onPressed: () {},
+                child: Text('Comprar')),
           ],
         ),
       ),
     );
   }
 
-  CalcularPrecioFinal(CartProvider preciosFlores) {
+  calculationAddPrice(CartProvider preciosFlores) {
     setState(() {
+      _precioTotal = 0;
+      _cantidadProductos = 0;
       for (var flor in preciosFlores.flores) {
         _precioTotal += flor.precio;
         _cantidadProductos++;
       }
-      print(_precioTotal);
+      print('precio total adicionado en metodo adicionar$_precioTotal');
     });
+  }
+
+  calculationRemovePrice(int priceRemove) {
+    _precioTotal -= priceRemove;
+    _cantidadProductos--;
+    print('precio total adicionado en metodo remover$_precioTotal');
   }
 }

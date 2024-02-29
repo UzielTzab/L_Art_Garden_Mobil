@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Screens/welcome.dart';
-import 'package:l_art_garden_mobil/Services/service.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
-import 'package:l_art_garden_mobil/model_provider/flower_product_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
-import './Models/user.dart';
+import './model_provider/favorites_provider.dart';
 // import './Screens/Welcome/WelcomeScreen.dart';
 
 void main() {
@@ -67,7 +65,7 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
           ChangeNotifierProvider(create: (_) => ProductsTestProvider()),
           ChangeNotifierProvider(create: (_) => CartProvider()),
           ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
-          ChangeNotifierProvider(create: (_) => FlowerProvider())
+          ChangeNotifierProvider(create: (_) => FavoritesProvide())
         ],
         builder: (context, _) {
           return MaterialApp(

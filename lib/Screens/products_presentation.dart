@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Screens/cart_main.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
-import 'package:l_art_garden_mobil/model_provider/flower_product_provider.dart';
+import 'package:l_art_garden_mobil/model_provider/favorites_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
 import 'ClaseIntermediaria.dart';
@@ -36,7 +36,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
     print(productCount);
     ProductsTestProvider watchProductsTestProvider =
         context.watch<ProductsTestProvider>();
-    FlowerProvider watchFlowerProvider = context.watch<FlowerProvider>();
+    FavoritesProvide watchFlowerProvider = context.watch<FavoritesProvide>();
     CartProvider watchCartProvider = context.watch<CartProvider>();
     if (watchFlowerProvider.findFlower(widget.index)) {
       isPressedFavorite = true;
@@ -105,7 +105,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                     });
 
                     if (isPressedFavorite) {
-                      context.read<FlowerProvider>().addFlower(
+                      context.read<FavoritesProvide>().addFlower(
                           indexFlower: watchProductsTestProvider
                               .flores[widget.index].indexFlower,
                           imageUrl: watchProductsTestProvider
@@ -115,7 +115,9 @@ class _YourNewScreenState extends State<YourNewScreen> {
                           precio: watchProductsTestProvider
                               .flores[widget.index].precio);
                     } else {
-                      context.read<FlowerProvider>().removeFlower(widget.index);
+                      context
+                          .read<FavoritesProvide>()
+                          .removeFlower(widget.index);
                     }
                   },
                 ),
@@ -241,7 +243,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                             print(
                                 'Removiste la flor con indice: ${watchCartProvider.findFlowerByIndex(widget.index)}');
                             context
-                                .read<FlowerProvider>()
+                                .read<FavoritesProvide>()
                                 .removeFlower(widget.index);
                             for (var flowers in watchCartProvider.flores) {
                               print(

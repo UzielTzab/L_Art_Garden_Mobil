@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Models/product.dart';
 
-class FlowerProvider with ChangeNotifier {
+class FavoritesProvide with ChangeNotifier {
   final List<Flower> _flores = [];
 
   List<Flower> get flores => _flores;
@@ -48,7 +48,7 @@ class FlowerProvider with ChangeNotifier {
 
 // import 'package:flutter/material.dart';
 
-// class FlowerProvider with ChangeNotifier {
+// class FavoritesProvide with ChangeNotifier {
 //   String _descripcion = "";
 //   int _precio = 0;
 
