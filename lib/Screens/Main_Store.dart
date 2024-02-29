@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
 import 'flower_main.dart';
@@ -36,6 +37,8 @@ class _MainStoreState extends State<MainStore> {
   @override
   Widget build(BuildContext context) {
     UserProvider watchUser = context.watch<UserProvider>();
+    CounterCartProvider watchCounterPorvider =
+        context.watch<CounterCartProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -55,20 +58,43 @@ class _MainStoreState extends State<MainStore> {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(left: 0, right: 0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const CartMain()));
-              },
-              icon: const Icon(
-                Icons.shopping_bag,
-                color: unselectColor,
-                size: 20,
+          Stack(children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 0, right: 0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CartMain()));
+                },
+                icon: const Icon(
+                  Icons.shopping_bag,
+                  color: unselectColor,
+                  size: 20,
+                ),
               ),
             ),
-          ),
+            if (watchCounterPorvider.counter > 0)
+              Positioned(
+                  right: 1,
+                  left: 1,
+                  child: Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: 1,
+                        minHeight: 1,
+                      ),
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(0, 238, 205, 106),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Text(
+                        '${watchCounterPorvider.counter}',
+                        textAlign: TextAlign.center,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 12),
+                      )))
+          ])
         ],
         flexibleSpace: Container(
           decoration: const BoxDecoration(

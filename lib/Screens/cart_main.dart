@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
+import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
 
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +20,8 @@ class _CartMainState extends State<CartMain> {
   @override
   Widget build(BuildContext context) {
     Color _orangeColor = Color.fromARGB(255, 209, 137, 49);
+    CounterCartProvider wacthConterCartProvider =
+        context.watch<CounterCartProvider>();
     CartProvider watchCartProvider = context.watch<CartProvider>();
     ProductsTestProvider watchProductTestProvider =
         context.watch<ProductsTestProvider>();
@@ -75,7 +76,13 @@ class _CartMainState extends State<CartMain> {
                       }
                       print(
                           '----------------------------------------------------------------------------');
+                      context
+                          .read<CounterCartProvider>()
+                          .setDataCounter(counter: _cantidadProductos);
                       watchCartProvider.removeFlower(temporalIndex);
+
+                      print(
+                          'Esto es el valor del contador del carrito: ${wacthConterCartProvider.counter}');
                       print(
                           '--------Lista en carrito despues de remover dicha flore del carrito-------------');
                       for (var flor in watchCartProvider.flores) {

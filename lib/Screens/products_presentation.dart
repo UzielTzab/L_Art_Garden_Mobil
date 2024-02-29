@@ -32,8 +32,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
         context.watch<ProductsTestProvider>();
     CounterCartProvider watchCounterProvider =
         context.watch<CounterCartProvider>();
-    productCount = watchCounterProvider.counter;
-    print(productCount);
+
     ProductsTestProvider watchProductsTestProvider =
         context.watch<ProductsTestProvider>();
     FavoritesProvide watchFlowerProvider = context.watch<FavoritesProvide>();
@@ -60,7 +59,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                   size: 20,
                 ),
               ),
-              if (productCount > 0)
+              if (watchCounterProvider.counter > 0)
                 Positioned(
                   right: 8,
                   top: 8,
@@ -71,11 +70,11 @@ class _YourNewScreenState extends State<YourNewScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     constraints: const BoxConstraints(
-                      minWidth: 16,
-                      minHeight: 16,
+                      minWidth: 15,
+                      minHeight: 15,
                     ),
                     child: Text(
-                      '$productCount',
+                      '${watchCounterProvider.counter}',
                       style: const TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 12,
@@ -201,12 +200,19 @@ class _YourNewScreenState extends State<YourNewScreen> {
                           setState(() {
                             isPressedAddCart = !isPressedAddCart;
                             _cartIndexList.addIndex(widget.index);
-                            context.read<CounterCartProvider>().setDataCounter(
-                                counter: watchCounterProvider.counter +
-                                    1); // Agregar el índice al carrito
+
+                            // Agregar el índice al carrito
                           });
 
                           if (isPressedAddCart) {
+                            setState(() {
+                              context
+                                  .read<CounterCartProvider>()
+                                  .setDataCounter(
+                                      counter:
+                                          watchCounterProvider.counter + 1);
+                            });
+
                             context.read<CartProvider>().addFlower(
                                 indexFlower: widget.index,
                                 imageUrl: widget.imageUrls[widget.index],
@@ -229,7 +235,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                               backgroundColor:
                                   const Color.fromARGB(255, 224, 169, 6),
                               content: const Text(
-                                  '¡Agregaste correctamente este producto!'),
+                                  '¡Agregaste correctamente es5te producto!'),
                               action: SnackBarAction(
                                 label: 'Undo',
                                 onPressed: () {
