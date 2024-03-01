@@ -6,6 +6,7 @@ import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
 import './model_provider/favorites_provider.dart';
+import './Services/service.dart';
 // import './Screens/Welcome/WelcomeScreen.dart';
 
 void main() {
@@ -24,7 +25,7 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
   void initState() {
     print("Why you don't print the users?");
     super.initState();
-    // getUserByEmailAndPassword("juan.perez@example.com", "nuevacontraseña");
+    getUserByEmailAndPassword("u", "u");
     // getOneUser(45);
     // getAllUsers();
     // createUser(User(

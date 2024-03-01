@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Models/user.dart';
 
-const String ipDirection = "10.2.8.99";
+const String ipDirection = "192.168.100.31";
 const String url = 'http://$ipDirection:3004/api/users';
 
 // Future<User> getOneUser(int index) async {
@@ -58,10 +58,10 @@ Future<User> createUser(User user) async {
   );
 
   if (response.statusCode == 201) {
-    print(response.body);
+    print('${response.body}');
     return User.createUser(jsonDecode(response.body));
   } else {
-    print(response.body);
+    print('Error al conectar con la API, esto es la reponse ${response.body}');
     throw Exception('Error al conectar a la API');
   }
 }

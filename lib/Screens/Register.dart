@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Models/user.dart';
 import 'package:l_art_garden_mobil/Services/service.dart';
-import 'package:l_art_garden_mobil/Widgets/insert_image.dart';
 import './loginScreen.dart';
+import 'dart:convert';
+import 'dart:io';
 import '../../Widgets/waitingLoad.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
-import '../Widgets/insert_image.dart';
+
+import 'package:image_picker/image_picker.dart';
 
 class registerScreen extends StatefulWidget {
   const registerScreen({super.key});
@@ -16,13 +17,25 @@ class registerScreen extends StatefulWidget {
 }
 
 class _registerScreenState extends State<registerScreen> {
-  ImageSelector _imageSelector = ImageSelector();
   String nombre = '';
   String apellido = '';
   String correro = '';
   String contrasenia = '';
   String confirmarContrasenia = '';
   File? foto = null;
+
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedImage != null) {
+        foto = File(pickedImage.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   bool pass = false;
   bool confirmPass = false;
@@ -300,7 +313,25 @@ class _registerScreenState extends State<registerScreen> {
                                         ),
                                       ),
                                     ),
-                                    ImageSelector(),
+                                    Column(
+                                      children: <Widget>[
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 16.0),
+                                          child: foto == null
+                                              ? const Text(
+                                                  'Ninguna imagen cargada.')
+                                              : Image.file(foto!),
+                                        ),
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  MaterialStateProperty.all(0)),
+                                          onPressed: _getImage,
+                                          child: Text('Agregar foto de perfil'),
+                                        ),
+                                      ],
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 30),
                                       child: ElevatedButton(
@@ -310,10 +341,13 @@ class _registerScreenState extends State<registerScreen> {
                                                     Colors.amber),
                                             elevation:
                                                 MaterialStateProperty.all(0)),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           if (_FormKey.currentState
                                                   ?.validate() ??
                                               false) {
+                                            String base64Image =
+                                                await convertirFileABase64(
+                                                    foto!);
                                             // Validación de la confirmación de la contraseña
                                             if (_PasswordInfo.text !=
                                                 _PasswordImfoConfirm.text) {
@@ -338,7 +372,7 @@ class _registerScreenState extends State<registerScreen> {
                                                   _dateController.text,
                                               genero: _selectItem,
                                               tipoUsuario: "",
-                                              foto: null,
+                                              foto: base64Image,
                                             );
 
                                             // Enviar la solicitud POST para crear el usuario
@@ -414,5 +448,11 @@ class _registerScreenState extends State<registerScreen> {
         ),
       ),
     );
+  }
+
+  Future<String> convertirFileABase64(File file) async {
+    List<int> bytes = await file.readAsBytes();
+    String base64Image = base64Encode(bytes);
+    return base64Image;
   }
 }

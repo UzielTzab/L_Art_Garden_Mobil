@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 class User {
   int id;
@@ -9,7 +10,7 @@ class User {
   String fechaNacimiento;
   String genero;
   String? tipoUsuario;
-  File? foto;
+  String? foto;
   User({
     required this.id,
     required this.nombre,
@@ -30,16 +31,22 @@ class User {
       'Correo_Electronico': correo,
       'Contraseña': contrasena,
       'Genero': genero,
+      'Tipo_Usuario': tipoUsuario,
       'Foto': foto,
     };
   }
 
   factory User.createUser(Map<String, dynamic> json) {
-    print("Printing user JSON data:");
-    print(json);
+    final fotoData = json['Foto'] != null ? json['Foto']['data'] : null;
+    String fotoBase64 = "";
 
-    final user = User(
-      id: json['Id_Usuario'] != null ? json['Id_Usuario'] as int : 0,
+    if (fotoData != null) {
+      // Convertir los bytes de la foto a una cadena base64
+      fotoBase64 = base64Encode(List<int>.from(fotoData));
+    }
+
+    return User(
+      id: json['ID'] != null ? json['ID'] as int : 0,
       nombre:
           json['NombreUsuario'] != null ? json['NombreUsuario'] as String : '',
       fechaNacimiento: json['FechaNacimiento'] != null
@@ -50,17 +57,14 @@ class User {
           : '',
       contrasena:
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
-      telefono: json['Telefono'] != null ? json['Telefono'] as String : "",
-      genero: json['Genero'] != null ? json['Genero'] as String : "",
+      telefono: json['Telefono'] != null ? json['Telefono'] as String : '',
+      genero: json['Genero'] != null ? json['Genero'] as String : '',
       tipoUsuario:
           json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
-      foto: json['Foto'] != null ? json["Foto"] as File : null,
+      foto: fotoBase64,
     );
-
-    print("User created: $user");
-
-    return user;
   }
+
   factory User.uptadeUser(Map<String, dynamic> json) {
     return User(
       id: json['Id_Usuario'] != null ? json['Id_Usuario'] as int : 0,
@@ -77,7 +81,7 @@ class User {
       genero: json['Genero'] != null ? json['Genero'] as String : "",
       tipoUsuario:
           json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
-      foto: json['Foto'] != null ? json["Foto"] as File : null,
+      foto: json['Foto'] != null ? json["Foto"] as String : null,
     );
   }
   factory User.updateUser(Map<String, dynamic> json) {
@@ -96,7 +100,7 @@ class User {
       genero: json['Genero'] != null ? json['Genero'] as String : "",
       tipoUsuario:
           json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
-      foto: json['Foto'] != null ? json["Foto"] as File : null,
+      foto: json['Foto'] != null ? json["Foto"] as String : null,
     );
   }
 }

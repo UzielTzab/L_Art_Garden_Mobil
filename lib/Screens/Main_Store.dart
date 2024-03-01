@@ -6,6 +6,7 @@ import 'flower_main.dart';
 import 'cart_main.dart';
 import 'ClaseIntermediaria.dart';
 import 'favorits.dart';
+import 'dart:convert';
 
 class MainStore extends StatefulWidget {
   const MainStore({super.key});
@@ -130,20 +131,32 @@ class _MainStoreState extends State<MainStore> {
               accountName: Text(
                 watchUser.nombre,
                 style: const TextStyle(
-                    fontSize: 23,
-                    fontFamily: 'CuteFlower',
-                    color: Color.fromARGB(255, 255, 255, 255)),
+                  fontSize: 23,
+                  fontFamily: 'CuteFlower',
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
               ),
               accountEmail: Text(
                 watchUser.correo_electronico,
                 style: const TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'CuteFlower',
-                    color: Color.fromARGB(255, 255, 255, 255)),
+                  fontSize: 18,
+                  fontFamily: 'CuteFlower',
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
               ),
-              currentAccountPicture: const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/usuario.png'),
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255)),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                child: ClipOval(
+                  child: watchUser.foto != null
+                      ? Image.memory(
+                          base64Decode(watchUser.foto!),
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset('assets/images/usuario.png'),
+                ), // Aquí se corrige la línea
+              ),
             ),
             const ListTile(
               title: Text(

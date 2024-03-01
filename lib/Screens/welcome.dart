@@ -124,7 +124,9 @@ class Welcome extends StatelessWidget {
               onTap: () {
                 context.read<UserProvider>().setDataUser(
                     nombre: "No has iniciado sesión",
-                    correo_electronico: "¿Tienes cuenta?");
+                    correo_electronico: "¿Tienes cuenta?",
+                    foto: "");
+
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MainStore()));
               },
