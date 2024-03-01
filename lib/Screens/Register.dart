@@ -327,8 +327,25 @@ class _registerScreenState extends State<registerScreen> {
                                           style: ButtonStyle(
                                               elevation:
                                                   MaterialStateProperty.all(0)),
+                                          onPressed: () async {
+                                            final pickedFile =
+                                                await ImagePicker().pickImage(
+                                                    source: ImageSource.camera);
+                                            if (pickedFile != null) {
+                                              setState(() {
+                                                foto = File(pickedFile.path);
+                                              });
+                                            }
+                                          },
+                                          child: Text('Tomar foto'),
+                                        ),
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  MaterialStateProperty.all(0)),
                                           onPressed: _getImage,
-                                          child: Text('Agregar foto de perfil'),
+                                          child: Text(
+                                              'Seleccionar foto de la galería'),
                                         ),
                                       ],
                                     ),
