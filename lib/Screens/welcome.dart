@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'main_store.dart';
-import './loginScreen.dart';
-import 'register.dart';
+import 'mainStore.dart';
+
 import '../model_provider/users.dart';
 
 class Welcome extends StatelessWidget {
@@ -67,10 +66,7 @@ class Welcome extends StatelessWidget {
                     (states) => 0), // Establecer la elevación a cero
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
+                Navigator.pushNamed(context, '/LoginScreen');
                 // Funcionalidad del botón
               },
               icon: const Icon(
@@ -98,10 +94,7 @@ class Welcome extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const registerScreen()));
+                    Navigator.pushNamed(context, '/RegisterScreen');
                   },
                   child: const Text(
                     "Crear",

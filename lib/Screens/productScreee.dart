@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:l_art_garden_mobil/Screens/cart_main.dart';
+import 'package:l_art_garden_mobil/Screens/cartMain.dart';
+import 'package:l_art_garden_mobil/Widgets/classicButton.dart';
+import 'package:l_art_garden_mobil/model_provider/cartListProvider.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
 import 'package:l_art_garden_mobil/model_provider/favorites_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
-import 'ClaseIntermediaria.dart';
 
-class YourNewScreen extends StatefulWidget {
-  final List<String> imageUrls;
+class ProductScreen extends StatefulWidget {
   final int index;
-  const YourNewScreen(this.imageUrls, this.index, {super.key});
+  const ProductScreen(this.index, {super.key});
 
   @override
-  State<YourNewScreen> createState() => _YourNewScreenState();
+  State<ProductScreen> createState() => _YourNewScreenState();
 }
 
-class _YourNewScreenState extends State<YourNewScreen> {
+class _YourNewScreenState extends State<ProductScreen> {
   Color baseColor = Colors.amber;
-
-  final CartIndexList _cartIndexList =
-      CartIndexList(); // Instancia de CartIndexList
 
   int productCount = 0;
   bool isPressedFavorite = false;
@@ -28,15 +25,13 @@ class _YourNewScreenState extends State<YourNewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ProductsTestProvider watchProductProvider =
-        context.watch<ProductsTestProvider>();
     CounterCartProvider watchCounterProvider =
         context.watch<CounterCartProvider>();
 
     ProductsTestProvider watchProductsTestProvider =
         context.watch<ProductsTestProvider>();
     FavoritesProvide watchFlowerProvider = context.watch<FavoritesProvide>();
-    CartProvider watchCartProvider = context.watch<CartProvider>();
+    CartListProvider watchListCartProvider = context.watch<CartListProvider>();
     if (watchFlowerProvider.findFlower(widget.index)) {
       isPressedFavorite = true;
     }
@@ -93,7 +88,8 @@ class _YourNewScreenState extends State<YourNewScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Image.network(widget.imageUrls[widget.index]),
+                Image.network(
+                    watchProductsTestProvider.flores[widget.index].imageUrl),
                 IconButton.outlined(
                   icon: isPressedFavorite
                       ? const Icon(Icons.favorite)
@@ -113,10 +109,35 @@ class _YourNewScreenState extends State<YourNewScreen> {
                               .flores[widget.index].descripcion,
                           precio: watchProductsTestProvider
                               .flores[widget.index].precio);
+                      final snackBar = SnackBar(
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: Color.fromARGB(255, 52, 156, 3),
+                        content:
+                            const Text('¡Agregaste correctamente a favoritos!'),
+                        action: SnackBarAction(
+                          textColor: Colors.white,
+                          label: 'Omitir',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
                       context
                           .read<FavoritesProvide>()
                           .removeFlower(widget.index);
+                      final sanckBar = SnackBar(
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: const Color.fromARGB(255, 224, 35, 6),
+                        content: const Text(
+                            'Quitaste este producto de tus favoritos'),
+                        action: SnackBarAction(
+                            textColor: Colors.white,
+                            label: 'Omitir',
+                            onPressed: () {}),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(sanckBar);
                     }
                   },
                 ),
@@ -191,78 +212,80 @@ class _YourNewScreenState extends State<YourNewScreen> {
                     //Boton de agregar al carrito
                     Padding(
                       padding: const EdgeInsets.all(8.0),
+                      // child: CalssicButton(
+                      //     counterCartProvider: watchCounterProvider.counter,
+                      //     wacthProductTestProvider: watchProductsTestProvider,
+                      //     widgetIndex: widget.index,
+                      //     widgetContext: context,
+                      //     typeOperation: 1),
                       child: ElevatedButton(
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all(0),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.white)),
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromARGB(255, 235, 161, 65))),
                         onPressed: () {
                           setState(() {
-                            isPressedAddCart = !isPressedAddCart;
-                            _cartIndexList.addIndex(widget.index);
-
-                            // Agregar el índice al carrito
+                            context.read<CounterCartProvider>().setDataCounter(
+                                counter: watchCounterProvider.counter + 1);
                           });
 
-                          if (isPressedAddCart) {
-                            setState(() {
-                              context
-                                  .read<CounterCartProvider>()
-                                  .setDataCounter(
-                                      counter:
-                                          watchCounterProvider.counter + 1);
-                            });
-
-                            context.read<CartProvider>().addFlower(
-                                indexFlower: widget.index,
-                                imageUrl: widget.imageUrls[widget.index],
-                                descripcion: watchProductsTestProvider
-                                    .flores[widget.index].descripcion,
-                                precio: watchProductsTestProvider
-                                    .flores[widget.index].precio);
-                            // for (var flowers in watchCartProvider.flores) {
-                            //   print(
-                            //       'id: ${flowers.indexFlower} despcripcion: ${flowers.descripcion}  imagenUrl: ${flowers.imageUrl}  precio: ${flowers.precio}');
-                            // }
-                            // print(
-                            //     'Añadiste la flor con indice: ${watchFlowerProvider.findFlowerByIndex(widget.index)}');
-
-                            // for (var flowers in watchCartProvider.flores) {
-                            //   print(
-                            //       'id: ${flowers.indexFlower} despcripcion: ${flowers.descripcion}  imagenUrl: ${flowers.imageUrl}  precio: ${flowers.precio}');
-                            // }
-                            final snackBar = SnackBar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 224, 169, 6),
-                              content: const Text(
-                                  '¡Agregaste correctamente es5te producto!'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } else {
+                          context.read<CartListProvider>().addFlowerToCart(
+                              indexFlower: watchProductsTestProvider
+                                  .flores[widget.index].indexFlower,
+                              imageUrl: watchProductsTestProvider
+                                  .flores[widget.index].imageUrl,
+                              description: watchProductsTestProvider
+                                  .flores[widget.index].descripcion,
+                              price: watchProductsTestProvider
+                                  .flores[widget.index].precio,
+                              type: watchProductsTestProvider
+                                  .flores[widget.index].tipo,
+                              quantityToBuy: 1);
+                          print(
+                              "+++++++++++++++Aqui la lista del carrito+++++++++++++++++");
+                          for (var flower in watchListCartProvider.flowers) {
                             print(
-                                'Removiste la flor con indice: ${watchCartProvider.findFlowerByIndex(widget.index)}');
-                            context
-                                .read<FavoritesProvide>()
-                                .removeFlower(widget.index);
-                            for (var flowers in watchCartProvider.flores) {
-                              print(
-                                  'id: ${flowers.indexFlower} despcripcion: ${flowers.descripcion}  imagenUrl: ${flowers.imageUrl}  precio: ${flowers.precio}');
-                            }
+                                'Id: ${flower.indexFlower},   despcripcion: ${flower.description},    precio: ${flower.price}  CantidadAñadido: ${flower.quantityToBuy}');
                           }
+
+                          print(
+                              "++++++++++++++++++LA CANTIDAD AÑADIDAD DE ESE MISMO PRODUCTO++++++++++++++++++");
+                          print(watchListCartProvider
+                                  .getQuantityByIndex(widget.index) +
+                              1);
+                          // print(watchListCartProvider
+                          //     .flowers[widget.index].quantityToBuy);
+
+                          final snackBar = SnackBar(
+                            duration: const Duration(seconds: 1),
+                            backgroundColor:
+                                const Color.fromARGB(255, 224, 169, 6),
+                            content: const Text(
+                                '¡Agregaste este producto al carrito!'),
+                            action: SnackBarAction(
+                              label: 'Omitir',
+                              onPressed: () {
+                                // Some code to undo the change.
+                              },
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
-                        child: Text(
-                          'Agregar al carrito',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: baseColor,
-                              fontFamily: "Capri"),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Agregar al carrito',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 244, 244, 244),
+                                  fontFamily: "Capri"),
+                            ),
+                            Icon(
+                              Icons.add_shopping_cart,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                          ],
                         ),
                       ),
                     )

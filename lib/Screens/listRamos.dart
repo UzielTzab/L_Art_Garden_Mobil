@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
 import 'CarouselFlowerShops.dart';
-import 'products_presentation.dart';
+import 'productScreee.dart';
 // import 'ProductPresentation.dart';
 
 class CustomListRamos extends StatefulWidget {
@@ -137,7 +137,7 @@ class _CustomScrollViewState extends State<CustomListRamos> {
   Route _createPageRoute(List<String> imageUrls, int index) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          YourNewScreen(imageUrls, index),
+          ProductScreen(index),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/Screens/loginScreen.dart';
+import 'package:l_art_garden_mobil/Screens/mainStore.dart';
+import 'package:l_art_garden_mobil/Screens/register.dart';
 import 'package:l_art_garden_mobil/Screens/welcome.dart';
+import 'package:l_art_garden_mobil/model_provider/cartListProvider.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
 import './model_provider/favorites_provider.dart';
-import './Services/service.dart';
 // import './Screens/Welcome/WelcomeScreen.dart';
 
 void main() {
@@ -25,7 +28,7 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
   void initState() {
     print("Why you don't print the users?");
     super.initState();
-    getUserByEmailAndPassword("u", "u");
+    // getUserByEmailAndPassword("u", "u");
     // getOneUser(45);
     // getAllUsers();
     // createUser(User(
@@ -62,14 +65,21 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => CartListProvider()),
+          ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => FavoritesProvide()),
           ChangeNotifierProvider(create: (_) => CounterCartProvider()),
           ChangeNotifierProvider(create: (_) => ProductsTestProvider()),
-          ChangeNotifierProvider(create: (_) => CartProvider()),
-          ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
-          ChangeNotifierProvider(create: (_) => FavoritesProvide())
         ],
         builder: (context, _) {
           return MaterialApp(
+            initialRoute: '/',
+            routes: {
+              '/': (context) => const Welcome(),
+              '/MainStore': (context) => const MainStore(),
+              '/LoginScreen': (context) => const LoginScreen(),
+              '/RegisterScreen': (context) => const registerScreen(),
+            },
             theme: ThemeData(
                 textTheme: const TextTheme(
                     titleLarge: TextStyle(fontFamily: 'Capri'),
@@ -90,7 +100,6 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
             color: const Color.fromARGB(255, 237, 145, 88),
             debugShowCheckedModeBanner: false,
             title: 'L Art Garden',
-            home: const Welcome(),
           );
         });
   }

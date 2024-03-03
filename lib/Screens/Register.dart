@@ -6,7 +6,8 @@ import 'dart:convert';
 import 'dart:io';
 import '../../Widgets/waitingLoad.dart';
 import 'package:intl/intl.dart';
-
+import 'package:image/image.dart' as img;
+import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 
 class registerScreen extends StatefulWidget {
@@ -28,13 +29,12 @@ class _registerScreenState extends State<registerScreen> {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedImage != null) {
-        foto = File(pickedImage.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    if (pickedImage != null) {
+      File imageFile = File(pickedImage.path);
+      foto = imageFile;
+    } else {
+      print('No image selected.');
+    }
   }
 
   bool pass = false;
@@ -321,16 +321,31 @@ class _registerScreenState extends State<registerScreen> {
                                           child: foto == null
                                               ? const Text(
                                                   'Ninguna imagen cargada.')
-                                              : Image.file(foto!),
+                                              : ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0), // Puedes ajustar el radio según tus necesidades
+                                                  child: Image.file(
+                                                    foto!,
+                                                    width:
+                                                        200, // Puedes ajustar el tamaño de la imagen aquí
+                                                    height:
+                                                        200, // Puedes ajustar el tamaño de la imagen aquí
+                                                    fit: BoxFit
+                                                        .cover, // Esto asegurará que la imagen se ajuste al tamaño del ClipRRect
+                                                  ),
+                                                ),
                                         ),
                                         ElevatedButton(
                                           style: ButtonStyle(
-                                              elevation:
-                                                  MaterialStateProperty.all(0)),
+                                            elevation:
+                                                MaterialStateProperty.all(0),
+                                          ),
                                           onPressed: () async {
                                             final pickedFile =
                                                 await ImagePicker().pickImage(
-                                                    source: ImageSource.camera);
+                                              source: ImageSource.camera,
+                                            );
                                             if (pickedFile != null) {
                                               setState(() {
                                                 foto = File(pickedFile.path);
@@ -341,8 +356,9 @@ class _registerScreenState extends State<registerScreen> {
                                         ),
                                         ElevatedButton(
                                           style: ButtonStyle(
-                                              elevation:
-                                                  MaterialStateProperty.all(0)),
+                                            elevation:
+                                                MaterialStateProperty.all(0),
+                                          ),
                                           onPressed: _getImage,
                                           child: Text(
                                               'Seleccionar foto de la galería'),
@@ -362,6 +378,47 @@ class _registerScreenState extends State<registerScreen> {
                                           if (_FormKey.currentState
                                                   ?.validate() ??
                                               false) {
+// Lee el archivo de imagen
+                                            Uint8List bytes =
+                                                await foto!.readAsBytes();
+
+                                            // Decodifica la imagen
+                                            img.Image? image =
+                                                img.decodeImage(bytes);
+
+                                            if (image != null) {
+                                              // Obtiene el tamaño mínimo entre el ancho y el alto
+                                              int minSize =
+                                                  image.width < image.height
+                                                      ? image.width
+                                                      : image.height;
+
+                                              // Recorta la imagen para que sea cuadrada
+                                              img.Image squareImage =
+                                                  img.copyResize(image,
+                                                      width: 200, height: 200);
+
+                                              // Redimensiona la imagen a un tamaño específico (por ejemplo, 200x200)
+                                              img.Image resizedImage =
+                                                  img.copyResize(squareImage,
+                                                      width: 200, height: 200);
+
+                                              // Codifica la imagen de nuevo en formato JPEG con cierta calidad (por ejemplo, 80)
+                                              List<int> resizedBytes =
+                                                  img.encodeJpg(resizedImage,
+                                                      quality: 80);
+
+                                              // Crea un nuevo archivo con la imagen modificada
+                                              foto = await File(
+                                                      '${foto!.path}_modified.png')
+                                                  .writeAsBytes(resizedBytes);
+
+                                              // Actualiza el estado para mostrar la imagen modificada
+                                              setState(() {
+                                                foto = foto;
+                                              });
+                                            }
+
                                             String base64Image =
                                                 await convertirFileABase64(
                                                     foto!);

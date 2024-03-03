@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
 import 'CarouselFlowerShops.dart';
-import 'products_presentation.dart';
+import 'productScreee.dart';
 // import 'ProductPresentation.dart';
 
-class CustomListOffers extends StatefulWidget {
-  const CustomListOffers({Key? key}) : super(key: key);
+class CustomlistArreglo extends StatefulWidget {
+  const CustomlistArreglo({Key? key}) : super(key: key);
   @override
-  State<CustomListOffers> createState() => _CustomScrollViewState();
+  State<CustomlistArreglo> createState() => _CustomScrollViewState();
 }
 
-class _CustomScrollViewState extends State<CustomListOffers> {
+class _CustomScrollViewState extends State<CustomlistArreglo> {
+  Color _orangeColor = Color.fromARGB(255, 209, 137, 49);
   // final List<String> imageUrls = [
   //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwHDYrj9GF3FRJXPyk0hkHJeg1kCPWhk5_6g&usqp=CAU',
   //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXL4BrCGSKFdlL-vgTHU6DaaChK4xrkZRNNA&usqp=CAU',
@@ -102,19 +103,17 @@ class _CustomScrollViewState extends State<CustomListOffers> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.monetization_on,
                                     size: 15,
-                                    color: Color.fromARGB(255, 209, 137, 49),
+                                    color: _orangeColor,
                                   ),
                                   Text(
                                     watchProductTestProvider
                                         .flores[index].precio
                                         .toString(),
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        color:
-                                            Color.fromARGB(255, 209, 137, 49)),
+                                    style: TextStyle(
+                                        fontSize: 20, color: _orangeColor),
                                   ),
                                 ],
                               )
@@ -137,7 +136,7 @@ class _CustomScrollViewState extends State<CustomListOffers> {
   Route _createPageRoute(List<String> imageUrls, int index) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          YourNewScreen(imageUrls, index),
+          ProductScreen(index),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

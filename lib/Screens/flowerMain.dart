@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:l_art_garden_mobil/Screens/list_arreglo.dart';
-import 'package:l_art_garden_mobil/Screens/list_macetas.dart';
-import 'package:l_art_garden_mobil/Screens/list_ramos.dart';
+import 'package:l_art_garden_mobil/Screens/listaArreglo.dart';
+import 'package:l_art_garden_mobil/Screens/listMacetas.dart';
+import 'package:l_art_garden_mobil/Screens/listRamos.dart';
 import 'package:l_art_garden_mobil/Widgets/app_bar_oval.dart';
-import './list_Offers.dart';
+import 'listOffers.dart';
 
 class FlowerMain extends StatefulWidget {
   const FlowerMain({super.key});

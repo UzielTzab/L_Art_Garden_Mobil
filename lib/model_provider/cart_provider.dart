@@ -1,41 +1,19 @@
 import 'package:flutter/material.dart';
-import '../Models/product.dart';
 
-class CartProvider with ChangeNotifier {
-  final List<Flower> _flores = [];
+class CartProvider {
+  final int indexFlower;
+  final String imageUrl;
+  final String description;
+  final String type;
+  final int price;
+  int quantityToBuy;
 
-  List<Flower> get flores => _flores;
-
-  void addFlower({
-    required int indexFlower,
-    required String imageUrl,
-    required String descripcion,
-    required int precio,
-  }) {
-    _flores.add(Flower(
-        indexFlower: indexFlower,
-        imageUrl: imageUrl,
-        descripcion: descripcion,
-        precio: precio));
-    notifyListeners();
-  }
-
-  void removeFlower(int index) {
-    _flores.removeWhere((flower) => flower.indexFlower == index);
-    notifyListeners();
-  }
-
-  bool findFlower(int index) {
-    return _flores.any((flower) => flower.indexFlower == index);
-  }
-
-  Flower? findFlowerByIndex(int index) {
-    Flower? foundFlower;
-    _flores.forEach((flower) {
-      if (flower.indexFlower == index) {
-        foundFlower = flower;
-      }
-    });
-    return foundFlower;
-  }
+  CartProvider({
+    required this.indexFlower,
+    required this.quantityToBuy,
+    required this.imageUrl,
+    required this.description,
+    required this.type,
+    required this.price,
+  });
 }

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/AnimationRoutes/routeAnimatedBottomToTop.dart';
 import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
 import 'CarouselFlowerShops.dart';
-import 'products_presentation.dart';
+import 'productScreee.dart';
 // import 'ProductPresentation.dart';
 
-class CustomListMacetas extends StatefulWidget {
-  const CustomListMacetas({Key? key}) : super(key: key);
+class CustomListOffers extends StatefulWidget {
+  const CustomListOffers({Key? key}) : super(key: key);
   @override
-  State<CustomListMacetas> createState() => _CustomScrollViewState();
+  State<CustomListOffers> createState() => _CustomScrollViewState();
 }
 
-class _CustomScrollViewState extends State<CustomListMacetas> {
+class _CustomScrollViewState extends State<CustomListOffers> {
   // final List<String> imageUrls = [
   //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwHDYrj9GF3FRJXPyk0hkHJeg1kCPWhk5_6g&usqp=CAU',
   //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXL4BrCGSKFdlL-vgTHU6DaaChK4xrkZRNNA&usqp=CAU',
@@ -80,8 +81,8 @@ class _CustomScrollViewState extends State<CustomListMacetas> {
                         InkWell(
                           onTap: () {
                             // Navegar a la nueva pantalla cuando se toca la imagen
-                            Navigator.of(context).push(_createPageRoute(
-                                watchProductTestProvider.GetUrl(), index));
+                            Navigator.of(context)
+                                .push(PageRoutes.createPageRoute(index));
                           },
                           child: Image.network(
                               watchProductTestProvider.flores[index].imageUrl,
@@ -131,26 +132,6 @@ class _CustomScrollViewState extends State<CustomListMacetas> {
           ),
         ),
       ],
-    );
-  }
-
-  Route _createPageRoute(List<String> imageUrls, int index) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          YourNewScreen(imageUrls, index),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
     );
   }
 }

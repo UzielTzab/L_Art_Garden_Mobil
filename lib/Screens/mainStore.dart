@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
-import 'flower_main.dart';
-import 'cart_main.dart';
-import 'ClaseIntermediaria.dart';
-import 'favorits.dart';
+import 'flowerMain.dart';
+import 'cartMain.dart';
+import 'favorites.dart';
 import 'dart:convert';
 
 class MainStore extends StatefulWidget {
@@ -19,7 +18,6 @@ class _MainStoreState extends State<MainStore> {
   static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
   static const Color baseColorDark = Color.fromARGB(255, 163, 114, 49);
   static const Color unselectColor = Color.fromARGB(255, 107, 77, 12);
-  final CartIndexList _cartIndexList = CartIndexList();
   int selectedIndex = 0;
 
   final List<Widget> _sectionsToGlobalStore = <Widget>[
@@ -78,14 +76,15 @@ class _MainStoreState extends State<MainStore> {
             ),
             if (watchCounterPorvider.counter > 0)
               Positioned(
+                  top: MediaQuery.of(context).size.width * 0.02,
                   right: 1,
                   left: 1,
                   child: Container(
                       constraints: const BoxConstraints(
-                        maxWidth: 1,
-                        minHeight: 1,
+                        maxWidth: 15,
+                        minHeight: 15,
                       ),
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: Color.fromARGB(0, 238, 205, 106),
                           borderRadius: BorderRadius.circular(10)),
@@ -147,7 +146,7 @@ class _MainStoreState extends State<MainStore> {
               currentAccountPicture: CircleAvatar(
                 backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 child: ClipOval(
-                  child: watchUser.foto != null
+                  child: watchUser.foto != null && watchUser.foto!.isNotEmpty
                       ? Image.memory(
                           base64Decode(watchUser.foto!),
                           width: 100,
