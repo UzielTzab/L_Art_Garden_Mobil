@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/AnimationRoutes/routeAnimatedBottomToTop.dart';
+import 'package:l_art_garden_mobil/Screens/dataUserScreen.dart';
 import 'package:l_art_garden_mobil/Screens/notifications.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
@@ -159,7 +161,10 @@ class _MainStoreState extends State<MainStore> {
               ),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                    PageRoutesFree.createPageRoute(const DataUserScreen()));
+              },
               title: const Text(
                 "Mis datos personales",
                 style: TextStyle(fontSize: 15, color: baseColorDark),

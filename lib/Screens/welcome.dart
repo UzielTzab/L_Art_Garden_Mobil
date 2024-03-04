@@ -116,6 +116,8 @@ class Welcome extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 context.read<UserProvider>().setDataUser(
+                    telefono: '*****',
+                    tipo_usuario: 'Cliente',
                     nombre: "No has iniciado sesión",
                     correo_electronico: "¿Tienes cuenta?",
                     foto: "");

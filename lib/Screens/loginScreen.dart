@@ -165,6 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context.read<UserProvider>().setDataUser(
                                           nombre: user.nombre,
                                           correo_electronico: user.correo,
+                                          tipo_usuario: "Cliente",
+                                          telefono: user.telefono,
                                           foto: user.foto!);
 
                                       // Si la solicitud fue exitosa, muestra el mensaje con el nombre del usuario

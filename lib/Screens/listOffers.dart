@@ -81,8 +81,9 @@ class _CustomScrollViewState extends State<CustomListOffers> {
                         InkWell(
                           onTap: () {
                             // Navegar a la nueva pantalla cuando se toca la imagen
-                            Navigator.of(context)
-                                .push(PageRoutes.createPageRoute(index));
+                            Navigator.of(context).push(
+                                PageRoutesFree.createPageRoute(
+                                    ProductScreen(index)));
                           },
                           child: Image.network(
                               watchProductTestProvider.flores[index].imageUrl,
