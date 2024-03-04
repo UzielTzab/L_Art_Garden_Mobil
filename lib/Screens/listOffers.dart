@@ -7,7 +7,7 @@ import 'productScreee.dart';
 // import 'ProductPresentation.dart';
 
 class CustomListOffers extends StatefulWidget {
-  const CustomListOffers({Key? key}) : super(key: key);
+  const CustomListOffers({super.key});
   @override
   State<CustomListOffers> createState() => _CustomScrollViewState();
 }

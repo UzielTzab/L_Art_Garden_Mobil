@@ -190,7 +190,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                       );
                                     } catch (e) {
                                       // Maneja el error en caso de que falle la solicitud
-                                      print('Error: $e');
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Error al iniciar sesión'),
+                                            content: const Text(
+                                                'Los datos de inicio de sesión proporcionados son incorrectos. Por favor, verifica y vuelve a intentarlo.'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Aceptar'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
                                       // Puedes mostrar un diálogo o mensaje de error aquí si lo deseas
                                     }
                                   }

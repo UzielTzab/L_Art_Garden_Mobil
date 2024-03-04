@@ -1,5 +1,6 @@
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class CartListProvider with ChangeNotifier {
   final List<CartProvider> _flowers = [];
@@ -48,6 +49,21 @@ class CartListProvider with ChangeNotifier {
   void removeFlower(int index) {
     _flowers.removeWhere((flower) => flower.indexFlower == index);
     notifyListeners();
+  }
+
+  void removeOneFlower(int index) {
+    final flower =
+        _flowers.firstWhereOrNull((flower) => flower.indexFlower == index);
+    if (flower != null) {
+      if (flower.quantityToBuy > 1) {
+        // If quantityToBuy is greater than 1, reduce it by 1
+        flower.quantityToBuy -= 1;
+      } else {
+        // If quantityToBuy is 1, remove the flower from the list
+        _flowers.removeWhere((flower) => flower.indexFlower == index);
+      }
+      notifyListeners();
+    }
   }
 
   bool findFlower(int index) {

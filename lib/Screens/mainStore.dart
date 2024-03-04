@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/Screens/notifications.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class _MainStoreState extends State<MainStore> {
     const FlowerMain(),
     const FavoritesScreen(),
     const CartMain(),
-    const Text("u4")
+    const NotificationsScreen(),
   ];
 
   void _itemOnTaped(int index) {
@@ -157,8 +158,9 @@ class _MainStoreState extends State<MainStore> {
                 ), // Aquí se corrige la línea
               ),
             ),
-            const ListTile(
-              title: Text(
+            ListTile(
+              onTap: () {},
+              title: const Text(
                 "Mis datos personales",
                 style: TextStyle(fontSize: 15, color: baseColorDark),
               ),

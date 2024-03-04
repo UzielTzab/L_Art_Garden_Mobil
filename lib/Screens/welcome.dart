@@ -15,8 +15,8 @@ class Welcome extends StatelessWidget {
       body: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
-          Image.network(
-            'https://viajabonito.mx/wp-content/uploads/2021/09/Flores-de-d%C2%A1a-de-muertos-Portada2.jpg',
+          Image.asset(
+            'assets/images/Happy-Mothers-Day-mobil.jpg',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,

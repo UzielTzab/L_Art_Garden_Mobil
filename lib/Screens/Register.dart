@@ -31,7 +31,9 @@ class _registerScreenState extends State<registerScreen> {
 
     if (pickedImage != null) {
       File imageFile = File(pickedImage.path);
-      foto = imageFile;
+      setState(() {
+        foto = imageFile;
+      });
     } else {
       print('No image selected.');
     }

@@ -25,9 +25,8 @@ class CarouselSliderWithDots extends StatefulWidget {
   const CarouselSliderWithDots({
     super.key,
     this.items = const [
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSsEkAN9qqqHpUZZfEDBd0nPE5c6LHCSopPA&usqp=CAU',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVdZ8rENSlwhv5Y5wIxTIJCdV6WV1PCV4S7w&usqp=CAU',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Btb70gauSmGK_4UvgzbyFwYYt6q0WuUHzA&usqp=CAU',
+      'assets/images/carouselImages/mother.jpg',
+      'assets/images/carouselImages/sValentin.jpg',
     ],
   });
 
@@ -50,13 +49,13 @@ class _CarouselSliderWithDotsState extends State<CarouselSliderWithDots> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: AlignmentDirectional.topCenter,
+      alignment: AlignmentDirectional.bottomCenter,
       children: [
         CarouselSlider(
           carouselController: controller,
           items: widget.items
               .map(
-                (item) => Image.network(
+                (item) => Image.asset(
                   item,
                   fit: BoxFit.cover,
                   width: double.infinity,
@@ -82,7 +81,7 @@ class _CarouselSliderWithDotsState extends State<CarouselSliderWithDots> {
               controller.animateToPage(index);
             },
             decorator: DotsDecorator(
-              color: Colors.white,
+              color: Color.fromARGB(255, 255, 255, 255),
               activeColor: Colors.amber,
               size: const Size.square(12.0),
               activeSize: const Size(24.0, 12.0),

@@ -20,7 +20,6 @@ class _CartMainState extends State<CartMain> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _previousContext = context;
   }
@@ -73,20 +72,90 @@ class _CartMainState extends State<CartMain> {
                                   child: Row(
                                     children: [
                                       IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.add)),
+                                          onPressed: () {
+                                            setState(() {
+                                              calculationPriceAndQuantiy(
+                                                  watchCartListProvider);
+                                              int temporalIndex =
+                                                  watchCartListProvider
+                                                      .flowers[index]
+                                                      .indexFlower;
+
+                                              _previousContext
+                                                  .read<CartListProvider>()
+                                                  .removeOneFlower(
+                                                      temporalIndex);
+                                              calculationPriceAndQuantiy(
+                                                  watchCartListProvider);
+
+                                              _previousContext
+                                                  .read<CounterCartProvider>()
+                                                  .setDataCounter(
+                                                      counter:
+                                                          _cantidadProductos);
+                                            });
+                                          },
+                                          icon: const Icon(Icons.remove)),
                                       Text(
                                         watchCartListProvider
                                             .flowers[index].quantityToBuy
                                             .toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20,
                                             color: Color.fromARGB(
                                                 255, 31, 108, 10)),
                                       ),
                                       IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.remove)),
+                                          onPressed: () {
+                                            setState(() {
+                                              calculationPriceAndQuantiy(
+                                                  watchCartListProvider);
+                                              int temporalIndex =
+                                                  watchCartListProvider
+                                                      .flowers[index]
+                                                      .indexFlower;
+
+                                              _previousContext
+                                                  .read<CartListProvider>()
+                                                  .addFlowerToCart(
+                                                    indexFlower:
+                                                        watchProductTestProvider
+                                                            .flores[
+                                                                temporalIndex]
+                                                            .indexFlower,
+                                                    quantityToBuy: 1,
+                                                    imageUrl:
+                                                        watchProductTestProvider
+                                                            .flores[
+                                                                temporalIndex]
+                                                            .imageUrl,
+                                                    type:
+                                                        watchProductTestProvider
+                                                            .flores[
+                                                                temporalIndex]
+                                                            .tipo,
+                                                    description:
+                                                        watchProductTestProvider
+                                                            .flores[
+                                                                temporalIndex]
+                                                            .descripcion,
+                                                    price:
+                                                        watchProductTestProvider
+                                                            .flores[
+                                                                temporalIndex]
+                                                            .precio,
+                                                  );
+                                              calculationPriceAndQuantiy(
+                                                  watchCartListProvider);
+
+                                              _previousContext
+                                                  .read<CounterCartProvider>()
+                                                  .setDataCounter(
+                                                      counter:
+                                                          _cantidadProductos);
+                                            });
+                                          },
+                                          icon: const Icon(Icons.add)),
                                     ],
                                   ),
                                 ),
