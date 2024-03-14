@@ -83,11 +83,7 @@ class _CustomScrollViewState extends State<CustomListMacetas> {
                             Navigator.of(context).push(_createPageRoute(
                                 watchProductTestProvider.GetUrl(), index));
                           },
-                          child: Image.network(
-                              watchProductTestProvider.flores[index].imageUrl,
-                              width: 130.0,
-                              height: 120.0,
-                              fit: BoxFit.cover),
+                          child: const Icon(Icons.image),
                         ),
                         Container(
                           color: Color.fromARGB(255, 255, 255, 255),

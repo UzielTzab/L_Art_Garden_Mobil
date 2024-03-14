@@ -3,6 +3,7 @@ import 'package:l_art_garden_mobil/Screens/loginScreen.dart';
 import 'package:l_art_garden_mobil/Screens/mainStore.dart';
 import 'package:l_art_garden_mobil/Screens/register.dart';
 import 'package:l_art_garden_mobil/Screens/welcome.dart';
+import 'package:l_art_garden_mobil/Services/service_product.dart';
 import 'package:l_art_garden_mobil/model_provider/cartListProvider.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
@@ -10,6 +11,7 @@ import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:l_art_garden_mobil/model_provider/users.dart';
 import 'package:provider/provider.dart';
 import './model_provider/favorites_provider.dart';
+import './model_provider/products_test_provider.dart';
 // import './Screens/Welcome/WelcomeScreen.dart';
 
 void main() {
@@ -28,6 +30,8 @@ class _MainClassLArtGardenState extends State<MainClassLArtGarden> {
   void initState() {
     print("Why you don't print the users?");
     super.initState();
+    getAllProducts();
+
     // getUserByEmailAndPassword("u", "u");
     // getOneUser(45);
     // getAllUsers();

@@ -8,7 +8,7 @@ class User {
   String contrasena;
   String fechaNacimiento;
   String genero;
-  String? tipoUsuario;
+  int? tipoUsuario;
   String? foto;
   User({
     required this.id,
@@ -23,14 +23,14 @@ class User {
   });
   Map<String, dynamic> toJson() {
     return {
-      'Id_Usuario': id,
+      'ID': id,
       'Nombre': nombre,
-      'Fecha_Nacimiento': fechaNacimiento,
+      'FechaNacimiento': fechaNacimiento,
       'Telefono': telefono,
-      'Correo_Electronico': correo,
+      'CorreoElectronico': correo,
       'Contraseña': contrasena,
       'Genero': genero,
-      'Tipo_Usuario': tipoUsuario,
+      'TipoUsuarioID': tipoUsuario,
       'Foto': foto,
     };
   }
@@ -59,7 +59,7 @@ class User {
       telefono: json['Telefono'] != null ? json['Telefono'] as String : '',
       genero: json['Genero'] != null ? json['Genero'] as String : '',
       tipoUsuario:
-          json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
+          json['TipoUsuarioID'] != null ? json['TipoUsuarioID'] as int : 1,
       foto: fotoBase64,
     );
   }
@@ -78,8 +78,7 @@ class User {
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
       telefono: json['Telefono'] != null ? json['Telefono'] as String : "",
       genero: json['Genero'] != null ? json['Genero'] as String : "",
-      tipoUsuario:
-          json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
+      tipoUsuario: json['TipoUsuario'] != null ? json['TipoUsuario'] as int : 0,
       foto: json['Foto'] != null ? json["Foto"] as String : null,
     );
   }
@@ -97,8 +96,7 @@ class User {
           json['Contraseña'] != null ? json['Contraseña'] as String : '',
       telefono: json['Telefono'] != null ? json['Telefono'] as String : "",
       genero: json['Genero'] != null ? json['Genero'] as String : "",
-      tipoUsuario:
-          json['TipoUsuario'] != null ? json['TipoUsuario'] as String : '',
+      tipoUsuario: json['TipoUsuario'] != null ? json['TipoUsuario'] as int : 1,
       foto: json['Foto'] != null ? json["Foto"] as String : null,
     );
   }

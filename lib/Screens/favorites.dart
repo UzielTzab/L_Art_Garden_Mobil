@@ -65,13 +65,12 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
                               ),
                             ],
                           ),
-                          leading: Image.network(
-                              watchFavoritesProvide.flores[index].imageUrl),
+                          leading: const Icon(Icons.image),
                           onTap: () {
                             int temporalIndex =
-                                watchFavoritesProvide.flores[index].indexFlower;
+                                watchFavoritesProvide.flores[index].idProducto;
                             int indexTestProduct = wtachProductsTestProvider
-                                .flores[temporalIndex].indexFlower;
+                                .flores[temporalIndex].idProducto;
                             print(
                                 'Esto es el numero del index en la nueva pantalla: $index');
                             Navigator.of(context).push(
@@ -83,7 +82,7 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
                             color: const Color.fromARGB(255, 150, 118, 20),
                             onPressed: () {
                               int? temporalIndex = watchFavoritesProvide
-                                  .flores[index].indexFlower;
+                                  .flores[index].idProducto;
                               // print('Esto es index $temporalIndex');
                               // print("-------Lista de flores en el favoritos--------");
                               // for (var flor in watchFlowerProvider.flores) {

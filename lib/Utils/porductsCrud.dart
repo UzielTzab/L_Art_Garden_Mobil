@@ -17,11 +17,11 @@ class CrudProducts {
         .setDataCounter(counter: counterCartProvider + 1);
 
     context.read<CartListProvider>().addFlowerToCart(
-          indexFlower: wacthProductTestProvider.flores[widgetIndex].indexFlower,
-          imageUrl: wacthProductTestProvider.flores[widgetIndex].imageUrl,
+          indexFlower: wacthProductTestProvider.flores[widgetIndex].idProducto,
+          imageUrl: "",
           description: wacthProductTestProvider.flores[widgetIndex].descripcion,
           price: wacthProductTestProvider.flores[widgetIndex].precio,
-          type: wacthProductTestProvider.flores[widgetIndex].tipo,
+          type: wacthProductTestProvider.flores[widgetIndex].tipo!,
           quantityToBuy: 0,
         );
     ClassicSnackBar(

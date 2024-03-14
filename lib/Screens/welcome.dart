@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
 import 'package:provider/provider.dart';
 import 'mainStore.dart';
 
@@ -9,6 +10,16 @@ class Welcome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Estoy en welcome");
+
+    ProductsTestProvider watchProdutTestProvider =
+        context.watch<ProductsTestProvider>();
+    print("Lista en el welcome");
+    watchProdutTestProvider.convertAllProducts();
+    for (var flower in watchProdutTestProvider.flores) {
+      print(
+          "idProducto: ${flower.idProducto} idCategoria ${flower.idCategoria}: idInventario ${flower.idInventario}: nombre:${flower.nombre} descripcion ${flower.descripcion}: precio: ${flower.precio} stock: ${flower.stock} ");
+    }
     double heightScreen = MediaQuery.of(context).size.width;
     print(heightScreen / 4);
     return Scaffold(

@@ -22,8 +22,8 @@ class CartListProvider with ChangeNotifier {
     required int quantityToBuy,
     required imageUrl,
     required description,
-    required type,
-    required price,
+    required String type,
+    required double price,
   }) {
     bool found = false;
     for (var flower in _flowers) {

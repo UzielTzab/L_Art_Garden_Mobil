@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Models/user.dart';
 
-const String ipDirection = "10.2.8.159";
-const String url = 'http://$ipDirection:3004/api/users';
+const String ipDirection = "192.168.1.41";
+const String url = 'http://$ipDirection:4004/api/users';
+// const String url = 'https://l-art-garden-api-deploy.onrender.com';
 
 // Future<User> getOneUser(int index) async {
 //   final response = await http.get(Uri.parse('$url/$index'));

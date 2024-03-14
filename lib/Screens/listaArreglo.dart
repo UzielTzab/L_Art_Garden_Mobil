@@ -79,26 +79,21 @@ class _CustomScrollViewState extends State<CustomlistArreglo> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                          onTap: () {
-                            // Navegar a la nueva pantalla cuando se toca la imagen
-                            Navigator.of(context).push(_createPageRoute(
-                                watchProductTestProvider.GetUrl(), index));
-                          },
-                          child: Image.network(
-                              watchProductTestProvider.flores[index].imageUrl,
-                              width: 130.0,
-                              height: 120.0,
-                              fit: BoxFit.cover),
-                        ),
+                            onTap: () {
+                              // Navegar a la nueva pantalla cuando se toca la imagen
+                              Navigator.of(context).push(_createPageRoute(
+                                  watchProductTestProvider.GetUrl(), index));
+                            },
+                            child: const Icon(Icons.image)),
                         Container(
-                          color: Color.fromARGB(255, 255, 255, 255),
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 watchProductTestProvider
                                     .flores[index].descripcion,
-                                style: TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

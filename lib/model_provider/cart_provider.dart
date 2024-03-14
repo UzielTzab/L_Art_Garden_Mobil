@@ -5,7 +5,7 @@ class CartProvider {
   final String imageUrl;
   final String description;
   final String type;
-  final int price;
+  final double price;
   int quantityToBuy;
 
   CartProvider({

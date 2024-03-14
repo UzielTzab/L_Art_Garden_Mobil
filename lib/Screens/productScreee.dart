@@ -88,8 +88,7 @@ class _YourNewScreenState extends State<ProductScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Image.network(
-                    watchProductsTestProvider.flores[widget.index].imageUrl),
+                const Icon(Icons.image),
                 IconButton.outlined(
                   icon: isPressedFavorite
                       ? const Icon(Icons.favorite)
@@ -102,9 +101,8 @@ class _YourNewScreenState extends State<ProductScreen> {
                     if (isPressedFavorite) {
                       context.read<FavoritesProvide>().addFlower(
                           indexFlower: watchProductsTestProvider
-                              .flores[widget.index].indexFlower,
-                          imageUrl: watchProductsTestProvider
-                              .flores[widget.index].imageUrl,
+                              .flores[widget.index].idProducto,
+                          imageUrl: "",
                           descripcion: watchProductsTestProvider
                               .flores[widget.index].descripcion,
                           precio: watchProductsTestProvider
@@ -231,15 +229,16 @@ class _YourNewScreenState extends State<ProductScreen> {
 
                           context.read<CartListProvider>().addFlowerToCart(
                               indexFlower: watchProductsTestProvider
-                                  .flores[widget.index].indexFlower,
-                              imageUrl: watchProductsTestProvider
-                                  .flores[widget.index].imageUrl,
+                                  .flores[widget.index].idProducto,
+                              imageUrl: "",
                               description: watchProductsTestProvider
                                   .flores[widget.index].descripcion,
                               price: watchProductsTestProvider
                                   .flores[widget.index].precio,
-                              type: watchProductsTestProvider
-                                  .flores[widget.index].tipo,
+                              type: ""
+                              // watchProductsTestProvider
+                              //     .flores[widget.index].tipo!,
+                              ,
                               quantityToBuy: 1);
                           print(
                               "+++++++++++++++Aqui la lista del carrito+++++++++++++++++");

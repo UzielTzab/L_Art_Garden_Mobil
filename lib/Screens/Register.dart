@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Models/user.dart';
-import 'package:l_art_garden_mobil/Services/service.dart';
+import 'package:l_art_garden_mobil/Services/service_user.dart';
 import './loginScreen.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -381,49 +381,7 @@ class _registerScreenState extends State<registerScreen> {
                                                   ?.validate() ??
                                               false) {
 // Lee el archivo de imagen
-                                            Uint8List bytes =
-                                                await foto!.readAsBytes();
 
-                                            // Decodifica la imagen
-                                            img.Image? image =
-                                                img.decodeImage(bytes);
-
-                                            if (image != null) {
-                                              // Obtiene el tamaño mínimo entre el ancho y el alto
-                                              int minSize =
-                                                  image.width < image.height
-                                                      ? image.width
-                                                      : image.height;
-
-                                              // Recorta la imagen para que sea cuadrada
-                                              img.Image squareImage =
-                                                  img.copyResize(image,
-                                                      width: 200, height: 200);
-
-                                              // Redimensiona la imagen a un tamaño específico (por ejemplo, 200x200)
-                                              img.Image resizedImage =
-                                                  img.copyResize(squareImage,
-                                                      width: 200, height: 200);
-
-                                              // Codifica la imagen de nuevo en formato JPEG con cierta calidad (por ejemplo, 80)
-                                              List<int> resizedBytes =
-                                                  img.encodeJpg(resizedImage,
-                                                      quality: 80);
-
-                                              // Crea un nuevo archivo con la imagen modificada
-                                              foto = await File(
-                                                      '${foto!.path}_modified.png')
-                                                  .writeAsBytes(resizedBytes);
-
-                                              // Actualiza el estado para mostrar la imagen modificada
-                                              setState(() {
-                                                foto = foto;
-                                              });
-                                            }
-
-                                            String base64Image =
-                                                await convertirFileABase64(
-                                                    foto!);
                                             // Validación de la confirmación de la contraseña
                                             if (_PasswordInfo.text !=
                                                 _PasswordImfoConfirm.text) {
@@ -447,8 +405,8 @@ class _registerScreenState extends State<registerScreen> {
                                               fechaNacimiento:
                                                   _dateController.text,
                                               genero: _selectItem,
-                                              tipoUsuario: "",
-                                              foto: base64Image,
+                                              tipoUsuario: 1,
+                                              foto: null,
                                             );
 
                                             // Enviar la solicitud POST para crear el usuario

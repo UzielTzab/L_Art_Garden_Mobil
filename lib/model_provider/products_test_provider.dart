@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/Services/service_product.dart';
 import '../Models/product.dart';
 
 class ProductsTestProvider with ChangeNotifier {
@@ -19,86 +20,57 @@ class ProductsTestProvider with ChangeNotifier {
 
     // Agrega más URLs según sea necesario
   ];
-  final List<Flower> _flowers = [];
+  final List<Product> _flowers = [];
 
-  List<Flower> get flores => _flowers;
+  List<Product> get flores => _flowers;
 
-  ProductsTestProvider() {
-    // Crear algunos productos simulados al inicializar la clase
-    _initializeProducts();
+  Future<void> convertAllProducts() async {
+    List<Product> products = await getAllProducts();
+    for (var product in products) {
+      print("Justificar: ");
+      print('Nombre: ${product.nombre}, precio: ${product.precio}, ');
+
+      _initializeProducts(
+        product.idProducto,
+        product.idCategoria,
+        product.idInventario,
+        product.nombre,
+        product.descripcion,
+        product.precio,
+        product.stock!,
+      );
+      showAllTestProducts();
+    }
   }
 
   int? findIndex(int index) {
     for (var flower in _flowers) {
-      if (flower.indexFlower == index) {
-        return flower.indexFlower;
+      if (flower.idProducto == index) {
+        return flower.idProducto;
       }
     }
     // Si no se encuentra ninguna coincidencia, se devuelve null
     return null;
   }
 
-  void _initializeProducts() {
+  void showAllTestProducts() {
+    for (var flower in _flowers) {
+      print(
+          "idProducto: ${flower.idProducto} idCategoria ${flower.idCategoria}: idInventario ${flower.idInventario}: nombre:${flower.nombre} descripcion ${flower.descripcion}: precio: ${flower.precio} stock: ${flower.stock} ");
+    }
+  }
+
+  void _initializeProducts(int idproducto, int idCategoria, int idInvetario,
+      String nombre, String descripcion, double precio, int stock) {
     // Simular algunos productos
-    _flowers.add(Flower(
-      indexFlower: 0,
-      imageUrl: imageUrls[0],
-      descripcion: 'Ramo de rosas especiales',
-      precio: 500,
-      tipo: 'Ramo',
-      stock: 10,
-    ));
-
-    _flowers.add(Flower(
-      indexFlower: 1,
-      imageUrl: imageUrls[1],
-      descripcion: 'Arreglo floral, rosas blancas y rosadas',
-      precio: 300,
-      tipo: 'Arreglo',
-      stock: 5,
-    ));
-
-    _flowers.add(Flower(
-      indexFlower: 2,
-      imageUrl: imageUrls[2],
-      descripcion: 'Arreglo floral, rosas rosadas',
-      precio: 350,
-      tipo: 'Arreglo',
-      stock: 8,
-    ));
-
-    _flowers.add(Flower(
-      indexFlower: 3,
-      imageUrl: imageUrls[3],
-      descripcion: 'Arreglo de caja rectangular, con rosas nativas coloridas',
-      precio: 440,
-      tipo: 'Arreglo',
-      stock: 19,
-    ));
-    _flowers.add(Flower(
-      indexFlower: 4,
-      imageUrl: imageUrls[4],
-      descripcion: 'Arreglo de rosa blanca especial ',
-      precio: 800,
-      tipo: 'Arreglo',
-      stock: 12,
-    ));
-
-    _flowers.add(Flower(
-      indexFlower: 5,
-      imageUrl: imageUrls[5],
-      descripcion: 'Arreglo de flores de temporada ',
-      precio: 600,
-      tipo: 'Arreglo',
-      stock: 2,
-    ));
-    _flowers.add(Flower(
-      indexFlower: 6,
-      imageUrl: imageUrls[6],
-      descripcion: 'Arreglo de rosa especial con chocolates incluidos ',
-      precio: 1050,
-      tipo: 'Arreglo',
-      stock: 4,
+    _flowers.add(Product(
+      idProducto: idproducto,
+      idCategoria: idCategoria,
+      idInventario: idInvetario,
+      nombre: nombre,
+      descripcion: descripcion,
+      precio: precio,
+      stock: stock,
     ));
 
     // Agregar más productos según sea necesario
@@ -115,7 +87,7 @@ class ProductsTestProvider with ChangeNotifier {
   //     required int precio,
   //     required String tipo,
   //     required int stock}) {
-  //   _flowers.add(Flower(
+  //   _flowers.add(Product(
   //     indexFlower: indexFlower,
   //     imageUrl: imageUrl,
   //     descripcion: descripcion,

@@ -2,37 +2,41 @@ import 'package:flutter/material.dart';
 import '../Models/product.dart';
 
 class FavoritesProvide with ChangeNotifier {
-  final List<Flower> _flores = [];
+  final List<Product> _flores = [];
 
-  List<Flower> get flores => _flores;
+  List<Product> get flores => _flores;
 
   void addFlower({
     required int indexFlower,
     required String imageUrl,
     required String descripcion,
-    required int precio,
+    required double precio,
   }) {
-    _flores.add(Flower(
-        indexFlower: indexFlower,
-        imageUrl: imageUrl,
+    _flores.add(Product(
+        idProducto: indexFlower,
+        idCategoria: 1,
+        idInventario: 1,
+        nombre: "",
         descripcion: descripcion,
-        precio: precio));
+        precio: precio,
+        stock: 1));
+
     notifyListeners();
   }
 
   void removeFlower(int index) {
-    _flores.removeWhere((flower) => flower.indexFlower == index);
+    _flores.removeWhere((flower) => flower.idProducto == index);
     notifyListeners();
   }
 
   bool findFlower(int index) {
-    return _flores.any((flower) => flower.indexFlower == index);
+    return _flores.any((flower) => flower.idProducto == index);
   }
 
-  Flower? findFlowerByIndex(int index) {
-    Flower? foundFlower;
+  Product? findFlowerByIndex(int index) {
+    Product? foundFlower;
     _flores.forEach((flower) {
-      if (flower.indexFlower == index) {
+      if (flower.idProducto == index) {
         foundFlower = flower;
       }
     });

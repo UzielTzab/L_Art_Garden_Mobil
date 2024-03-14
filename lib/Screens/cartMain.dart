@@ -71,7 +71,8 @@ class _CartMainState extends State<CartMain> {
                                   padding: const EdgeInsets.only(left: 10.0),
                                   child: Row(
                                     children: [
-                                      IconButton(
+                                      if (wacthConterCartProvider.counter != 1)
+                                        IconButton(
                                           onPressed: () {
                                             setState(() {
                                               calculationPriceAndQuantiy(
@@ -95,7 +96,36 @@ class _CartMainState extends State<CartMain> {
                                                           _cantidadProductos);
                                             });
                                           },
-                                          icon: const Icon(Icons.remove)),
+                                          icon: const Icon(Icons.remove),
+                                        )
+                                      else
+                                        IconButton(
+                                          isSelected: true,
+                                          onPressed: () {
+                                            setState(() {
+                                              calculationPriceAndQuantiy(
+                                                  watchCartListProvider);
+                                              int temporalIndex =
+                                                  watchCartListProvider
+                                                      .flowers[index]
+                                                      .indexFlower;
+
+                                              _previousContext
+                                                  .read<CartListProvider>()
+                                                  .removeOneFlower(
+                                                      temporalIndex);
+                                              calculationPriceAndQuantiy(
+                                                  watchCartListProvider);
+
+                                              _previousContext
+                                                  .read<CounterCartProvider>()
+                                                  .setDataCounter(
+                                                      counter:
+                                                          _cantidadProductos);
+                                            });
+                                          },
+                                          icon: const Icon(Icons.remove),
+                                        ),
                                       Text(
                                         watchCartListProvider
                                             .flowers[index].quantityToBuy
@@ -122,18 +152,15 @@ class _CartMainState extends State<CartMain> {
                                                         watchProductTestProvider
                                                             .flores[
                                                                 temporalIndex]
-                                                            .indexFlower,
+                                                            .idProducto,
                                                     quantityToBuy: 1,
-                                                    imageUrl:
-                                                        watchProductTestProvider
-                                                            .flores[
-                                                                temporalIndex]
-                                                            .imageUrl,
-                                                    type:
-                                                        watchProductTestProvider
-                                                            .flores[
-                                                                temporalIndex]
-                                                            .tipo,
+                                                    imageUrl: null,
+                                                    type: ""
+                                                    // watchProductTestProvider
+                                                    //     .flores[
+                                                    //         temporalIndex]
+                                                    //     .tipo!
+                                                    ,
                                                     description:
                                                         watchProductTestProvider
                                                             .flores[
@@ -163,13 +190,12 @@ class _CartMainState extends State<CartMain> {
                             ),
                           ],
                         ),
-                        leading: Image.network(
-                            watchCartListProvider.flowers[index].imageUrl),
+                        leading: const Icon(Icons.image),
                         onTap: () {
                           int temporalIndex =
                               watchCartListProvider.flowers[index].indexFlower;
                           int testIndexProduct = watchProductTestProvider
-                              .flores[temporalIndex].indexFlower;
+                              .flores[temporalIndex].idProducto;
 
                           Navigator.of(context).push(
                               PageRoutes.createPageRoute(testIndexProduct));
@@ -207,26 +233,26 @@ class _CartMainState extends State<CartMain> {
                                               in watchProductTestProvider
                                                   .flores) {
                                             print(
-                                                'id: ${flower.indexFlower}, Descripcion: ${flower.descripcion} quantityToBuy: ${flower.precio}');
+                                                'id: ${flower.idProducto}, Descripcion: ${flower.descripcion} quantityToBuy: ${flower.precio}');
                                           }
                                           print(
                                               'Imprimir datos del producto eliminado previamente');
                                           print(
-                                              'id: ${watchProductTestProvider.flores[temporalIndex].indexFlower}, Descripcion: ${watchProductTestProvider.flores[temporalIndex].descripcion} quantityToBuy: $temporalQuantity');
+                                              'id: ${watchProductTestProvider.flores[temporalIndex].idProducto}, Descripcion: ${watchProductTestProvider.flores[temporalIndex].descripcion} quantityToBuy: $temporalQuantity');
                                           _previousContext
                                               .read<CartListProvider>()
                                               .addFlowerToCart(
                                                 indexFlower:
                                                     watchProductTestProvider
                                                         .flores[temporalIndex]
-                                                        .indexFlower,
+                                                        .idProducto,
                                                 quantityToBuy: temporalQuantity,
-                                                imageUrl:
-                                                    watchProductTestProvider
-                                                        .flores[temporalIndex]
-                                                        .imageUrl,
-                                                type: watchProductTestProvider
-                                                    .flores[temporalIndex].tipo,
+                                                imageUrl: null,
+                                                type: ""
+                                                // watchProductTestProvider
+                                                //     .flores[temporalIndex]
+                                                //     .tipo!
+                                                ,
                                                 description:
                                                     watchProductTestProvider
                                                         .flores[temporalIndex]
