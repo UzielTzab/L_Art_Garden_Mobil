@@ -1,69 +1,31 @@
 import 'package:flutter/material.dart';
-import '../Models/product.dart';
+import 'package:l_art_garden_mobil/Models/product.dart';
 
-class FavoritesProvide with ChangeNotifier {
-  final List<Product> _flores = [];
+class FavoritesProvider with ChangeNotifier {
+  final List<Product> _favoriteProducts = [];
 
-  List<Product> get flores => _flores;
+  List<Product> get favoriteProducts => _favoriteProducts;
 
-  void addFlower({
-    required int indexFlower,
-    required String imageUrl,
-    required String descripcion,
-    required double precio,
-  }) {
-    _flores.add(Product(
-        idProducto: indexFlower,
-        idCategoria: 1,
-        idInventario: 1,
-        nombre: "",
-        descripcion: descripcion,
-        precio: precio,
-        stock: 1));
-
+  void addProduct(Product product) {
+    _favoriteProducts.add(product);
     notifyListeners();
   }
 
-  void removeFlower(int index) {
-    _flores.removeWhere((flower) => flower.idProducto == index);
+  void removeProduct(int productId) {
+    _favoriteProducts.removeWhere((product) => product.idProducto == productId);
     notifyListeners();
   }
 
-  bool findFlower(int index) {
-    return _flores.any((flower) => flower.idProducto == index);
+  bool findProduct(int productId) {
+    return _favoriteProducts.any((product) => product.idProducto == productId);
   }
 
-  Product? findFlowerByIndex(int index) {
-    Product? foundFlower;
-    _flores.forEach((flower) {
-      if (flower.idProducto == index) {
-        foundFlower = flower;
-      }
-    });
-    return foundFlower;
+  Product? findProductById(int productId) {
+    try {
+      return _favoriteProducts
+          .firstWhere((product) => product.idProducto == productId);
+    } catch (e) {
+      return null;
+    }
   }
 }
-
-
-
-
-
-
-
-// import 'package:flutter/material.dart';
-
-// class FavoritesProvide with ChangeNotifier {
-//   String _descripcion = "";
-//   int _precio = 0;
-
-//   String get descripcion => _descripcion;
-//   int get precio => _precio;
-
-//   Future<void> setDataFlower({
-//     required String descripcion,
-//   }) async {
-//     _descripcion = descripcion;
-//     _precio = precio;
-//     notifyListeners();
-//   }
-// }

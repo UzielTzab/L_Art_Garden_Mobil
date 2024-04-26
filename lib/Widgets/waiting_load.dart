@@ -40,12 +40,14 @@ class _WaitingPageState extends State<WaitingPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const CircularProgressIndicator(
-                color: Colors.green,
+                color: Color.fromARGB(255, 242, 191, 104),
               ),
               Text(
                 widget.message,
                 style: const TextStyle(
-                    fontSize: 20, color: Colors.green, fontFamily: 'Capri'),
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 242, 191, 104),
+                    fontFamily: 'Capri'),
               ),
             ],
           ),

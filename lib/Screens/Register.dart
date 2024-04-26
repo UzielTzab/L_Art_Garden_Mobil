@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/Models/user.dart';
 import 'package:l_art_garden_mobil/Services/service_user.dart';
-import './loginScreen.dart';
+import 'package:l_art_garden_mobil/Utils/data_formatter.dart';
+import 'login_screen.dart';
 import 'dart:convert';
 import 'dart:io';
-import '../../Widgets/waitingLoad.dart';
+import '../Widgets/waiting_load.dart';
 import 'package:intl/intl.dart';
 import 'package:image/image.dart' as img;
 import 'dart:typed_data';
@@ -39,8 +40,8 @@ class _registerScreenState extends State<registerScreen> {
     }
   }
 
-  bool pass = false;
-  bool confirmPass = false;
+  bool pass = true;
+  bool confirmPass = true;
   DateTime _selectedDay = DateTime.now();
   final GlobalKey<FormState> _FormKey = GlobalKey<FormState>();
   TextEditingController _dateController = TextEditingController();
@@ -52,8 +53,8 @@ class _registerScreenState extends State<registerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String _selectItem = "M";
-    List<String> _items = ["M", "F"];
+    String _selectItem = "Masculino";
+    List<String> _items = ["Masculino", "Femenino"];
     return Placeholder(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -85,21 +86,9 @@ class _registerScreenState extends State<registerScreen> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 90, right: 90, left: 90),
-                    child: Text(
-                      "L-Art Garden",
-                      style: TextStyle(
-                          fontFamily: 'Capri',
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 45,
-                          letterSpacing: 4),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        bottom: 60, top: 10, left: 20, right: 20),
+                        bottom: 20, top: 20, left: 20, right: 20),
                     child: Container(
                       decoration: const BoxDecoration(
                           color: Colors.white,
@@ -135,6 +124,7 @@ class _registerScreenState extends State<registerScreen> {
                                             color: Color.fromARGB(
                                                 255, 169, 169, 169))),
                                     TextFormField(
+                                      maxLength: 20,
                                       controller: _Name,
                                       onChanged: (value) {
                                         setState(() {
@@ -142,6 +132,11 @@ class _registerScreenState extends State<registerScreen> {
                                         });
                                       },
                                       decoration: const InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.person,
+                                            color: Color.fromARGB(
+                                                255, 151, 151, 151),
+                                          ),
                                           labelStyle: TextStyle(
                                               color: Color.fromARGB(
                                                   255, 150, 150, 150)),
@@ -155,6 +150,7 @@ class _registerScreenState extends State<registerScreen> {
                                       },
                                     ),
                                     TextFormField(
+                                      maxLength: 30,
                                       controller: _Email,
                                       onChanged: (value) {
                                         setState(() {
@@ -168,6 +164,11 @@ class _registerScreenState extends State<registerScreen> {
                                         return null;
                                       },
                                       decoration: const InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.email,
+                                            color: Color.fromARGB(
+                                                255, 151, 151, 151),
+                                          ),
                                           labelStyle: TextStyle(
                                               color: Color.fromARGB(
                                                   255, 150, 150, 150)),
@@ -175,6 +176,8 @@ class _registerScreenState extends State<registerScreen> {
                                           labelText: 'Correo electronico'),
                                     ),
                                     TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      maxLength: 10,
                                       onChanged: (value) {
                                         setState(() {
                                           contrasenia = value;
@@ -183,65 +186,93 @@ class _registerScreenState extends State<registerScreen> {
                                       validator: (value) {
                                         if (value?.isEmpty ?? true) {
                                           return 'Completa el campo';
+                                        }
+                                        // Añade esta validación
+                                        if (value!.length != 10) {
+                                          return 'El teléfono debe contener exactamente 10 dígitos';
                                         }
                                         return null;
                                       },
                                       controller: _Telefono,
-                                      obscureText: pass,
                                       decoration: const InputDecoration(
-                                          labelStyle: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 150, 150, 150)),
-                                          border: UnderlineInputBorder(),
-                                          labelText: 'Telefono'),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(top: 18.0),
-                                      child: Text("Año de nacimiento",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Color.fromARGB(
-                                                  255, 169, 169, 169))),
+                                        prefixIcon: Icon(
+                                          Icons.phone,
+                                          color: Color.fromARGB(
+                                              255, 151, 151, 151),
+                                        ),
+                                        labelStyle: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 150, 150, 150)),
+                                        border: UnderlineInputBorder(),
+                                        labelText: 'Telefono',
+                                      ),
                                     ),
                                     TextFormField(
+                                      maxLength: 10,
                                       controller: _dateController,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Seleccione una fecha',
-                                        suffixIcon: Icon(Icons.calendar_today),
+                                      decoration: InputDecoration(
+                                        prefixIcon: Icon(
+                                          Icons.date_range,
+                                          color: Color.fromARGB(
+                                              255, 151, 151, 151),
+                                        ),
+                                        labelText: 'Fecha de nacimiento',
+                                        labelStyle: TextStyle(
+                                            color: const Color.fromARGB(
+                                                255, 152, 151, 151)),
+                                        hintText: '2022-12-31',
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[400]),
                                       ),
-                                      onTap: () async {
-                                        final DateTime? pickedDate =
-                                            await showDatePicker(
-                                          context: context,
-                                          initialDate: _selectedDay,
-                                          firstDate: DateTime.utc(1920, 1, 1),
-                                          lastDate: DateTime.now(),
-                                        );
-                                        if (pickedDate != null) {
-                                          setState(() {
-                                            _selectedDay = pickedDate;
-                                            _dateController.text =
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(pickedDate);
-                                          });
+                                      keyboardType: TextInputType.datetime,
+                                      inputFormatters: [
+                                        DateTextInputFormatter()
+                                      ],
+                                      validator: (value) {
+                                        if (value?.isEmpty ?? true) {
+                                          return 'Por favor complete el campo';
                                         }
+                                        // Verifica que el valor tenga exactamente 10 caracteres
+                                        if (value!.length != 10) {
+                                          return 'La fecha debe contener exactamente 10 caracteres';
+                                        }
+                                        // Verifica que el valor sea una fecha válida
+                                        try {
+                                          DateTime inputDate =
+                                              DateTime.parse(value);
+                                          if (inputDate
+                                              .isAfter(DateTime.now())) {
+                                            return 'La fecha no puede ser posterior a la fecha actual';
+                                          }
+                                        } catch (e) {
+                                          return 'Por favor ingrese una fecha válida';
+                                        }
+                                        return null;
                                       },
                                     ),
                                     TextFormField(
+                                      maxLength: 8,
                                       onChanged: (value) {
                                         setState(() {
                                           contrasenia = value;
                                         });
                                       },
                                       validator: (value) {
-                                        if (value?.isEmpty ?? true) {
+                                        if (value == null || value.isEmpty) {
                                           return 'Completa el campo';
+                                        } else if (value.length != 8) {
+                                          return 'La contraseña debe tener exactamente 8 caracteres';
                                         }
                                         return null;
                                       },
                                       controller: _PasswordInfo,
                                       obscureText: pass,
                                       decoration: InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.password,
+                                            color: Color.fromARGB(
+                                                255, 151, 151, 151),
+                                          ),
                                           suffixIcon: IconButton(
                                             onPressed: () {
                                               setState(() {
@@ -260,6 +291,7 @@ class _registerScreenState extends State<registerScreen> {
                                           labelText: 'Contraseña'),
                                     ),
                                     TextFormField(
+                                      maxLength: 8,
                                       onChanged: (value) {
                                         setState(() {
                                           confirmarContrasenia = value;
@@ -274,6 +306,11 @@ class _registerScreenState extends State<registerScreen> {
                                       controller: _PasswordImfoConfirm,
                                       obscureText: confirmPass,
                                       decoration: InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.password_outlined,
+                                            color: Color.fromARGB(
+                                                255, 151, 151, 151),
+                                          ),
                                           suffixIcon: IconButton(
                                               onPressed: () {
                                                 setState(() {
@@ -308,6 +345,11 @@ class _registerScreenState extends State<registerScreen> {
                                           });
                                         },
                                         decoration: const InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.people,
+                                            color: Color.fromARGB(
+                                                255, 151, 151, 151),
+                                          ),
                                           contentPadding: EdgeInsets.symmetric(
                                               vertical: 8.0, horizontal: 12.0),
                                           labelText: 'Seleciona tu genero',
@@ -322,7 +364,7 @@ class _registerScreenState extends State<registerScreen> {
                                               const EdgeInsets.only(top: 16.0),
                                           child: foto == null
                                               ? const Text(
-                                                  'Ninguna imagen cargada.')
+                                                  'Agrega una foto de perfil (opcional).')
                                               : ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -338,32 +380,33 @@ class _registerScreenState extends State<registerScreen> {
                                                   ),
                                                 ),
                                         ),
-                                        ElevatedButton(
-                                          style: ButtonStyle(
-                                            elevation:
-                                                MaterialStateProperty.all(0),
-                                          ),
-                                          onPressed: () async {
-                                            final pickedFile =
-                                                await ImagePicker().pickImage(
-                                              source: ImageSource.camera,
-                                            );
-                                            if (pickedFile != null) {
-                                              setState(() {
-                                                foto = File(pickedFile.path);
-                                              });
-                                            }
-                                          },
-                                          child: Text('Tomar foto'),
-                                        ),
-                                        ElevatedButton(
-                                          style: ButtonStyle(
-                                            elevation:
-                                                MaterialStateProperty.all(0),
-                                          ),
-                                          onPressed: _getImage,
-                                          child: Text(
-                                              'Seleccionar foto de la galería'),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            IconButton.outlined(
+                                              icon: const Icon(Icons
+                                                  .camera_alt), // Icono de la cámara
+                                              onPressed: () async {
+                                                final pickedFile =
+                                                    await ImagePicker()
+                                                        .pickImage(
+                                                  source: ImageSource.camera,
+                                                );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    foto =
+                                                        File(pickedFile.path);
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                            IconButton.outlined(
+                                              icon: const Icon(Icons
+                                                  .photo_library), // Icono de la biblioteca de fotos
+                                              onPressed: _getImage,
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -396,24 +439,29 @@ class _registerScreenState extends State<registerScreen> {
                                               return; // Detener el proceso si las contraseñas no coinciden
                                             }
 
-                                            User newUser = User(
+                                            UserModel newUser = UserModel(
                                               id: 0,
                                               nombre: _Name.text,
                                               telefono: _Telefono.text,
                                               correo: _Email.text,
-                                              contrasena: _PasswordInfo.text,
+                                              contrasenia: _PasswordInfo.text,
                                               fechaNacimiento:
                                                   _dateController.text,
                                               genero: _selectItem,
                                               tipoUsuario: 1,
-                                              foto: null,
+                                              foto: foto?.path,
+                                              latitud: 0,
+                                              longitud: 0,
+                                              direccion1: '',
+                                              direccion2: '',
+                                              direccion3: '',
                                             );
 
                                             // Enviar la solicitud POST para crear el usuario
                                             createUser(newUser);
 
                                             const welcome =
-                                                '¡Estamos creando tu cuenta! Redirigiendo a la pagina de INICIO';
+                                                '¡Estamos creando tu cuenta! Bienvenido a la plataforma L_Art Garden';
 
                                             // Resto del código para la navegación
                                             print(

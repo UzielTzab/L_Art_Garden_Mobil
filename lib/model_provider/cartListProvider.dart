@@ -1,83 +1,85 @@
+import 'package:flutter/foundation.dart';
 import 'package:l_art_garden_mobil/model_provider/cart_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 
 class CartListProvider with ChangeNotifier {
-  final List<CartProvider> _flowers = [];
+  final List<CartProvider> _products = [];
 
-  List<CartProvider> get flowers => _flowers;
+  List<CartProvider> get products => _products;
 
   int getQuantityByIndex(int index) {
-    int quantity = 0;
-    _flowers.forEach((flower) {
-      if (flower.indexFlower == index) {
-        quantity += flower.quantityToBuy;
+    for (var product in _products) {
+      if (product.idProduct == index) {
+        return product.quantityToBuy;
       }
-    });
-    return quantity;
+    }
+    return 0;
   }
 
-  void addFlowerToCart({
-    required indexFlower,
+  void addProductToCart({
+    required int indexProduct,
+    required int idCategory,
+    required int idInvetory,
     required int quantityToBuy,
-    required imageUrl,
-    required description,
-    required String type,
+    required String image1,
+    required String image2,
+    required String image3,
+    required String image4,
+    required String image5,
+    required String description,
+    required int stock,
     required double price,
   }) {
     bool found = false;
-    for (var flower in _flowers) {
-      if (flower.indexFlower == indexFlower) {
-        flower.quantityToBuy += quantityToBuy;
+    for (var product in _products) {
+      if (product.idProduct == indexProduct) {
+        product.quantityToBuy += quantityToBuy;
         found = true;
         break;
       }
     }
     if (!found) {
-      _flowers.add(CartProvider(
-        indexFlower: indexFlower,
+      _products.add(CartProvider(
+        idProduct: indexProduct,
+        idCategoria: idCategory,
+        idInventario: idInvetory,
         quantityToBuy: quantityToBuy,
-        imageUrl: imageUrl,
+        image1: image1,
+        image2: image2,
+        image3: image3,
+        image4: image4,
+        image5: image5,
         description: description,
-        type: type,
         price: price,
       ));
+      ;
     }
     notifyListeners();
   }
 
-  void removeFlower(int index) {
-    _flowers.removeWhere((flower) => flower.indexFlower == index);
+  void removeAllFlower(int indexProduct) {
+    _products.removeWhere((product) => product.idProduct == indexProduct);
     notifyListeners();
   }
 
-  void removeOneFlower(int index) {
-    final flower =
-        _flowers.firstWhereOrNull((flower) => flower.indexFlower == index);
-    if (flower != null) {
-      if (flower.quantityToBuy > 1) {
-        // If quantityToBuy is greater than 1, reduce it by 1
-        flower.quantityToBuy -= 1;
-      } else {
-        // If quantityToBuy is 1, remove the flower from the list
-        _flowers.removeWhere((flower) => flower.indexFlower == index);
-      }
-      notifyListeners();
+  void removeOneFlower(int productId) {
+    // Find the product in the cart
+    var product =
+        _products.firstWhere((product) => product.idProduct == productId);
+
+    // If the product's quantity is more than 1, decrease the quantity
+    if (product.quantityToBuy > 1) {
+      product.quantityToBuy--;
+    } else {
+      // If the product's quantity is 1, remove the product from the cart
+      _products.remove(product);
     }
+
+    // Notify listeners to update the UI
+    notifyListeners();
   }
 
-  bool findFlower(int index) {
-    return _flowers.any((flower) => flower.indexFlower == index);
-  }
-
-  CartProvider? findFlowerByIndex(int index) {
-    CartProvider? foundFlower;
-    flowers.forEach((flower) {
-      if (flower.indexFlower == index) {
-        foundFlower = flower;
-        return;
-      }
-    });
-    return foundFlower;
+  void clearCart() {
+    _products.clear();
+    notifyListeners();
   }
 }

@@ -25,8 +25,9 @@ class CarouselSliderWithDots extends StatefulWidget {
   const CarouselSliderWithDots({
     super.key,
     this.items = const [
-      'assets/images/carouselImages/mother.jpg',
-      'assets/images/carouselImages/sValentin.jpg',
+      'https://assets.eflorist.com/images/homepage/immersion/immersion_birthday_flowers.jpg?1665625112593',
+      'https://assets.eflorist.com/site/EF-72/Homepage/Custom%20(31).png',
+      'https://assets.eflorist.com//images/homepage/Immersion_mothers_day.jpg?v=12'
     ],
   });
 
@@ -55,7 +56,7 @@ class _CarouselSliderWithDotsState extends State<CarouselSliderWithDots> {
           carouselController: controller,
           items: widget.items
               .map(
-                (item) => Image.asset(
+                (item) => Image.network(
                   item,
                   fit: BoxFit.cover,
                   width: double.infinity,

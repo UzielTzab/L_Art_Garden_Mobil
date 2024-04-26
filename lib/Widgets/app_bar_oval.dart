@@ -1,27 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Custom Flexible Space'),
-          flexibleSpace: const CustomFlexibleSpace(),
-        ),
-        body: const Center(
-          child: Text('Contenido del cuerpo'),
-        ),
-      ),
-    );
-  }
-}
-
 class CustomFlexibleSpace extends StatelessWidget {
   const CustomFlexibleSpace({super.key});
   static const Color baseColor = Color.fromARGB(179, 242, 173, 83);

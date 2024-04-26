@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:l_art_garden_mobil/Screens/productScreee.dart';
+import 'package:l_art_garden_mobil/Screens/product_screee.dart';
 
 class PageRoutes {
   static Route createPageRoute(int index) {
@@ -9,7 +9,7 @@ class PageRoutes {
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
-        const curve = Curves.ease;
+        const curve = Curves.bounceIn;
 
         var tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));

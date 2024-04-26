@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:l_art_garden_mobil/Models/user.dart';
+import 'package:l_art_garden_mobil/Services/google_login.dart';
 import 'package:l_art_garden_mobil/Services/service_user.dart';
-import 'package:l_art_garden_mobil/model_provider/users.dart';
+import 'package:l_art_garden_mobil/model_provider/users_provider.dart';
 import 'package:provider/provider.dart';
-import 'mainStore.dart';
-import '../../Widgets/waitingLoad.dart';
+import 'main_store.dart';
+import '../Widgets/waiting_load.dart';
+import 'package:soundpool/soundpool.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,6 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _FormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    Soundpool pool = Soundpool.fromOptions(
+      options: SoundpoolOptions(streamType: StreamType.music),
+    );
     double heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -76,10 +83,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(40))),
                     child: Padding(
                       padding: EdgeInsets.only(
-                          left: 30,
-                          right: 30,
-                          top: heightScreen * 0.01,
-                          bottom: 10),
+                        left: 30,
+                        right: 30,
+                        top: heightScreen * 0.05,
+                      ),
                       child: Form(
                         key: _FormKey,
                         child: Column(
@@ -91,6 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value?.isEmpty ?? true) {
                                   return 'Por favor llena el campo';
                                 }
+                                // Expresión regular para validar el correo electrónico
+                                Pattern pattern =
+                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                RegExp regex = new RegExp(pattern.toString());
+                                if (!regex.hasMatch(value!))
+                                  return 'Ingresa un correo electrónico válido';
                                 return null;
                               },
                               decoration: const InputDecoration(
@@ -112,6 +125,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               validator: (value) {
                                 if (value?.isEmpty ?? true) {
                                   return 'Por favor llena el campo';
+                                }
+                                if (value!.length > 8) {
+                                  return 'La contraseña no puede tener más de 8 caracteres';
                                 }
                                 return null;
                               },
@@ -138,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: _obscurePassword,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 30),
+                              padding: const EdgeInsets.only(top: 10),
                               child: ElevatedButton(
                                 style: ButtonStyle(
                                   fixedSize: MaterialStateProperty.all(
@@ -162,34 +178,79 @@ class _LoginScreenState extends State<LoginScreen> {
                                         passwordController.text,
                                       );
 
-                                      context.read<UserProvider>().setDataUser(
-                                          nombre: user.nombre,
-                                          correo_electronico: user.correo,
-                                          tipo_usuario: "Cliente",
-                                          telefono: user.telefono,
-                                          foto: user.foto!);
+                                      // Verifica el tipo de usuario
+                                      if (user.tipoUsuario == 1) {
+                                        context.read<UserProvider>().setUser(
+                                              UserModel(
+                                                id: user.id,
+                                                nombre: user.nombre,
+                                                correo: user.correo,
+                                                telefono: user.telefono,
+                                                contrasenia: user.contrasenia,
+                                                fechaNacimiento:
+                                                    user.fechaNacimiento,
+                                                genero: user.genero,
+                                                tipoUsuario: user.tipoUsuario,
+                                                foto: user.foto,
+                                                latitud: user.latitud,
+                                                longitud: user.longitud,
+                                                direccion1: user.direccion1,
+                                                direccion2: user.direccion2,
+                                                direccion3: user.direccion3,
+                                              ),
+                                            );
 
-                                      // Si la solicitud fue exitosa, muestra el mensaje con el nombre del usuario
-                                      final welcomeMessage =
-                                          '¡Bienvenido ${user.nombre}!';
+                                        // Si la solicitud fue exitosa, muestra el mensaje con el nombre del usuario
+                                        final welcomeMessage =
+                                            '¡Bienvenido ${user.nombre}!';
 
-                                      // Muestra la página de espera con el mensaje adecuado
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => WaitingPage(
-                                            message: welcomeMessage,
-                                            onWaitComplete: () {
-                                              // Navega a la siguiente pantalla después de completar la espera
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const MainStore(),
-                                                ),
-                                              );
-                                            },
+                                        // Muestra la página de espera con el mensaje adecuado
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => WaitingPage(
+                                              message: welcomeMessage,
+                                              onWaitComplete: () async {
+                                                int soundId = await rootBundle
+                                                    .load(
+                                                        "assets/sounds/lsound.mp3")
+                                                    .then((ByteData soundData) {
+                                                  return pool.load(soundData);
+                                                });
+                                                int streamId =
+                                                    await pool.play(soundId);
+                                                // Navega a la siguiente pantalla después de completar la espera
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const MainStore(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      } else {
+                                        // Si el tipo de usuario no es 1, muestra un modal
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title:
+                                                  const Text('Cuenta no apta'),
+                                              content: const Text(
+                                                  'La cuenta con la que estás intentando iniciar sesión no es válida para hacer compras en la aplicación. Puedes crear una cuenta para realizar compras.'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text('Aceptar'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
                                     } catch (e) {
                                       // Maneja el error en caso de que falle la solicitud
                                       showDialog(
@@ -231,9 +292,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: heightScreen * 0.01),
+                  padding: EdgeInsets.only(top: heightScreen * 0.1),
                   child: Column(
                     children: [
+                      const Text(
+                        'o continua con',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       ElevatedButton.icon(
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all(
@@ -267,7 +332,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialStateProperty.all(Colors.red),
                         ),
                         onPressed: () {
-                          // Agregar funcionalidad para continuar con Google
+                          signInWithGoogle().then((UserModel? user) {
+                            if (user != null) {
+                              // Aquí puedes manejar el usuario que ha iniciado sesión
+                              // Por ejemplo, puedes navegar a otra página:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MainStore(),
+                                ),
+                              );
+                            }
+                          });
                         },
                         icon: const Icon(
                           Icons.g_mobiledata,
@@ -285,11 +361,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: heightScreen * 0.01),
+                  padding: EdgeInsets.only(top: heightScreen * 0),
                   child: TextButton(
-                    onPressed: () {
-                      // Aquí puedes agregar la funcionalidad para recuperar la contraseña
-                    },
+                    onPressed: () {},
                     child: const Text(
                       '¿Olvidaste tu contraseña?',
                       style: TextStyle(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/AnimationRoutes/routeAnimatedBottomToTop.dart';
-import 'package:l_art_garden_mobil/model_provider/products_test_provider.dart';
+import 'package:l_art_garden_mobil/model_provider/products_provider.dart';
 import '../model_provider/favorites_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -29,77 +29,84 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
   int CounterElementsInMyList = 0;
   @override
   Widget build(BuildContext context) {
-    FavoritesProvide watchFavoritesProvide = context.watch<FavoritesProvide>();
-    ProductsTestProvider wtachProductsTestProvider =
-        context.watch<ProductsTestProvider>();
+    FavoritesProvider watchFavoritesProvide =
+        context.watch<FavoritesProvider>();
+    ProductProvider watchProductsProvider = context.watch<ProductProvider>();
+    BuildContext contextFatter = context;
 
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text(
-            'Favoritos',
-            style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0), fontFamily: "Capri"),
+          title: Row(
+            children: [
+              const Icon(
+                Icons.favorite,
+                color: Color.fromARGB(255, 98, 84, 52),
+              ),
+              const Text(
+                'Favoritos',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 98, 84, 52),
+                    fontFamily: "Capri"),
+              ),
+            ],
           ),
         ),
-        body: watchFavoritesProvide.flores.isNotEmpty
+        body: watchFavoritesProvide.favoriteProducts.isNotEmpty
             ? ListView.builder(
-                itemCount: watchFavoritesProvide.flores.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemCount: watchFavoritesProvide.favoriteProducts.length,
+                itemBuilder: (_, int index) {
                   return Card(
                     elevation: 0,
                     child: Column(
                       children: [
                         ListTile(
                           title: Text(
-                            watchFavoritesProvide.flores[index].descripcion,
+                            watchFavoritesProvide
+                                .favoriteProducts[index].descripcion,
                             style: const TextStyle(fontFamily: "Capri"),
                           ),
                           subtitle: Row(
                             children: [
                               const Icon(Icons.monetization_on),
                               Text(
-                                watchFavoritesProvide.flores[index].precio
+                                watchFavoritesProvide
+                                    .favoriteProducts[index].precio
                                     .toString(),
                                 style: const TextStyle(fontFamily: "Capri"),
                               ),
                             ],
                           ),
-                          leading: const Icon(Icons.image),
+                          leading: Image.network(
+                              'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp'),
                           onTap: () {
-                            int temporalIndex =
-                                watchFavoritesProvide.flores[index].idProducto;
-                            int indexTestProduct = wtachProductsTestProvider
-                                .flores[temporalIndex].idProducto;
-                            print(
-                                'Esto es el numero del index en la nueva pantalla: $index');
-                            Navigator.of(context).push(
-                                PageRoutes.createPageRoute(indexTestProduct));
+                            int temporalId = watchFavoritesProvide
+                                .favoriteProducts[index].idProducto;
+                            int indexTestProduct = watchProductsProvider
+                                .products
+                                .indexWhere((product) =>
+                                    product.idProducto == temporalId);
 
-                            // Acción cuando se toca la carta
+                            print('Esto es el indice del listBuild: $index');
+                            print('Temporal index: ${temporalId}');
+                            print(
+                                'Abriendo pantalla con detalles de producto con el indice: $indexTestProduct');
+
+                            if (indexTestProduct != -1) {
+                              Navigator.of(context).push(
+                                  PageRoutes.createPageRoute(indexTestProduct));
+                            } else {
+                              print(
+                                  'Producto no encontrado en la lista de productos');
+                            }
                           },
                           trailing: IconButton(
                             color: const Color.fromARGB(255, 150, 118, 20),
                             onPressed: () {
                               int? temporalIndex = watchFavoritesProvide
-                                  .flores[index].idProducto;
-                              // print('Esto es index $temporalIndex');
-                              // print("-------Lista de flores en el favoritos--------");
-                              // for (var flor in watchFlowerProvider.flores) {
-                              //   print(
-                              //       'id de la flor: ${flor.indexFlower},    Descripcion de la flor: ${flor.descripcion}');
-                              // }
-                              // print('----------------------------------------------');
-                              // print(
-                              //     "has eliminado el producto del favoritos con el indice: ${watchFlowerProvider.flores[index].indexFlower}");
-                              watchFavoritesProvide.removeFlower(temporalIndex);
-                              // print(
-                              //     "-------Lista de flores en el favoritos despues de eliminar--------");
-                              // for (var flor in watchFlowerProvider.flores) {
-                              //   print(
-                              //       'id de la flor: ${flor.indexFlower},    Descripcion de la flor: ${flor.descripcion}');
-                              // }
-                              // print('----------------------------------------------');
+                                  .favoriteProducts[index].idProducto;
+                              watchFavoritesProvide
+                                  .removeProduct(temporalIndex);
                               final sanckBar = SnackBar(
                                 backgroundColor:
                                     const Color.fromARGB(255, 224, 35, 6),

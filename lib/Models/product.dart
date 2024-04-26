@@ -5,59 +5,55 @@ class Product {
   final String nombre;
   final String descripcion;
   final double precio;
-  final String? tipo;
-  final int? stock;
+  final int stock;
+  final String imagen1;
+  final String imagen2;
+  final String imagen3;
+  final String imagen4;
+  final String imagen5;
+  final String nombreFloreria;
+  final String nombreCategoria;
 
-  Product({
-    required this.idProducto,
-    required this.idCategoria,
-    required this.idInventario,
-    required this.nombre,
-    required this.descripcion,
-    required this.precio,
-    this.tipo,
-    this.stock,
-  });
+  Product(
+      {required this.idProducto,
+      required this.idCategoria,
+      required this.idInventario,
+      required this.nombre,
+      required this.descripcion,
+      required this.precio,
+      required this.stock,
+      required this.imagen1,
+      required this.imagen2,
+      required this.imagen3,
+      required this.imagen4,
+      required this.imagen5,
+      required this.nombreFloreria,
+      required this.nombreCategoria});
 
-  Map<String, dynamic> toJson() {
-    return {
-      'IDProducto': idProducto,
-      'IDCategoria': idCategoria,
-      'IDInventario': idInventario,
-      'NombreProducto': nombre,
-      'Descripcion': descripcion,
-      'Precio': precio,
-      'Stock': stock
-    };
-  }
-
-  factory Product.createProduct(Map<String, dynamic> json) {
-    print("Valor del precio");
-    print(json['Precio']);
-
+  factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-        idProducto: json['ID'] != null ? json['ID'] as int : 0,
-        idCategoria:
-            json['IDCategoria'] != null ? json['IDCategoria'] as int : 0,
-        idInventario:
-            json['IDInventarios'] != null ? json['IDInventario'] as int : 0,
-        nombre: json['NombreProducto'] != null
-            ? json['NombreProducto'] as String
-            : "",
-        descripcion:
-            json['Descripcion'] != null ? json['Descripcion'] as String : "",
-        precio: json['Precio'] != null
-            ? (json['Precio'] is int
-                ? (json['Precio'] as int).toDouble()
-                : json['Precio'])
-            : 0.0,
-        stock: json['Stock'] != null ? json['Stock'] as int : 0);
-  }
-  static List<Product> createProductList(dynamic responseData) {
-    List<Product> products = [];
-    for (var productData in responseData) {
-      products.add(Product.createProduct(productData));
-    }
-    return products;
+      idProducto: json['IDProducto'] != null ? json['IDProducto'] as int : 0,
+      idCategoria: json['IDCategoria'] != null ? json['IDCategoria'] as int : 0,
+      idInventario:
+          json['IDInventario'] != null ? json['IDInventario'] as int : 0,
+      nombre: json['NombreProducto'] != null
+          ? json['NombreProducto'] as String
+          : "",
+      descripcion:
+          json['Descripcion'] != null ? json['Descripcion'] as String : "",
+      precio: json['Precio'] != null ? (json['Precio'] as num).toDouble() : 0.0,
+      stock: json['Stock'] != null ? json['Stock'] as int : 0,
+      imagen1: json['Imagen1'] != null ? json['Imagen1'] as String : "",
+      imagen2: json['Imagen2'] != null ? json['Imagen2'] as String : "",
+      imagen3: json['Imagen3'] != null ? json['Imagen3'] as String : "",
+      imagen4: json['Imagen4'] != null ? json['Imagen4'] as String : "",
+      imagen5: json['Imagen5'] != null ? json['Imagen5'] as String : "",
+      nombreFloreria: json['NombreFloreria'] != null
+          ? json['NombreFloreria'] as String
+          : "",
+      nombreCategoria: json['NombreCategoria'] != null
+          ? json['NombreCategoria'] as String
+          : "",
+    );
   }
 }

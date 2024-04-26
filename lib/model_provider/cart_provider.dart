@@ -1,19 +1,27 @@
-import 'package:flutter/material.dart';
-
 class CartProvider {
-  final int indexFlower;
-  final String imageUrl;
+  final int idProduct;
+  final int idCategoria;
+  final int idInventario;
   final String description;
-  final String type;
   final double price;
+  final String image1;
+  final String image2;
+  final String image3;
+  final String image4;
+  final String image5;
   int quantityToBuy;
 
   CartProvider({
-    required this.indexFlower,
+    required this.idProduct,
+    required this.idCategoria,
+    required this.idInventario,
     required this.quantityToBuy,
-    required this.imageUrl,
     required this.description,
-    required this.type,
     required this.price,
+    required this.image1,
+    required this.image2,
+    required this.image3,
+    required this.image4,
+    required this.image5,
   });
 }
