@@ -45,13 +45,26 @@ class _YourNewScreenState extends State<ProductScreen> {
         context.watch<CounterCartProvider>();
 
     ProductProvider watchProductProvider = context.watch<ProductProvider>();
+    watchProductProvider.products.forEach((product) {
+      print(
+          'idProducto: ${product.idProducto}, Producto: ${product.nombre}, Precio: ${product.precio}');
+    });
     FavoritesProvider watchFavoritesProvider =
         context.watch<FavoritesProvider>();
+    print(
+        "Hola, esto es el valor del indice del producto que estas pasando para verlo: ${widget.index}");
+
     CartListProvider watchListCartProvider = context.watch<CartListProvider>();
     if (watchFavoritesProvider
         .findProduct(watchProductProvider.products[widget.index].idProducto)) {
       isPressedFavorite = true;
     }
+    // Comprueba si el producto ya está en el carrito
+    if (watchListCartProvider
+        .findProduct(watchProductProvider.products[widget.index].idProducto)) {
+      isPressedAddCart = true;
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 242, 173, 83),
@@ -221,8 +234,7 @@ class _YourNewScreenState extends State<ProductScreen> {
                       color: const Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(children: [
-                    Text(
-                        watchProductProvider.products[widget.index].descripcion,
+                    Text(watchProductProvider.products[widget.index].nombre,
                         style: const TextStyle(fontSize: 38)),
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
@@ -336,85 +348,109 @@ class _YourNewScreenState extends State<ProductScreen> {
                       //     typeOperation: 1),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            elevation: MaterialStateProperty.all(0),
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 235, 161, 65))),
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor: MaterialStateProperty.all(
+                            const Color.fromARGB(255, 235, 161, 65),
+                          ),
+                        ),
                         onPressed: () {
                           setState(() {
-                            context.read<CounterCartProvider>().setDataCounter(
-                                counter: watchCounterProvider.counter + 1);
+                            isPressedAddCart = !isPressedAddCart;
                           });
 
-                          context.read<CartListProvider>().addProductToCart(
-                                indexProduct: watchProductProvider
-                                    .products[widget.index].idProducto,
-                                idCategory: watchProductProvider
-                                    .products[widget.index].idCategoria,
-                                idInvetory: watchProductProvider
-                                    .products[widget.index].idInventario,
-                                image1: watchProductProvider
-                                    .products[widget.index].imagen1,
-                                image2: watchProductProvider
-                                    .products[widget.index].imagen2,
-                                image3: watchProductProvider
-                                    .products[widget.index].imagen3,
-                                image4: watchProductProvider
-                                    .products[widget.index].imagen4,
-                                image5: watchProductProvider
-                                    .products[widget.index].imagen5,
-                                description: watchProductProvider
-                                    .products[widget.index].descripcion,
-                                price: watchProductProvider
-                                    .products[widget.index].precio,
-                                stock: watchProductProvider
-                                    .products[widget.index].stock,
-                                quantityToBuy: 1,
-                              );
-                          print(
-                              "+++++++++++++++Aqui la lista del carrito+++++++++++++++++");
-                          for (var product in watchListCartProvider.products) {
-                            print(
-                                'Id: ${product.idProduct},   despcripcion: ${product.description},    precio: ${product.price}  CantidadAñadido: ${product.quantityToBuy}');
+                          if (isPressedAddCart) {
+                            context.read<CounterCartProvider>().setDataCounter(
+                                  counter: watchCounterProvider.counter + 1,
+                                );
+
+                            context.read<CartListProvider>().addProductToCart(
+                                  indexProduct: watchProductProvider
+                                      .products[widget.index].idProducto,
+                                  idCategory: watchProductProvider
+                                      .products[widget.index].idCategoria,
+                                  idInvetory: watchProductProvider
+                                      .products[widget.index].idInventario,
+                                  image1: watchProductProvider
+                                      .products[widget.index].imagen1,
+                                  image2: watchProductProvider
+                                      .products[widget.index].imagen2,
+                                  image3: watchProductProvider
+                                      .products[widget.index].imagen3,
+                                  image4: watchProductProvider
+                                      .products[widget.index].imagen4,
+                                  image5: watchProductProvider
+                                      .products[widget.index].imagen5,
+                                  description: watchProductProvider
+                                      .products[widget.index].descripcion,
+                                  price: watchProductProvider
+                                      .products[widget.index].precio,
+                                  stock: watchProductProvider
+                                      .products[widget.index].stock,
+                                  quantityToBuy: 1,
+                                );
+
+                            final snackBar = SnackBar(
+                              duration: const Duration(seconds: 1),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 224, 169, 6),
+                              content: const Text(
+                                  '¡Agregaste este producto al carrito!'),
+                              action: SnackBarAction(
+                                label: 'Omitir',
+                                textColor: Colors.white,
+                                onPressed: () {},
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            int quantity = context
+                                .read<CartListProvider>()
+                                .getQuantity(watchProductProvider
+                                    .products[widget.index].idProducto);
+                            context.read<CartListProvider>().removeAllFlower(
+                                watchProductProvider
+                                    .products[widget.index].idProducto);
+                            context.read<CounterCartProvider>().setDataCounter(
+                                  counter:
+                                      watchCounterProvider.counter - quantity,
+                                );
+
+                            final snackBar = SnackBar(
+                              duration: const Duration(seconds: 1),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 224, 35, 6),
+                              content: const Text(
+                                  'Quitaste este producto del carrito'),
+                              action: SnackBarAction(
+                                textColor: Colors.white,
+                                label: 'Omitir',
+                                onPressed: () {},
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           }
-
-                          print(
-                              "++++++++++++++++++LA CANTIDAD AÑADIDAD DE ESE MISMO PRODUCTO++++++++++++++++++");
-                          print(watchListCartProvider
-                                  .getQuantityByIndex(widget.index) +
-                              1);
-                          // print(watchListCartProvider
-                          //     .products[widget.index].quantityToBuy);
-
-                          final snackBar = SnackBar(
-                            duration: const Duration(seconds: 1),
-                            backgroundColor:
-                                const Color.fromARGB(255, 224, 169, 6),
-                            content: const Text(
-                                '¡Agregaste este producto al carrito!'),
-                            action: SnackBarAction(
-                              label: 'Omitir',
-                              textColor: Colors.white,
-                              onPressed: () {
-                                // Some code to undo the change.
-                              },
-                            ),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Agregar al carrito',
+                              isPressedAddCart
+                                  ? 'Agregado'
+                                  : 'Agregar al carrito',
                               style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontFamily: "Capri"),
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Capri",
+                              ),
                             ),
                             Icon(
-                              Icons.add_shopping_cart,
+                              isPressedAddCart
+                                  ? Icons.check
+                                  : Icons.add_shopping_cart,
                               color: Color.fromARGB(255, 255, 255, 255),
-                            ),
+                            )
                           ],
                         ),
                       ),

@@ -82,4 +82,22 @@ class CartListProvider with ChangeNotifier {
     _products.clear();
     notifyListeners();
   }
+
+  bool findProduct(int productId) {
+    for (var product in _products) {
+      if (product.idProduct == productId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  int getQuantity(int productId) {
+    for (var product in _products) {
+      if (product.idProduct == productId) {
+        return product.quantityToBuy;
+      }
+    }
+    return 0;
+  }
 }

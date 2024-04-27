@@ -131,54 +131,85 @@ class _CartMainState extends State<CartMain> {
                                                 255, 31, 108, 10)),
                                       ),
                                       IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            calculationPriceAndQuantiy(
-                                                watchCartListProvider);
-                                            int temporalIdProduct =
-                                                watchCartListProvider
-                                                    .products[index].idProduct;
-
-                                            // Buscar el producto correcto en watchProductTestProvider.products
-                                            var productToAdd =
+                                        onPressed: watchCartListProvider
+                                                    .products[index]
+                                                    .quantityToBuy <
                                                 watchProductTestProvider
                                                     .products
-                                                    .firstWhere(
-                                              (product) =>
-                                                  product.idProducto ==
-                                                  temporalIdProduct,
-                                            );
+                                                    .firstWhere((product) =>
+                                                        product.idProducto ==
+                                                        watchCartListProvider
+                                                            .products[index]
+                                                            .idProduct)
+                                                    .stock
+                                            ? () {
+                                                setState(() {
+                                                  calculationPriceAndQuantiy(
+                                                      watchCartListProvider);
+                                                  int temporalIdProduct =
+                                                      watchCartListProvider
+                                                          .products[index]
+                                                          .idProduct;
 
-                                            _previousContext
-                                                .read<CartListProvider>()
-                                                .addProductToCart(
-                                                  indexProduct:
-                                                      productToAdd.idProducto,
-                                                  idCategory:
-                                                      productToAdd.idCategoria,
-                                                  idInvetory:
-                                                      productToAdd.idInventario,
-                                                  quantityToBuy: 1,
-                                                  image1: productToAdd.imagen1,
-                                                  image2: productToAdd.imagen2,
-                                                  image3: productToAdd.imagen3,
-                                                  image4: productToAdd.imagen4,
-                                                  image5: productToAdd.imagen5,
-                                                  stock: productToAdd.stock,
-                                                  description:
-                                                      productToAdd.descripcion,
-                                                  price: productToAdd.precio,
-                                                );
-                                            calculationPriceAndQuantiy(
-                                                watchCartListProvider);
+                                                  // Buscar el producto correcto en watchProductTestProvider.products
+                                                  var productToAdd =
+                                                      watchProductTestProvider
+                                                          .products
+                                                          .firstWhere(
+                                                    (product) =>
+                                                        product.idProducto ==
+                                                        temporalIdProduct,
+                                                  );
 
-                                            _previousContext
-                                                .read<CounterCartProvider>()
-                                                .setDataCounter(
-                                                    counter:
-                                                        _cantidadProductos);
-                                          });
-                                        },
+                                                  if (productToAdd.stock >
+                                                      watchCartListProvider
+                                                          .products[index]
+                                                          .quantityToBuy) {
+                                                    _previousContext
+                                                        .read<
+                                                            CartListProvider>()
+                                                        .addProductToCart(
+                                                          indexProduct:
+                                                              productToAdd
+                                                                  .idProducto,
+                                                          idCategory:
+                                                              productToAdd
+                                                                  .idCategoria,
+                                                          idInvetory:
+                                                              productToAdd
+                                                                  .idInventario,
+                                                          quantityToBuy: 1,
+                                                          image1: productToAdd
+                                                              .imagen1,
+                                                          image2: productToAdd
+                                                              .imagen2,
+                                                          image3: productToAdd
+                                                              .imagen3,
+                                                          image4: productToAdd
+                                                              .imagen4,
+                                                          image5: productToAdd
+                                                              .imagen5,
+                                                          stock: productToAdd
+                                                              .stock,
+                                                          description:
+                                                              productToAdd
+                                                                  .descripcion,
+                                                          price: productToAdd
+                                                              .precio,
+                                                        );
+                                                    calculationPriceAndQuantiy(
+                                                        watchCartListProvider);
+
+                                                    _previousContext
+                                                        .read<
+                                                            CounterCartProvider>()
+                                                        .setDataCounter(
+                                                            counter:
+                                                                _cantidadProductos);
+                                                  }
+                                                });
+                                              }
+                                            : null, // Si la cantidad elegida es mayor o igual al stock del producto, onPressed será null y el botón estará deshabilitado
                                         icon: const Icon(Icons.add),
                                       ),
                                     ],

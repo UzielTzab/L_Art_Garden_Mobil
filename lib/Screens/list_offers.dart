@@ -92,7 +92,8 @@ class _CustomListOffersState extends State<CustomListOffers> {
                               onTap: () {
                                 Navigator.of(context).push(
                                     PageRoutesFree.createPageRoute(
-                                        ProductScreen(index)));
+                                        ProductScreen(
+                                            products[index].idProducto)));
                               },
                               child: products[index].imagen1 != ''
                                   ? Image.network(
