@@ -56,4 +56,8 @@ class Product {
           : "",
     );
   }
+  @override
+  String toString() {
+    return 'Product{idProducto: $idProducto, idCategoria: $idCategoria, idInventario: $idInventario, nombre: $nombre, descripcion: $descripcion, precio: $precio, stock: $stock, imagen1: $imagen1, imagen2: $imagen2, imagen3: $imagen3, imagen4: $imagen4, imagen5: $imagen5, nombreFloreria: $nombreFloreria, nombreCategoria: $nombreCategoria}';
+  }
 }

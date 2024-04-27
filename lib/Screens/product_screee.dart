@@ -55,13 +55,17 @@ class _YourNewScreenState extends State<ProductScreen> {
         "Hola, esto es el valor del indice del producto que estas pasando para verlo: ${widget.index}");
 
     CartListProvider watchListCartProvider = context.watch<CartListProvider>();
-    if (watchFavoritesProvider
-        .findProduct(watchProductProvider.products[widget.index].idProducto)) {
+    //Aqui traigo la informacion del producto tocado
+    Product touchedProduct = watchProductProvider.getProductById(widget.index);
+
+    print('Producto tocado: $touchedProduct');
+    //-----------------------------------------------
+
+    if (watchFavoritesProvider.findProduct(widget.index)) {
       isPressedFavorite = true;
     }
     // Comprueba si el producto ya está en el carrito
-    if (watchListCartProvider
-        .findProduct(watchProductProvider.products[widget.index].idProducto)) {
+    if (watchListCartProvider.findProduct(widget.index)) {
       isPressedAddCart = true;
     }
 
@@ -155,34 +159,20 @@ class _YourNewScreenState extends State<ProductScreen> {
                     if (isPressedFavorite) {
                       print('Agrgaste el producto');
                       Product product = Product(
-                          idProducto: watchProductProvider
-                              .products[widget.index].idProducto,
-                          idCategoria: watchProductProvider
-                              .products[widget.index].idCategoria,
-                          idInventario: watchProductProvider
-                              .products[widget.index].idInventario,
-                          nombre: watchProductProvider
-                              .products[widget.index].nombre,
-                          descripcion: watchProductProvider
-                              .products[widget.index].descripcion,
-                          precio: watchProductProvider
-                              .products[widget.index].precio,
-                          imagen1: watchProductProvider
-                              .products[widget.index].imagen1,
-                          imagen2: watchProductProvider
-                              .products[widget.index].imagen2,
-                          imagen3: watchProductProvider
-                              .products[widget.index].imagen3,
-                          imagen4: watchProductProvider
-                              .products[widget.index].imagen4,
-                          imagen5: watchProductProvider
-                              .products[widget.index].imagen5,
-                          stock:
-                              watchProductProvider.products[widget.index].stock,
-                          nombreFloreria: watchProductProvider
-                              .products[widget.index].nombreFloreria,
-                          nombreCategoria: watchProductProvider
-                              .products[widget.index].nombreCategoria);
+                          idProducto: touchedProduct.idProducto,
+                          idCategoria: touchedProduct.idCategoria,
+                          idInventario: touchedProduct.idInventario,
+                          nombre: touchedProduct.nombre,
+                          descripcion: touchedProduct.descripcion,
+                          precio: touchedProduct.precio,
+                          imagen1: touchedProduct.imagen1,
+                          imagen2: touchedProduct.imagen2,
+                          imagen3: touchedProduct.imagen3,
+                          imagen4: touchedProduct.imagen4,
+                          imagen5: touchedProduct.imagen5,
+                          stock: touchedProduct.stock,
+                          nombreFloreria: touchedProduct.nombreFloreria,
+                          nombreCategoria: touchedProduct.nombreCategoria);
                       if (!context
                           .read<FavoritesProvider>()
                           .findProduct(product.idProducto)) {
@@ -208,12 +198,12 @@ class _YourNewScreenState extends State<ProductScreen> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
-                      context.read<FavoritesProvider>().removeProduct(
-                          watchProductProvider
-                              .products[widget.index].idProducto);
+                      context
+                          .read<FavoritesProvider>()
+                          .removeProduct(touchedProduct.idProducto);
                       // Imprimir el producto removido de favoritos
                       print(
-                          'Producto removido de favoritos: ${watchProductProvider.products[widget.index].idProducto}, ${watchProductProvider.products[widget.index].nombre}, ${watchProductProvider.products[widget.index].descripcion}, ${watchProductProvider.products[widget.index].precio}');
+                          'Producto removido de favoritos: ${touchedProduct.idProducto}, ${touchedProduct.nombre}, ${touchedProduct.descripcion}, ${touchedProduct.precio}');
 
                       final sanckBar = SnackBar(
                         duration: const Duration(seconds: 1),
@@ -234,14 +224,13 @@ class _YourNewScreenState extends State<ProductScreen> {
                       color: const Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(children: [
-                    Text(watchProductProvider.products[widget.index].nombre,
+                    Text(touchedProduct.nombre,
                         style: const TextStyle(fontSize: 38)),
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Center(
                         child: Text(
-                          watchProductProvider
-                              .products[widget.index].descripcion,
+                          touchedProduct.descripcion,
                           style: const TextStyle(fontSize: 20),
                         ),
                       ),
@@ -267,9 +256,7 @@ class _YourNewScreenState extends State<ProductScreen> {
                                 ),
                                 Text('Stock disponible de este producto: '),
                                 Text(
-                                  watchProductProvider
-                                      .products[widget.index].stock
-                                      .toString(),
+                                  touchedProduct.stock.toString(),
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Color.fromARGB(255, 255, 171, 62)),
@@ -285,7 +272,7 @@ class _YourNewScreenState extends State<ProductScreen> {
                                 ),
                                 Text('Precio: '),
                                 Text(
-                                  '${watchProductProvider.products[widget.index].precio.toString()}MXN',
+                                  '${touchedProduct.precio.toString()}MXN',
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Color.fromARGB(255, 255, 171, 62),
@@ -303,9 +290,7 @@ class _YourNewScreenState extends State<ProductScreen> {
                                 Text('FLoreria: '),
                                 Expanded(
                                   child: Text(
-                                    watchProductProvider
-                                        .products[widget.index].nombreFloreria
-                                        .toString(),
+                                    touchedProduct.nombreFloreria.toString(),
                                     style: TextStyle(
                                         fontSize: 20,
                                         color:
@@ -324,9 +309,7 @@ class _YourNewScreenState extends State<ProductScreen> {
                                 ),
                                 Text('Categoria: '),
                                 Text(
-                                  watchProductProvider
-                                      .products[widget.index].nombreCategoria
-                                      .toString(),
+                                  touchedProduct.nombreCategoria.toString(),
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Color.fromARGB(255, 255, 171, 62)),
@@ -364,28 +347,17 @@ class _YourNewScreenState extends State<ProductScreen> {
                                 );
 
                             context.read<CartListProvider>().addProductToCart(
-                                  indexProduct: watchProductProvider
-                                      .products[widget.index].idProducto,
-                                  idCategory: watchProductProvider
-                                      .products[widget.index].idCategoria,
-                                  idInvetory: watchProductProvider
-                                      .products[widget.index].idInventario,
-                                  image1: watchProductProvider
-                                      .products[widget.index].imagen1,
-                                  image2: watchProductProvider
-                                      .products[widget.index].imagen2,
-                                  image3: watchProductProvider
-                                      .products[widget.index].imagen3,
-                                  image4: watchProductProvider
-                                      .products[widget.index].imagen4,
-                                  image5: watchProductProvider
-                                      .products[widget.index].imagen5,
-                                  description: watchProductProvider
-                                      .products[widget.index].descripcion,
-                                  price: watchProductProvider
-                                      .products[widget.index].precio,
-                                  stock: watchProductProvider
-                                      .products[widget.index].stock,
+                                  indexProduct: touchedProduct.idProducto,
+                                  idCategory: touchedProduct.idCategoria,
+                                  idInvetory: touchedProduct.idInventario,
+                                  image1: touchedProduct.imagen1,
+                                  image2: touchedProduct.imagen2,
+                                  image3: touchedProduct.imagen3,
+                                  image4: touchedProduct.imagen4,
+                                  image5: touchedProduct.imagen5,
+                                  description: touchedProduct.descripcion,
+                                  price: touchedProduct.precio,
+                                  stock: touchedProduct.stock,
                                   quantityToBuy: 1,
                                 );
 
@@ -406,11 +378,10 @@ class _YourNewScreenState extends State<ProductScreen> {
                           } else {
                             int quantity = context
                                 .read<CartListProvider>()
-                                .getQuantity(watchProductProvider
-                                    .products[widget.index].idProducto);
-                            context.read<CartListProvider>().removeAllFlower(
-                                watchProductProvider
-                                    .products[widget.index].idProducto);
+                                .getQuantity(touchedProduct.idProducto);
+                            context
+                                .read<CartListProvider>()
+                                .removeAllFlower(touchedProduct.idProducto);
                             context.read<CounterCartProvider>().setDataCounter(
                                   counter:
                                       watchCounterProvider.counter - quantity,

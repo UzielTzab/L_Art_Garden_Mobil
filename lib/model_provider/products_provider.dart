@@ -23,4 +23,26 @@ class ProductProvider with ChangeNotifier {
         .where((product) => product.nombreFloreria == floreriaName)
         .toList();
   }
+
+  Product getProductById(int idProducto) {
+    return _products.firstWhere(
+      (product) => product.idProducto == idProducto,
+      orElse: () => Product(
+        idProducto: 0,
+        idCategoria: 0,
+        idInventario: 0,
+        nombre: '',
+        descripcion: '',
+        precio: 0.0,
+        stock: 0,
+        imagen1: '',
+        imagen2: '',
+        imagen3: '',
+        imagen4: '',
+        imagen5: '',
+        nombreFloreria: '',
+        nombreCategoria: '',
+      ),
+    );
+  }
 }

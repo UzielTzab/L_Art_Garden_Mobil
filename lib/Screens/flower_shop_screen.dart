@@ -22,6 +22,7 @@ class FlowerShopDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider watchProductsProvider = context.watch<ProductProvider>();
+
     var filteredProducts = watchProductsProvider.products
         .where((product) => product.idInventario == flowerShop.idFloreria)
         .toList();
@@ -211,7 +212,7 @@ class FlowerShopDetailScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             PageRoutesFree.createPageRoute(
-                              ProductScreen(index),
+                              ProductScreen(filteredProducts[index].idProducto),
                             ),
                           );
                         },
