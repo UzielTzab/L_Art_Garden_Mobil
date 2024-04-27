@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:l_art_garden_mobil/AnimationRoutes/routeAnimatedBottomToTop.dart';
 import 'package:l_art_garden_mobil/model_provider/products_provider.dart';
 import '../model_provider/favorites_provider.dart';
+import 'product_screee.dart';
 
 import 'package:provider/provider.dart';
 
@@ -10,11 +11,7 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Favorites',
-      home: ScaffoldExample(),
-    );
+    return ScaffoldExample();
   }
 }
 
@@ -32,7 +29,6 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
     FavoritesProvider watchFavoritesProvide =
         context.watch<FavoritesProvider>();
     ProductProvider watchProductsProvider = context.watch<ProductProvider>();
-    BuildContext contextFatter = context;
 
     return Scaffold(
         appBar: AppBar(
@@ -55,7 +51,7 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
         body: watchFavoritesProvide.favoriteProducts.isNotEmpty
             ? ListView.builder(
                 itemCount: watchFavoritesProvide.favoriteProducts.length,
-                itemBuilder: (_, int index) {
+                itemBuilder: (BuildContext context, int index) {
                   return Card(
                     elevation: 0,
                     child: Column(
@@ -87,14 +83,12 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
                                 .indexWhere((product) =>
                                     product.idProducto == temporalId);
 
-                            print('Esto es el indice del listBuild: $index');
-                            print('Temporal index: ${temporalId}');
-                            print(
-                                'Abriendo pantalla con detalles de producto con el indice: $indexTestProduct');
-
                             if (indexTestProduct != -1) {
                               Navigator.of(context).push(
-                                  PageRoutes.createPageRoute(indexTestProduct));
+                                  PageRoutesFree.createPageRoute(ProductScreen(
+                                      watchFavoritesProvide
+                                          .favoriteProducts[index]
+                                          .idProducto)));
                             } else {
                               print(
                                   'Producto no encontrado en la lista de productos');

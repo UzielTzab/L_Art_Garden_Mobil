@@ -3,7 +3,7 @@ import 'package:l_art_garden_mobil/AnimationRoutes/routeAnimatedBottomToTop.dart
 import 'package:l_art_garden_mobil/Screens/buy_screen.dart';
 import 'package:l_art_garden_mobil/model_provider/cartListProvider.dart';
 import 'package:l_art_garden_mobil/model_provider/counter_cart.dart';
-
+import 'product_screee.dart';
 import 'package:l_art_garden_mobil/model_provider/products_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -229,8 +229,10 @@ class _CartMainState extends State<CartMain> {
                                   product.idProducto == temporalIdProduct);
 
                           if (indexProduct != -1) {
-                            Navigator.of(context)
-                                .push(PageRoutes.createPageRoute(indexProduct));
+                            Navigator.of(context).push(
+                                PageRoutesFree.createPageRoute(ProductScreen(
+                                    watchCartListProvider
+                                        .products[index].idProduct)));
                           } else {
                             print(
                                 'Producto no encontrado en la lista de productos');
