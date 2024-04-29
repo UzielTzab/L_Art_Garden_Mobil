@@ -16,6 +16,7 @@ class CartListProvider with ChangeNotifier {
   }
 
   void addProductToCart({
+    required String productName,
     required int indexProduct,
     required int idCategory,
     required int idInvetory,
@@ -39,6 +40,7 @@ class CartListProvider with ChangeNotifier {
     }
     if (!found) {
       _products.add(CartProvider(
+        nombreProducto: productName,
         idProduct: indexProduct,
         idCategoria: idCategory,
         idInventario: idInvetory,

@@ -438,7 +438,8 @@ class _registerScreenState extends State<registerScreen> {
                                               );
                                               return; // Detener el proceso si las contraseñas no coinciden
                                             }
-
+                                            print(
+                                                '`````````````````````````Èsto es el valor de la imagen: ${foto?.path}```````````````````````');
                                             UserModel newUser = UserModel(
                                               id: 0,
                                               nombre: _Name.text,

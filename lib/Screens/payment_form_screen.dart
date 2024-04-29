@@ -7,11 +7,17 @@ import '../Widgets/waiting_load_fill.dart';
 
 class PaymentFormScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  static const Color orangeColor = const Color.fromARGB(255, 209, 137, 49);
+  static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
+  static const Color baseColorDark = Color.fromARGB(255, 163, 114, 49);
+  static const Color unselectColor = Color.fromARGB(255, 107, 77, 12);
+  static const Color disableColor = Color.fromARGB(255, 193, 193, 193);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: baseColor,
         title: Text('Formulario de Pago'),
       ),
       body: Center(
@@ -52,9 +58,13 @@ class PaymentFormScreen extends StatelessWidget {
                     labelText: 'Número de la tarjeta',
                     prefixIcon: Icon(Icons.credit_card),
                   ),
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Por favor ingrese el número de la tarjeta';
+                    }
+                    if (!RegExp(r"^\d{16}$").hasMatch(value)) {
+                      return 'Por favor ingrese un número de tarjeta válido';
                     }
                     return null;
                   },
@@ -64,9 +74,14 @@ class PaymentFormScreen extends StatelessWidget {
                     labelText: 'Fecha de vencimiento (MM/AA)',
                     prefixIcon: Icon(Icons.date_range),
                   ),
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Por favor ingrese la fecha de vencimiento';
+                    }
+                    if (!RegExp(r"^(0[1-9]|1[0-2])\/?([0-9]{2})$")
+                        .hasMatch(value)) {
+                      return 'Por favor ingrese una fecha de vencimiento válida';
                     }
                     return null;
                   },
@@ -76,21 +91,21 @@ class PaymentFormScreen extends StatelessWidget {
                     labelText: 'Código de seguridad (CVV)',
                     prefixIcon: Icon(Icons.lock),
                   ),
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Por favor ingrese el código de seguridad';
+                    }
+                    if (!RegExp(r"^\d{3}$").hasMatch(value)) {
+                      return 'Por favor ingrese un código de seguridad válido';
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent),
-                    side: MaterialStateProperty.all(
-                        BorderSide(color: Colors.black)),
-                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    side: BorderSide(color: Colors.black),
                   ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

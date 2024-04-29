@@ -11,8 +11,8 @@ class UserModel {
   String genero;
   int tipoUsuario;
   String? foto;
-  double? latitud;
-  double? longitud;
+  double latitud;
+  double longitud;
   String direccion1;
   String direccion2;
   String direccion3;
@@ -48,7 +48,7 @@ class UserModel {
       'Genero': genero,
       'TipoUsuarioID': tipoUsuario,
       'Foto': foto,
-      'Altitud': latitud,
+      'Latitud': latitud,
       'Longitud': longitud,
       'Direccion1': direccion1,
       'Direccion2': direccion2,
@@ -76,8 +76,8 @@ class UserModel {
       tipoUsuario:
           json['TipoUsuarioID'] != null ? json['TipoUsuarioID'] as int : 1,
       foto: json['Foto'] != null ? json['Foto'] as String : "",
-      latitud: json['Latitud'] != null ? json['Latitud'] as double : 0,
-      longitud: json['Longitud'] != null ? json['Longitud'] as double : 0,
+      latitud: json['Latitud'] != null ? json['Latitud'] as double : 0.0,
+      longitud: json['Longitud'] != null ? json['Longitud'] as double : 0.0,
       direccion1:
           json['Direccion1'] != null ? json['Direccion1'] as String : "",
       direccion2:

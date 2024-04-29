@@ -56,9 +56,9 @@ class _CustomListOffersState extends State<CustomListOffers> {
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 6.0,
-                mainAxisSpacing: 6.0,
-                mainAxisExtent: 300.0,
+                crossAxisSpacing: 0.0,
+                mainAxisSpacing: 0.0,
+                mainAxisExtent: 320.0,
                 childAspectRatio: 0.6),
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -75,69 +75,75 @@ class _CustomListOffersState extends State<CustomListOffers> {
                     ),
                   );
                 } else {
-                  return Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 180,
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                          child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                    PageRoutesFree.createPageRoute(
-                                        ProductScreen(
-                                            products[index].idProducto)));
-                              },
-                              child: products[index].imagen1 != ''
-                                  ? Image.network(
-                                      products[index].imagen1,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.network(
-                                      'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp')),
-                        ),
-                        Container(
-                          height: 100,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  products[index].nombre,
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.attach_money_sharp,
-                                      size: 15,
-                                      color: Color.fromARGB(255, 209, 137, 49),
-                                    ),
-                                    Text(
-                                      '${products[index].precio.toString()} MXN',
-                                      style: const TextStyle(
-                                          fontFamily: "Arial",
-                                          fontSize: 20,
-                                          color: Color.fromARGB(
-                                              255, 209, 137, 49)),
-                                    ),
-                                  ],
-                                )
-                              ],
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 160,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                      PageRoutesFree.createPageRoute(
+                                          ProductScreen(
+                                              products[index].idProducto)));
+                                },
+                                child: products[index].imagen5 != ''
+                                    ? Image.network(
+                                        products[index].imagen5,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.network(
+                                        'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp')),
+                          ),
+                          Container(
+                            height: 100,
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    products[index].nombre,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.attach_money_sharp,
+                                        size: 15,
+                                        color:
+                                            Color.fromARGB(255, 209, 137, 49),
+                                      ),
+                                      Text(
+                                        '${products[index].precio.toString()} MXN',
+                                        style: const TextStyle(
+                                            fontFamily: "Arial",
+                                            fontSize: 20,
+                                            color: Color.fromARGB(
+                                                255, 209, 137, 49)),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 }

@@ -36,8 +36,7 @@ class _DataUserScreenState extends State<DataUserScreen> {
               CircleAvatar(
                 backgroundColor: baseColor,
                 radius: 75,
-                backgroundImage: NetworkImage(
-                    'https://api-mysql-types-l-art-garden.onrender.com/api/userImage/${watchUserPrivider.user.foto}'),
+                backgroundImage: NetworkImage('${watchUserPrivider.user.foto}'),
               ),
               const SizedBox(height: 16),
               Card(

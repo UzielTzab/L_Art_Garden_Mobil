@@ -15,6 +15,12 @@ class CartMain extends StatefulWidget {
 }
 
 class _CartMainState extends State<CartMain> {
+  static const Color orangeColor = const Color.fromARGB(255, 209, 137, 49);
+  static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
+  static const Color baseColorDark = Color.fromARGB(255, 163, 114, 49);
+  static const Color unselectColor = Color.fromARGB(255, 107, 77, 12);
+  static const Color disableColor = Color.fromARGB(255, 193, 193, 193);
+
   double _bottomSheetOpacity = 1.0;
   late BuildContext _previousContext;
   double _precioTotal = 0;
@@ -46,11 +52,11 @@ class _CartMainState extends State<CartMain> {
           children: [
             const Icon(
               Icons.shopping_cart,
-              color: Color.fromARGB(255, 98, 84, 52),
+              color: baseColorDark,
             ),
             const Text(
               'Carrito',
-              style: TextStyle(color: Color.fromARGB(255, 98, 84, 52)),
+              style: TextStyle(color: baseColorDark),
             ),
           ],
         ),
@@ -169,6 +175,9 @@ class _CartMainState extends State<CartMain> {
                                                         .read<
                                                             CartListProvider>()
                                                         .addProductToCart(
+                                                          productName:
+                                                              productToAdd
+                                                                  .nombre,
                                                           indexProduct:
                                                               productToAdd
                                                                   .idProducto,
@@ -220,7 +229,7 @@ class _CartMainState extends State<CartMain> {
                           ],
                         ),
                         leading: Image.network(
-                            'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp'),
+                            '${watchCartListProvider.products[index].image5}'),
                         onTap: () {
                           int temporalIdProduct =
                               watchCartListProvider.products[index].idProduct;
@@ -239,7 +248,7 @@ class _CartMainState extends State<CartMain> {
                           }
                         },
                         trailing: IconButton(
-                          color: orangeColor,
+                          color: baseColorDark,
                           onPressed: () {
                             setState(() {
                               int temporalIndex = watchCartListProvider
@@ -285,6 +294,8 @@ class _CartMainState extends State<CartMain> {
                                           _previousContext
                                               .read<CartListProvider>()
                                               .addProductToCart(
+                                                productName:
+                                                    productToReAdd.nombre,
                                                 indexProduct:
                                                     productToReAdd.idProducto,
                                                 idCategory:

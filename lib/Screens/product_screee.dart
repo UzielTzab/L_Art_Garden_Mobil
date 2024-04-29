@@ -35,7 +35,7 @@ class _YourNewScreenState extends State<ProductScreen> {
       '[url=https://postimg.cc/CdsnycQF][img]https://i.postimg.cc/CdsnycQF/Ternura-con-6-Rosas-y-Lilys-principal-1.jpg[/img][/url]',
     ];
     final List<String> imgList = [
-      'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp',
+      '',
       'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp',
       'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp',
       'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp',
@@ -124,7 +124,7 @@ class _YourNewScreenState extends State<ProductScreen> {
               children: [
                 CarouselSlider(
                   options: CarouselOptions(
-                    height: 300,
+                    height: 320,
                     autoPlay: true,
                     aspectRatio: 2.0,
                     enlargeCenterPage: true,
@@ -137,8 +137,10 @@ class _YourNewScreenState extends State<ProductScreen> {
                   items: imgList
                       .map((item) => Container(
                             child: Center(
-                              child: Image.network(item,
-                                  fit: BoxFit.cover, width: 1500),
+                              child: Image.network(
+                                touchedProduct.imagen5,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ))
                       .toList(),
@@ -347,6 +349,7 @@ class _YourNewScreenState extends State<ProductScreen> {
                                 );
 
                             context.read<CartListProvider>().addProductToCart(
+                                  productName: touchedProduct.nombre,
                                   indexProduct: touchedProduct.idProducto,
                                   idCategory: touchedProduct.idCategoria,
                                   idInvetory: touchedProduct.idInventario,

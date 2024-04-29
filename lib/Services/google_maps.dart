@@ -115,31 +115,63 @@ void ShowLocationDialogGoogleMaps(
               TextButton(
                 child: Text("Guardar dirección"),
                 onPressed: () async {
-                  String yourGoogleDirecction =
-                      '${place.street}, ${place.subLocality}, ${place.postalCode}, ${place.administrativeArea}';
-                  userProvider.setAddress1(yourGoogleDirecction);
-                  addressProvider.setAddress(
-                      place.street ?? '',
-                      place.subLocality ?? '',
-                      place.postalCode ?? '',
-                      place.administrativeArea ?? '');
+                  // Comprueba si el usuario ha iniciado sesión
+                  if (userProvider.user.id == 0) {
+                    // El usuario no ha iniciado sesión, muestra un diálogo
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Iniciar sesión'),
+                        content: Text(
+                            'Necesitas iniciar sesión para guardar la dirección. ¿Quieres iniciar sesión ahora?'),
+                        actions: [
+                          TextButton(
+                            child: Text('No'),
+                            onPressed: () {
+                              // Cierra el diálogo
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: Text('Sí'),
+                            onPressed: () {
+                              // Cierra el diálogo y navega a la pantalla de inicio de sesión
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed('/LoginScreen');
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    // El usuario ha iniciado sesión, guarda la dirección
+                    String yourGoogleDirecction =
+                        '${place.street}, ${place.subLocality}, ${place.postalCode}, ${place.administrativeArea}';
+                    userProvider.setAddress1(yourGoogleDirecction);
+                    addressProvider.setAddress(
+                        place.street ?? '',
+                        place.subLocality ?? '',
+                        place.postalCode ?? '',
+                        place.administrativeArea ?? '');
 
-                  // Imprime los valores que se están pasando a updateUserAddresses
-                  print('ID: ${userProvider.user.id.toString()}');
-                  print('Direccion1: $yourGoogleDirecction');
-                  print('Direccion2: ""');
-                  print('Direccion3: ""');
+                    // Imprime los valores que se están pasando a updateUserAddresses
+                    print('ID: ${userProvider.user.id.toString()}');
+                    print('Direccion1: $yourGoogleDirecction');
+                    print('Direccion2: ""');
+                    print('Direccion3: ""');
 
-                  // Llama al servicio para actualizar las direcciones del usuario
-                  await updateUserAddresses(
-                      userProvider.user.id.toString(),
-                      yourGoogleDirecction,
-                      "", // Direccion2
-                      "" // Direccion3
-                      );
-                  Navigator.pop(context);
-                  print(
-                      "Latitude: ${position.latitude}, Longitude: ${position.longitude}");
+                    // Llama al servicio para actualizar las direcciones del usuario
+                    await updateUserAddresses(
+                        userProvider.user.id.toString(),
+                        yourGoogleDirecction,
+                        "",
+                        "",
+                        position.latitude,
+                        position.longitude);
+                    Navigator.pop(context);
+                    print(
+                        "Latitude: ${position.latitude}, Longitude: ${position.longitude}");
+                  }
                 },
               ),
               TextButton(

@@ -20,6 +20,7 @@ class BuyScreen extends StatefulWidget {
   final int totalQuantity;
 
   BuyScreen({required this.totalAmount, required this.totalQuantity});
+  static const Color orangeColor = const Color.fromARGB(255, 209, 137, 49);
   static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
   static const Color baseColorDark = Color.fromARGB(255, 163, 114, 49);
   static const Color unselectColor = Color.fromARGB(255, 107, 77, 12);
@@ -80,6 +81,8 @@ class _BuyScreenState extends State<BuyScreen> {
         backgroundColor: BuyScreen.baseColor,
       ),
       body: ListView.builder(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 8),
         itemCount: groupedProducts.keys.length,
         itemBuilder: (context, index) {
           final shopId = groupedProducts.keys.elementAt(index);
@@ -165,8 +168,7 @@ class _BuyScreenState extends State<BuyScreen> {
                         children: shopProducts
                             .map(
                               (product) => ListTile(
-                                leading: Image.network(
-                                    'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp'),
+                                leading: Image.network('${product.image5}'),
                                 title: Text(
                                   'Producto: ${product.description}',
                                   style:
@@ -334,6 +336,7 @@ class _BuyScreenState extends State<BuyScreen> {
                       );
                       return;
                     }
+
                     // Crea un nuevo DetallePedido
                     DetallePedido detallePedido = DetallePedido(
                       idDetalle: 0,
@@ -362,26 +365,29 @@ class _BuyScreenState extends State<BuyScreen> {
 
                       // Crea un nuevo Pedido para cada producto
                       Pedido pedido = Pedido(
-                        idPedido: 0,
-                        idEstado: 1,
-                        fechaHoraPedido: DateTime.now().toString(),
-                        precioUnitario: product.price,
-                        idDetallePedido:
-                            detallePedidoID, // Usa el ID del DetallePedido que acabas de crear
-                        idUsuario: userProvider.user
-                            .id, // Reemplaza esto con el ID del usuario actual
-                        idProducto: product.idProduct,
-                        cantidadProducto: product.quantityToBuy,
-                        precioTotal: product.price * product.quantityToBuy,
-                        idTarjeta:
-                            8, // Reemplaza esto con el ID de la tarjeta seleccionada
-                        fechaEntrega: selectedDate,
-                        horaEntrega: selectedTime,
-                        idInventario: product
-                            .idInventario, // Asegúrate de que CartProvider tenga idInventario
-                        pagoTotal: widget
-                            .totalAmount, // Asegúrate de que totalAmount esté definido
-                      );
+                          idPedido: 0,
+                          idEstado: 1,
+                          fechaHoraPedido: DateTime.now().toString(),
+                          precioUnitario: product.price,
+                          idDetallePedido:
+                              detallePedidoID, // Usa el ID del DetallePedido que acabas de crear
+                          idUsuario: userProvider.user
+                              .id, // Reemplaza esto con el ID del usuario actual
+                          idProducto: product.idProduct,
+                          cantidadProducto: product.quantityToBuy,
+                          precioTotal: product.price * product.quantityToBuy,
+                          idTarjeta:
+                              12, // Reemplaza esto con el ID de la tarjeta seleccionada
+                          fechaEntrega: selectedDate,
+                          horaEntrega: selectedTime,
+                          idInventario: product
+                              .idInventario, // Asegúrate de que CartProvider tenga idInventario
+                          pagoTotal: widget.totalAmount,
+                          nombreCliente: userProvider.user.nombre,
+                          nombreProducto: product.nombreProducto,
+                          cantidadSeleccionado: product.quantityToBuy,
+                          direccion: userProvider.user.direccion1,
+                          imagenReferencia: product.image5);
                       print(pedido.toString());
 
                       try {

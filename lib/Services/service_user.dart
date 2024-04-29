@@ -30,8 +30,8 @@ Future<UserModel> getUserByEmailAndPassword(
 }
 
 Future<void> createUser(UserModel user) async {
-  var uri =
-      Uri.parse('https://api-mysql-types-l-art-garden.onrender.com/api/users');
+  var uri = Uri.parse(
+      'https://api-mysql-types-l-art-garden.onrender.com/api/createAccount');
   var request = http.MultipartRequest('POST', uri);
 
   request.fields['NombreUsuario'] = user.nombre;
@@ -61,7 +61,12 @@ Future<void> createUser(UserModel user) async {
 }
 
 Future<void> updateUserAddresses(
-    String id, String direccion1, String direccion2, String direccion3) async {
+    String id,
+    String direccion1,
+    String direccion2,
+    String direccion3,
+    double latitud,
+    double longitud) async {
   final url = Uri.parse(
       'https://api-mysql-types-l-art-garden.onrender.com/api/UpdateAdress');
 
@@ -70,11 +75,13 @@ Future<void> updateUserAddresses(
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(<String, String>{
+    body: jsonEncode(<String, dynamic>{
       'ID': id,
       'Direccion1': direccion1,
       'Direccion2': direccion2,
       'Direccion3': direccion3,
+      'Latitud': latitud,
+      'Longitud': longitud,
     }),
   );
 

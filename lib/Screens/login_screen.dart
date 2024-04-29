@@ -192,8 +192,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 genero: user.genero,
                                                 tipoUsuario: user.tipoUsuario,
                                                 foto: user.foto,
-                                                latitud: user.latitud,
-                                                longitud: user.longitud,
+                                                latitud: user.latitud / 1,
+                                                longitud: user.longitud / 1,
                                                 direccion1: user.direccion1,
                                                 direccion2: user.direccion2,
                                                 direccion3: user.direccion3,
@@ -253,6 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                     } catch (e) {
                                       // Maneja el error en caso de que falle la solicitud
+                                      print('Esto es el error $e');
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {

@@ -16,6 +16,7 @@ import 'cart_main.dart';
 import 'favorites.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
+import '../Screens/register.dart';
 
 class MainStore extends StatefulWidget {
   const MainStore({super.key});
@@ -80,6 +81,7 @@ class _MainStoreState extends State<MainStore> {
   @override
   Widget build(BuildContext context) {
     UserProvider watchUser = context.watch<UserProvider>();
+    print('${watchUser.user.foto}');
     CounterCartProvider watchCounterPorvider =
         context.watch<CounterCartProvider>();
     AddressProvider watchAddressProvider = context.watch<AddressProvider>();
@@ -201,10 +203,9 @@ class _MainStoreState extends State<MainStore> {
                         backgroundColor:
                             const Color.fromARGB(255, 255, 255, 255),
                         child: ClipOval(
-                          child: watchUser.user.foto != '' &&
-                                  watchUser.user.foto!.isEmpty
+                          child: watchUser.user.foto != null
                               ? Image.network(
-                                  'https://api-mysql-types-l-art-garden.onrender.com/api/userImage/${watchUser.user.foto}',
+                                  '${watchUser.user.foto!}',
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -341,7 +342,7 @@ class _MainStoreState extends State<MainStore> {
                                                 Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const MainStore(),
+                                                        const registerScreen(),
                                                   ),
                                                 );
                                               },

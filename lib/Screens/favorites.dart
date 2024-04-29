@@ -23,6 +23,12 @@ class ScaffoldExample extends StatefulWidget {
 }
 
 class _ScaffoldExampleState extends State<ScaffoldExample> {
+  static const Color orangeColor = const Color.fromARGB(255, 209, 137, 49);
+  static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
+  static const Color baseColorDark = Color.fromARGB(255, 163, 114, 49);
+  static const Color unselectColor = Color.fromARGB(255, 107, 77, 12);
+  static const Color disableColor = Color.fromARGB(255, 193, 193, 193);
+
   int CounterElementsInMyList = 0;
   @override
   Widget build(BuildContext context) {
@@ -37,13 +43,11 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
             children: [
               const Icon(
                 Icons.favorite,
-                color: Color.fromARGB(255, 98, 84, 52),
+                color: baseColorDark,
               ),
               const Text(
                 'Favoritos',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 98, 84, 52),
-                    fontFamily: "Capri"),
+                style: TextStyle(color: baseColorDark, fontFamily: "Capri"),
               ),
             ],
           ),
@@ -64,17 +68,21 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
                           ),
                           subtitle: Row(
                             children: [
-                              const Icon(Icons.monetization_on),
+                              const Icon(
+                                Icons.monetization_on,
+                                color: orangeColor,
+                              ),
                               Text(
                                 watchFavoritesProvide
                                     .favoriteProducts[index].precio
                                     .toString(),
-                                style: const TextStyle(fontFamily: "Capri"),
+                                style: const TextStyle(
+                                    fontFamily: "Capri", color: orangeColor),
                               ),
                             ],
                           ),
                           leading: Image.network(
-                              'https://floresfinas.oss-us-east-1.aliyuncs.com/mj-v1/arreglo-floral-m4067-1.webp'),
+                              '${watchFavoritesProvide.favoriteProducts[index].imagen5}'),
                           onTap: () {
                             int temporalId = watchFavoritesProvide
                                 .favoriteProducts[index].idProducto;
@@ -95,7 +103,7 @@ class _ScaffoldExampleState extends State<ScaffoldExample> {
                             }
                           },
                           trailing: IconButton(
-                            color: const Color.fromARGB(255, 150, 118, 20),
+                            color: baseColorDark,
                             onPressed: () {
                               int? temporalIndex = watchFavoritesProvide
                                   .favoriteProducts[index].idProducto;

@@ -54,8 +54,11 @@ class FlowerShop {
             json['HoraApertura'] != null ? json['HoraApertura'] as String : "",
         horaCierre:
             json['HoraCierre'] != null ? json['HoraCierre'] as String : "",
-        latitude: json['Latitud'] != null ? json['Latitud'] as double : 0,
-        longitude: json['Longitud'] != null ? json['Longitud'] as double : 0);
+        latitude:
+            json['Latitud'] != null ? (json['Latitud'] as num).toDouble() : 0,
+        longitude: json['Longitud'] != null
+            ? (json['Longitud'] as num).toDouble()
+            : 0);
   }
 
   static List<FlowerShop> createFlowerShopList(dynamic responseData) {

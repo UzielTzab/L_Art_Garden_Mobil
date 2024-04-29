@@ -32,6 +32,7 @@ dependencies:
   flutter_shimmer: ^2.1.2  # Proporciona un efecto de brillo para indicar la carga de contenido.
   animated_text_kit: ^4.2.2  # Proporciona animaciones de texto.
   shimmer: ^3.0.0
+  intl: ^0.19.0
 
 
 dev_dependencies:

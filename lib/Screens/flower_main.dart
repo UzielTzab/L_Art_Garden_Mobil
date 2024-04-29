@@ -19,6 +19,7 @@ class FlowerMain extends StatefulWidget {
 class _FlowerMainState extends State<FlowerMain> {
   static const Color grayColor = Color.fromARGB(255, 128, 128, 128);
   static const Color whiteColor = Color.fromARGB(255, 255, 255, 255);
+  static const Color shimmerColor = Color.fromARGB(255, 255, 248, 239);
   static const Color baseColor = Color.fromARGB(255, 242, 173, 83);
   static const Color unselectColor = Color.fromARGB(255, 156, 112, 18);
 
@@ -36,12 +37,7 @@ class _FlowerMainState extends State<FlowerMain> {
       print(
           'Florería: ${shop.nombreFloreria}, ID de inventario: ${shop.idFloreria}');
     });
-    // Establecer manualmente la URL de la imagen para todas las florerías
-    String testImageUrl =
-        'https://www.tijuanaenlinea.com/wp-content/uploads/2021/11/Buenas-ventas-reportan-florerias-tras-Dia-de-Muertos.jpeg';
-    for (FlowerShop shop in flowerShops) {
-      shop.foto = testImageUrl;
-    }
+
     if (mounted) {
       setState(() {
         flowerShopProvider.flowerShops = flowerShops;
@@ -178,29 +174,26 @@ class _FlowerMainState extends State<FlowerMain> {
                   ),
                 ),
               ),
-              body: TabBarView(
-                children: [
-                  CustomListOffers(),
-                  Consumer<FlowerShopProvider>(
-                    builder: (context, flowerShopProvider, child) {
-                      if (flowerShopProvider.flowerShops.isEmpty) {
-                        getAllFlowerShops().then((flowerShops) {
-                          // Establecer manualmente la URL de la imagen para todas las florerías
-                          String testImageUrl =
-                              'https://www.tijuanaenlinea.com/wp-content/uploads/2021/11/Buenas-ventas-reportan-florerias-tras-Dia-de-Muertos.jpeg';
-                          for (FlowerShop shop in flowerShops) {
-                            shop.foto = testImageUrl;
-                          }
-                          flowerShopProvider.flowerShops = flowerShops;
-                        });
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        return FlowerShopsParallax(
-                            flowerShops: flowerShopProvider.flowerShops);
-                      }
-                    },
-                  ),
-                ],
+              body: Container(
+                color: shimmerColor,
+                child: TabBarView(
+                  children: [
+                    CustomListOffers(),
+                    Consumer<FlowerShopProvider>(
+                      builder: (context, flowerShopProvider, child) {
+                        if (flowerShopProvider.flowerShops.isEmpty) {
+                          getAllFlowerShops().then((flowerShops) {
+                            flowerShopProvider.flowerShops = flowerShops;
+                          });
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return FlowerShopsParallax(
+                              flowerShops: flowerShopProvider.flowerShops);
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

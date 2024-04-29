@@ -1,4 +1,5 @@
 class CartProvider {
+  final String nombreProducto;
   final int idProduct;
   final int idCategoria;
   final int idInventario;
@@ -12,6 +13,7 @@ class CartProvider {
   int quantityToBuy;
 
   CartProvider({
+    required this.nombreProducto,
     required this.idProduct,
     required this.idCategoria,
     required this.idInventario,
